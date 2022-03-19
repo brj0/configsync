@@ -1,2 +1,2 @@
 # configsync
-Contains personal dotfiles (vimrc, tmux) and scripts to sync on multiple platforms.
+Contains personal configuration/dotfiles (vimrc, tmux) and scripts to sync on multiple platforms.
