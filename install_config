@@ -2,11 +2,15 @@
 
 SCRIPTS=~/bin
 VIM_SYNTAX=~/.vim/syntax
+OLD_PWD=$PWD
 
 SYNC=$(realpath $(dirname $0))
 SYNC_CONFIG=$SYNC/dotfiles
 SYNC_SCRIPTS=$SYNC/scripts
 SYNC_VIM_SYNTAX=$SYNC/vim/syntax
+
+cd SYNC
+git pull
 
 # Make CapsLock work like Esc.
 setxkbmap -option caps:escape
@@ -39,3 +43,10 @@ do
   remove_ln $VIM_SYNTAX $f
   ln -sv $SYNC_VIM_SYNTAX/$f $VIM_SYNTAX/$f
 done;
+
+# push to GitHub
+git add -A
+git commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+git push origin main
+
+cd $OLD_PWD
