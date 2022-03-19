@@ -9,14 +9,15 @@ SYNC_CONFIG=$SYNC/dotfiles
 SYNC_SCRIPTS=$SYNC/scripts
 SYNC_VIM_SYNTAX=$SYNC/vim/syntax
 
-echo $PWD
 cd $SYNC
+
+# Look for updates.
 git pull
-echo $PWD
 
 # Make CapsLock work like Esc.
 setxkbmap -option caps:escape
 
+# Removes symbolic links if they exist.
 remove_ln() {
   if [ -L $1/$2 ]
     then
@@ -45,8 +46,6 @@ do
   remove_ln $VIM_SYNTAX $f
   ln -sv $SYNC_VIM_SYNTAX/$f $VIM_SYNTAX/$f
 done;
-
-echo $PWD
 
 # push to GitHub
 git add -A
