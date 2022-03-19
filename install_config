@@ -9,8 +9,10 @@ SYNC_CONFIG=$SYNC/dotfiles
 SYNC_SCRIPTS=$SYNC/scripts
 SYNC_VIM_SYNTAX=$SYNC/vim/syntax
 
-cd SYNC
+echo $PWD
+cd $SYNC
 git pull
+echo $PWD
 
 # Make CapsLock work like Esc.
 setxkbmap -option caps:escape
@@ -43,6 +45,8 @@ do
   remove_ln $VIM_SYNTAX $f
   ln -sv $SYNC_VIM_SYNTAX/$f $VIM_SYNTAX/$f
 done;
+
+echo $PWD
 
 # push to GitHub
 git add -A
