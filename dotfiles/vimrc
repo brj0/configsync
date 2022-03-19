@@ -1,0 +1,67 @@
+" make jk do esc
+inoremap jk <Esc>
+inoremap pdb import pdb; pdb.set_trace()
+
+" shortcuts for tabs
+nnoremap tn :tabnew<Space>
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprev<CR>
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+
+" backspace working as usual
+nnoremap <bs> X
+set backspace=indent,eol,start " backspace working as usual in insert mode
+
+set clipboard=unnamedplus " enables copying into os clipboard
+set mouse=a " enables mouse
+"set ruler " enables curser position
+
+" Show all untanted trailing whitespace
+" MUST be inserted before colorscheme command
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+
+" Highlight tabs
+set list
+set listchars=tab:▸·
+
+colorscheme default " colors
+syntax on " Switch Syntax highlighting on
+" set syntax to jinja for all html files
+au BufNewFile,BufRead *.html set syntax=htmljinja
+set number " Show line number
+
+set tabstop=4 " number of visual spaces per TAB
+set softtabstop=4 " number deleted by pressing backspace
+set shiftwidth=4 " should be the same as softtabstop
+set textwidth=120 " Maximal textwidth
+set autoindent " continue with upper indentation
+set expandtab " tabs are spaces
+
+" for html/js, 2 spaces
+autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd Filetype htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd Filetype css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+set hlsearch " highlight matches
+set ignorecase smartcase " ignores cases for search function
+set shortmess-=S " show count of search hits
+set incsearch " see search results as you type
+
+" Search down into subfolders
+" Provides tab-completion for all file relad tasks
+set path+=**
+
+" Display all matching commands/files when we tab complete
+set wildmenu
+
+" easier moving/indentation of blocks
+vnoremap < <gv
+vnoremap > >gv
+
+" ctrl-x ctrl-o completion
+set omnifunc=syntaxcomplete#Complete
+

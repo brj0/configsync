@@ -1,0 +1,41 @@
+#!/bin/bash
+
+SCRIPTS=~/bin
+VIM_SYNTAX=~/.vim/syntax
+
+SYNC=$(realpath $(dirname $0))
+SYNC_CONFIG=$SYNC/dotfiles
+SYNC_SCRIPTS=$SYNC/scripts
+SYNC_VIM_SYNTAX=$SYNC/vim/syntax
+
+# Make CapsLock work like Esc.
+setxkbmap -option caps:escape
+
+remove_ln() {
+  if [ -L $1/$2 ]
+    then
+        rm $1/$2
+  fi
+}
+
+# Create symbolic links for main config files.
+for f in $(ls $SYNC_CONFIG);
+do
+  remove_ln ~ .$f
+  ln -sv $SYNC_CONFIG/$f ~/.$f
+done;
+
+# Create symbolic links for scripts.
+for f in $(ls $SYNC_SCRIPTS);
+do
+  remove_ln $SCRIPTS $f
+  ln -sv $SYNC_SCRIPTS/$f $SCRIPTS/$f
+done;
+
+
+# Copy symbolic links for special vim syntax files.
+for f in $(ls $SYNC_VIM_SYNTAX);
+do
+  remove_ln $VIM_SYNTAX $f
+  ln -sv $SYNC_VIM_SYNTAX/$f $VIM_SYNTAX/$f
+done;
