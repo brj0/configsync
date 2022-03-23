@@ -4,7 +4,8 @@ SCRIPTS=~/bin
 VIM_SYNTAX=~/.vim/syntax
 OLD_PWD=$PWD
 
-SYNC=$(realpath $(dirname $0))
+THIS_SCRIPT=$(realpath $0)
+SYNC=$(dirname $THIS_SCRIPT)
 SYNC_CONFIG=$SYNC/dotfiles
 SYNC_SCRIPTS=$SYNC/scripts
 SYNC_VIM_SYNTAX=$SYNC/vim/syntax
@@ -39,6 +40,9 @@ do
   ln -sv $SYNC_SCRIPTS/$f $SCRIPTS/$f
 done;
 
+# Create symbolic links for this script.
+remove_ln $SCRIPTS $(basename $0)
+ln -sv $THIS_SCRIPT $SCRIPTS/$(basename $0)
 
 # Copy symbolic links for special vim syntax files.
 for f in $(ls $SYNC_VIM_SYNTAX);
