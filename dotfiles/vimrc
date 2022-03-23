@@ -64,6 +64,3 @@ vnoremap > >gv
 
 " ctrl-x ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
-
-" automatically read file again if changed outside vim
-set autoread
