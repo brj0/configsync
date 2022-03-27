@@ -86,7 +86,7 @@ map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
 " biber my_file
 map <f4> :w<CR>:! biber %:r<CR><CR>
 " Full command list:
-map <f5> <f2><f2><f4><f2><f3>
+map <f5> <f2><f4><f2><f3>
 
 " Spell check
 map <f6> :setlocal spell! spelllang=en_us<CR>
