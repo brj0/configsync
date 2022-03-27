@@ -64,3 +64,7 @@ vnoremap > >gv
 
 " ctrl-x ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
+
+" LaTeX compile and open pdf
+map <f2> :! pdflatex %<CR><CR>
+map <f3> :! xdg-open $(echo % \| sed "s/tex$/pdf/") & disown<CR><CR>
