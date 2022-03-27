@@ -76,9 +76,8 @@ set omnifunc=syntaxcomplete#Complete
 "   \printbibliography
 " Correct command ordering:
 "   1. pdflatex my_file.tex
-"   2. pdflatex my_file.tex
-"   3. biber my_file
-"   4. pdflatex my_file.tex
+"   2. biber my_file
+"   3. pdflatex my_file.tex
 " pdflatex my_file.tex
 map <f2> :w<CR>:! pdflatex %<CR><CR>
 " Open my_file.pdf
