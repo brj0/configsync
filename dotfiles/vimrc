@@ -90,5 +90,5 @@ map <f5> <f2><f2><f4><f2><f3>
 
 " Spell check
 map <f6> :setlocal spell! spelllang=en_us<CR>
-map <f7> :set spelllang=de<CR>
+map <f7> :setlocal spell! spelllang=de<CR>
 autocmd Filetype tex setlocal spell! spelllang=en_us,de
