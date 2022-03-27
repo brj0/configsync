@@ -65,6 +65,25 @@ vnoremap > >gv
 " ctrl-x ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
 
-" LaTeX compile and open pdf
+" LaTeX commands
+" Add file my_bibliography.bib in same folder as my_file.tex
+" Add to my_file.tex header:
+"   \usepackage[backend=biber]{biblatex}
+"   \addbibresource{my_bibliography.bib}
+" Add if non-cited files should be included
+"   \nocite{*} or \nocite{<bibkey>}
+" Print bibliography with
+"   \printbibliography
+" Correct command ordering:
+"   1. pdflatex my_file.tex
+"   2. pdflatex my_file.tex
+"   3. biber my_file
+"   4. pdflatex my_file.tex
+" pdflatex my_file.tex
 map <f2> :w<CR>:! pdflatex %<CR><CR>
+" Open my_file.pdf
 map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
+" biber my_file
+map <f4> :w<CR>:! biber %:r<CR><CR>
+" Full command list:
+map <f5> <f2><f2><f4><f2><f3>
