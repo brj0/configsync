@@ -1,0 +1,5 @@
+#!/bin/bash
+
+vnc4server -kill :1
+sleep 10
+vnc4server -geometry 1680x1050 -alwaysshared :1
