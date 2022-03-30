@@ -79,13 +79,13 @@ set omnifunc=syntaxcomplete#Complete
 "   2. biber my_file
 "   3. pdflatex my_file.tex
 " pdflatex my_file.tex
-map <f2> :w<CR>:! pdflatex %<CR><CR>
+autocmd FileType tex map <f2> :w<CR>:! pdflatex %<CR><CR>
 " Open my_file.pdf
-map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
+autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
 " biber my_file
-map <f4> :w<CR>:! biber %:r<CR><CR>
+autocmd FileType tex map <f4> :w<CR>:! biber %:r<CR><CR>
 " Full command list:
-map <f5> <f2><f4><f2><f3>
+autocmd FileType tex map <f5> <f2><f4><f2><f3>
 
 " Spell check
 map <f6> :setlocal spell! spelllang=en_us<CR>
