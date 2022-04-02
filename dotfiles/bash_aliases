@@ -40,3 +40,6 @@ shopt -s autocd
 
 # Start screen
 neofetch 2>/dev/null
+
+# Fuzzy finder fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
