@@ -2,6 +2,8 @@
 inoremap jk <Esc>
 inoremap pdb import pdb; pdb.set_trace()
 
+set title " shows data name on terminal bar
+
 " shortcuts for tabs
 nnoremap tn :tabnew<Space>
 nnoremap tk :tabnext<CR>
