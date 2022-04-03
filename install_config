@@ -2,6 +2,7 @@
 
 SCRIPTS=~/bin
 VIM_SYNTAX=~/.vim/syntax
+VIM_TEMPLATES=~/.vim/templates
 OLD_PWD=$PWD
 
 THIS_SCRIPT=$(realpath $0)
@@ -9,6 +10,7 @@ SYNC=$(dirname $THIS_SCRIPT)
 SYNC_CONFIG=$SYNC/dotfiles
 SYNC_SCRIPTS=$SYNC/scripts
 SYNC_VIM_SYNTAX=$SYNC/vim/syntax
+SYNC_VIM_TEMPLATES=$SYNC/vim/templates
 
 cd $SYNC
 
@@ -49,6 +51,13 @@ for f in $(ls $SYNC_VIM_SYNTAX);
 do
   remove_ln $VIM_SYNTAX $f
   ln -sv $SYNC_VIM_SYNTAX/$f $VIM_SYNTAX/$f
+done;
+
+# Copy symbolic links for special vim syntax files.
+for f in $(ls $SYNC_VIM_TEMPLATES);
+do
+  remove_ln $VIM_TEMPLATES $f
+  ln -sv $SYNC_VIM_TEMPLATES/$f $VIM_TEMPLATES/$f
 done;
 
 # push to GitHub
