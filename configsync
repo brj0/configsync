@@ -1,0 +1,49 @@
+#!/bin/bash
+
+OLD_PWD=$PWD
+
+THIS_SCRIPT_PATH=$(realpath $0)
+CONFIG_DIR=$(dirname $THIS_SCRIPT_PATH)/config
+cd $CONFIG_DIR
+SYNC_FILES=$(find $CONFIG_DIR -mindepth 1)
+SYNC_DIRS=$(find $CONFIG_DIR -mindepth 1 -type d)
+
+
+# Create symbolic links for main config files.
+
+echo $CONFIG_DIR
+echo
+echo $SYNC_FILES
+echo
+echo "$SYNC_FILES" | sed "s|^$CONFIG_DIR|$HOME|"
+echo
+
+for f in "$(SYNC_FILES)";
+do
+  if [ -d $f ]
+    then
+        echo $f
+  fi
+done;
+
+# Look for updates.
+#git pull
+
+# Create dirs if they do not exist.
+
+# Removes symbolic links if they exist.
+remove_ln() {
+  if [ -L $1/$2 ]
+    then
+        rm $1/$2
+  fi
+}
+
+
+# push to GitHub
+#git add -A
+#git commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+#git push origin main
+
+
+cd $OLD_PWD

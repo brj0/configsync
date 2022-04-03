@@ -1,0 +1,36 @@
+#!/bin/bash
+
+wdir=$PWD
+
+for dir in $wdir/*-P; do
+    cd $dir
+    touch done.txt
+
+    if ! [[ -d "raw" ]]; then
+        mkdir raw
+        mv $dir/*.tif raw
+        echo "directory raw created and tif files moved to it"
+    fi
+
+    cd raw
+
+    if ! [[ -e "raw.md5" ]]; then
+        md5sum * > raw.md5
+    fi
+
+    cd $dir
+
+    if ! [[ -d "derived" ]]; then
+        mkdir derived
+        mv $dir/*.xml derived
+        echo "directory derived created and xml files moved to it"
+    fi
+
+    cd derived
+
+    if ! [[ -e "derived.md5" ]]; then
+        md5sum * > derived.md5
+    fi
+
+    cd $wdir
+done
