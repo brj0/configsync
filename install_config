@@ -18,6 +18,7 @@ cd $SYNC
 git pull
 
 # Create dirs if they do not exist.
+echo $VIM_TEMPLATES
 mkdir -p VIM_SYNTAX VIM_TEMPLATES
 
 # Removes symbolic links if they exist.
