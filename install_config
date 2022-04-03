@@ -17,8 +17,8 @@ cd $SYNC
 # Look for updates.
 git pull
 
-# Make CapsLock work like Esc.
-setxkbmap -option caps:escape
+# Create dirs if they do not exist.
+mkdir -p VIM_SYNTAX VIM_TEMPLATES
 
 # Removes symbolic links if they exist.
 remove_ln() {
