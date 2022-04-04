@@ -3,11 +3,13 @@
 OLD_PWD=$PWD
 
 THIS_SCRIPT_PATH=$(realpath $0)
-CONFIG_DIR=$(dirname $THIS_SCRIPT_PATH)/config
-cd $CONFIG_DIR
+CONFIG_DIR=$(dirname $THIS_SCRIPT_PATH)'/config'
+
 SYNC_FILES=$(find $CONFIG_DIR -mindepth 1)
 SYNC_DIRS=$(find $CONFIG_DIR -mindepth 1 -type d)
 
+HOME_FILES=$(echo "$SYNC_FILES" | sed "s|^$CONFIG_DIR|$HOME|")
+HOME_FILES=$(echo "$SYNC_DIRS" | sed "s|^$CONFIG_DIR|$HOME|")
 
 # Create symbolic links for main config files.
 
@@ -15,16 +17,17 @@ echo $CONFIG_DIR
 echo
 echo $SYNC_FILES
 echo
-echo "$SYNC_FILES" | sed "s|^$CONFIG_DIR|$HOME|"
+echo "$HOME_FILES"
 echo
+echo "$HOME_DIRS"
 
-for f in "$(SYNC_FILES)";
-do
-  if [ -d $f ]
-    then
-        echo $f
-  fi
-done;
+#for f in "$(SYNC_FILES)";
+#do
+#  if [ -d $f ]
+#    then
+#        echo $f
+#  fi
+#done;
 
 # Look for updates.
 #git pull
