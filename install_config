@@ -1,68 +1,43 @@
 #!/bin/bash
 
-SCRIPTS=~/bin
-VIM_SYNTAX=~/.vim/syntax
-VIM_TEMPLATES=~/.vim/templates
-OLD_PWD=$PWD
-
 THIS_SCRIPT=$(realpath $0)
-SYNC=$(dirname $THIS_SCRIPT)
-SYNC_CONFIG=$SYNC/dotfiles
-SYNC_SCRIPTS=$SYNC/scripts
-SYNC_VIM_SYNTAX=$SYNC/vim/syntax
-SYNC_VIM_TEMPLATES=$SYNC/vim/templates
-
-cd $SYNC
+THIS_SCRIPT_DIR=$(dirname $THIS_SCRIPT)
+CONFIG_DIR=$(dirname $THIS_SCRIPT)'/config'
 
 # Look for updates.
-git pull
+git -C $THIS_SCRIPT_DIR pull
 
-# Create dirs if they do not exist.
-mkdir -p $VIM_SYNTAX $VIM_TEMPLATES
+# Files and dirs to sync.
+SYNC_FILES=$(find $CONFIG_DIR -mindepth 1 -type f)
+SYNC_DIRS=$(find $CONFIG_DIR -mindepth 1 -type d)
 
-# Removes symbolic links if they exist.
-remove_ln() {
-  if [ -L $1/$2 ]
+# Target dirs containing symbolic links.
+HOME_DIRS=$(echo "$SYNC_DIRS" | sed "s|^$CONFIG_DIR|$HOME|")
+
+# Create all dirs in home dir if they do not exist.
+mkdir -p $HOME_DIRS
+
+# Create symbolic links for all files
+for f in $SYNC_FILES;
+do
+  f_ln=$(echo "$f" | sed "s|^$CONFIG_DIR|$HOME|")
+  # Removes symbolic links if they exist.
+  if [ -L $f_ln ]
     then
-        rm $1/$2
+        rm $f_ln
   fi
-}
-
-# Create symbolic links for main config files.
-for f in $(ls $SYNC_CONFIG);
-do
-  remove_ln ~ .$f
-  ln -sv $SYNC_CONFIG/$f ~/.$f
+  ln -sv $f $f_ln
 done;
 
-# Create symbolic links for scripts.
-for f in $(ls $SYNC_SCRIPTS);
-do
-  remove_ln $SCRIPTS $f
-  ln -sv $SYNC_SCRIPTS/$f $SCRIPTS/$f
-done;
-
-# Create symbolic links for this script.
-remove_ln $SCRIPTS $(basename $0)
-ln -sv $THIS_SCRIPT $SCRIPTS/$(basename $0)
-
-# Copy symbolic links for special vim syntax files.
-for f in $(ls $SYNC_VIM_SYNTAX);
-do
-  remove_ln $VIM_SYNTAX $f
-  ln -sv $SYNC_VIM_SYNTAX/$f $VIM_SYNTAX/$f
-done;
-
-# Copy symbolic links for special vim syntax files.
-for f in $(ls $SYNC_VIM_TEMPLATES);
-do
-  remove_ln $VIM_TEMPLATES $f
-  ln -sv $SYNC_VIM_TEMPLATES/$f $VIM_TEMPLATES/$f
-done;
+# Create symbolic links for this script in ~/bin.
+THIS_SCRIPT_LN=$HOME/bin/$(basename $THIS_SCRIPT)
+if [ -L $THIS_SCRIPT_LN ]
+  then
+    rm $THIS_SCRIPT_LN
+fi
+ln -sv $THIS_SCRIPT $THIS_SCRIPT_LN
 
 # push to GitHub
-git add -A
-git commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
-git push origin main
-
-cd $OLD_PWD
+git -C $THIS_SCRIPT_DIR add -A
+git -C $THIS_SCRIPT_DIR commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+git -C $THIS_SCRIPT_DIR push origin main
