@@ -158,5 +158,9 @@ autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-
 """ HTML COMMANDS
 """"""""""""""""""""""""""""""""""""""""
 
+" Spell check
+autocmd FileType html setlocal spell! spelllang=en_us
+autocmd FileType htmldjango setlocal spell! spelllang=en_us
+
 " Snippets
 autocmd FileType html inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>

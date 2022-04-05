@@ -1,26 +1,29 @@
 #!/bin/bash
 
-THIS_SCRIPT=$(realpath $0)
-THIS_SCRIPT_DIR=$(dirname $THIS_SCRIPT)
-CONFIG_DIR=$(dirname $THIS_SCRIPT)'/config'
+# This script creates symbolid links for some dotfiles. Existing dotfiles
+# will not be replaced.
+
+this_script=$(realpath $0)
+this_script_dir=$(dirname $this_script)
+config_dir=$(dirname $this_script)'/config'
 
 # Look for updates.
-git -C $THIS_SCRIPT_DIR pull
+git -C $this_script_dir pull
 
 # Files and dirs to sync.
-SYNC_FILES=$(find $CONFIG_DIR -mindepth 1 -type f)
-SYNC_DIRS=$(find $CONFIG_DIR -mindepth 1 -type d)
+sync_files=$(find $config_dir -mindepth 1 -type f)
+sync_dirs=$(find $config_dir -mindepth 1 -type d)
 
 # Target dirs containing symbolic links.
-HOME_DIRS=$(echo "$SYNC_DIRS" | sed "s|^$CONFIG_DIR|$HOME|")
+home_dirs=$(echo "$sync_dirs" | sed "s|^$config_dir|$HOME|")
 
 # Create all dirs in home dir if they do not exist.
-mkdir -p $HOME_DIRS
+mkdir -p $home_dirs
 
 # Create symbolic links for all files
-for f in $SYNC_FILES;
+for f in $sync_files;
 do
-  f_ln=$(echo "$f" | sed "s|^$CONFIG_DIR|$HOME|")
+  f_ln=$(echo "$f" | sed "s|^$config_dir|$HOME|")
   # Removes symbolic links if they exist.
   if [ -L $f_ln ]
     then
@@ -29,15 +32,15 @@ do
   ln -sv $f $f_ln
 done;
 
-# Create symbolic links for this script in ~/bin.
-THIS_SCRIPT_LN=$HOME/bin/$(basename $THIS_SCRIPT)
-if [ -L $THIS_SCRIPT_LN ]
+# Create symbolic link for this script in ~/bin.
+this_script_ln=$HOME/bin/$(basename $this_script)
+if [ -L $this_script_ln ]
   then
-    rm $THIS_SCRIPT_LN
+    rm $this_script_ln
 fi
-ln -sv $THIS_SCRIPT $THIS_SCRIPT_LN
+ln -sv $this_script $this_script_ln
 
 # push to GitHub
-git -C $THIS_SCRIPT_DIR add -A
-git -C $THIS_SCRIPT_DIR commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
-git -C $THIS_SCRIPT_DIR push origin main
+git -C $this_script_dir add -A
+git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+git -C $this_script_dir push origin main
