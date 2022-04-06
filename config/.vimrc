@@ -1,3 +1,4 @@
+""""""""""""""""""""""""""""""""""""""""
 """ GENERAL COMMANDS
 """"""""""""""""""""""""""""""""""""""""
 
@@ -7,6 +8,29 @@ let mapleader = ","
 
 " Fast saving
 nmap <leader>w :w<cr>
+
+" Fast closing
+nmap <leader>q :q<cr>
+
+" Make jk do esc
+inoremap jk <Esc>
+
+" Shows data name on terminal bar
+set title
+
+" Shortcuts for tabs
+nnoremap tn :tabnew<Space>
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprev<CR>
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+
+" Backspace working as usual
+nnoremap <bs> X
+set backspace=indent,eol,start " backspace working as usual in insert mode
+
+" Enables copying into os clipboard
+set clipboard=unnamedplus
 
 " Make jk do esc
 inoremap jk <Esc>
@@ -109,6 +133,7 @@ ab tempcpp -1read ~/.vim/templates/skeleton.cpp
 ab tempbeamer -1read ~/.vim/templates/beamer.tex
 ab templetter -1read ~/.vim/templates/letter.tex
 
+""""""""""""""""""""""""""""""""""""""""
 """ LATEX COMMANDS
 """"""""""""""""""""""""""""""""""""""""
 
@@ -160,6 +185,7 @@ autocmd FileType tex inoremap ,- <Esc>"zdiWi\<C-R>z{}<++><Esc>T{i
 autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-R>z}<Enter><++><Esc>2ki
 
 
+""""""""""""""""""""""""""""""""""""""""
 """ HTML COMMANDS
 """"""""""""""""""""""""""""""""""""""""
 
@@ -169,3 +195,8 @@ autocmd FileType htmldjango setlocal spell! spelllang=en_us
 
 " Snippets
 autocmd FileType html inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
+
+""""""""""""""""""""""""""""""""""""""""
+""" CSS COMMANDS
+""""""""""""""""""""""""""""""""""""""""
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
