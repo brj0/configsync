@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""
-""" GENERAL COMMANDS
+""" GENERAL
 """"""""""""""""""""""""""""""""""""""""
 
 " With a map leader it's possible to do extra key combinations
@@ -32,33 +32,13 @@ set backspace=indent,eol,start " backspace working as usual in insert mode
 " Enables copying into os clipboard
 set clipboard=unnamedplus
 
-" Make jk do esc
-inoremap jk <Esc>
-
-" Shows data name on terminal bar
-set title
-
-" Shortcuts for tabs
-nnoremap tn :tabnew<Space>
-nnoremap tk :tabnext<CR>
-nnoremap tj :tabprev<CR>
-nnoremap th :tabfirst<CR>
-nnoremap tl :tablast<CR>
-
-" Backspace working as usual
-nnoremap <bs> X
-set backspace=indent,eol,start " backspace working as usual in insert mode
-
-" Enables copying into os clipboard
-set clipboard=unnamedplus
-
 " Enables mouse
 set mouse=a
 
 " Show line number
 set number
 
-" Show all untanted trailing whitespace
+" Show all trailing whitespace
 " MUST be inserted before colorscheme command
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
@@ -73,49 +53,41 @@ autocmd BufWinEnter * match SnippedSign /<++>/
 " Syntax color
 colorscheme default " colors
 syntax on " Switch Syntax highlighting on
-" Set syntax to jinja for all html files
-au BufNewFile,BufRead *.html set syntax=htmljinja
-" Show all highliting colors
-ab hitest so<Space>$VIMRUNTIME/syntax/hitest.vim
 
-" Highlight tabs
-set list
-set listchars=tab:▸·
+" Show all highlighting colors
+ab hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
 
 " Format style
 set tabstop=4 " number of visual spaces per TAB
 set softtabstop=4 " number deleted by pressing backspace
 set shiftwidth=4 " should be the same as softtabstop
-set textwidth=120 " Maximal textwidth
+set textwidth=120 " Maximal text width
 set autoindent " continue with upper indentation
 set expandtab " tabs are spaces
-" For html/js use 2 spaces
-autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd Filetype htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd Filetype css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+" Highlight tabs
+set list
+set listchars=tab:▸·
+
+" Easier moving/indentation of blocks
+vnoremap < <gv
+vnoremap > >gv
 
 " Searching
 set hlsearch " highlight matches
 set ignorecase smartcase " ignores cases for search function
 set shortmess-=S " show count of search hits
 set incsearch " see search results as you type
+
 " Search down into subfolders
-" Provides tab-completion for all file relad tasks
+" Provides tab-completion for all file related tasks
 set path+=**
 
 " Display all matching commands/files when we tab complete
 set wildmenu
 
-" Easier moving/indentation of blocks
-vnoremap < <gv
-vnoremap > >gv
-
 " ctrl-x ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
-
-" Python debugging
-inoremap pdb import pdb; pdb.set_trace()
 
 " Navigate within snippets
 inoremap ,, <Esc>/<++><Enter>"_c4l
@@ -133,8 +105,9 @@ ab tempcpp -1read ~/.vim/templates/skeleton.cpp
 ab tempbeamer -1read ~/.vim/templates/beamer.tex
 ab templetter -1read ~/.vim/templates/letter.tex
 
+
 """"""""""""""""""""""""""""""""""""""""
-""" LATEX COMMANDS
+""" LATEX
 """"""""""""""""""""""""""""""""""""""""
 
 " Spell check
@@ -156,10 +129,13 @@ autocmd FileType tex setlocal spell! spelllang=en_us,de
 
 " pdflatex my_file.tex
 autocmd FileType tex map <f2> :w<CR>:! pdflatex %<CR><CR>
+
 " Open my_file.pdf
 autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
+
 " biber my_file
 autocmd FileType tex map <f4> :w<CR>:! biber %:r<CR><CR>
+
 " Full command list:
 autocmd FileType tex map <f5> <f2><f4><f2><f3>
 
@@ -186,8 +162,23 @@ autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-
 
 
 """"""""""""""""""""""""""""""""""""""""
-""" HTML COMMANDS
+""" PYTHON
 """"""""""""""""""""""""""""""""""""""""
+
+" Python debugging
+inoremap pdb import pdb; pdb.set_trace()
+
+
+""""""""""""""""""""""""""""""""""""""""
+""" HTML
+""""""""""""""""""""""""""""""""""""""""
+
+" Set syntax to jinja for all html files
+au BufNewFile,BufRead *.html set syntax=htmljinja
+
+" For html use 2 spaces
+autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd Filetype htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 " Spell check
 autocmd FileType html setlocal spell! spelllang=en_us
@@ -195,8 +186,23 @@ autocmd FileType htmldjango setlocal spell! spelllang=en_us
 
 " Snippets
 autocmd FileType html inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
+autocmd FileType htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
+
 
 """"""""""""""""""""""""""""""""""""""""
-""" CSS COMMANDS
+""" CSS
 """"""""""""""""""""""""""""""""""""""""
+
+" ctrl-x ctrl-o completion
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+
+" For css use 2 spaces
+autocmd Filetype css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+
+""""""""""""""""""""""""""""""""""""""""
+""" JAVASCRIPT
+""""""""""""""""""""""""""""""""""""""""
+
+" For javascript use 2 spaces
+autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
