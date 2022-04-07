@@ -177,16 +177,13 @@ inoremap pdb import pdb; pdb.set_trace()
 au BufNewFile,BufRead *.html set syntax=htmljinja
 
 " For html use 2 spaces
-autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd Filetype htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType html,htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 " Spell check
-autocmd FileType html setlocal spell! spelllang=en_us
-autocmd FileType htmldjango setlocal spell! spelllang=en_us
+autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
 
 " Snippets
-autocmd FileType html inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
-autocmd FileType htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
+autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
 
 
 """"""""""""""""""""""""""""""""""""""""
@@ -197,7 +194,7 @@ autocmd FileType htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 " For css use 2 spaces
-autocmd Filetype css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 
 """"""""""""""""""""""""""""""""""""""""
@@ -205,4 +202,4 @@ autocmd Filetype css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 """"""""""""""""""""""""""""""""""""""""
 
 " For javascript use 2 spaces
-autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
