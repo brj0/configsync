@@ -190,9 +190,6 @@ autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></
 """ CSS
 """"""""""""""""""""""""""""""""""""""""
 
-" ctrl-x ctrl-o completion
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-
 " For css use 2 spaces
 autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
