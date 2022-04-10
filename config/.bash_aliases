@@ -14,6 +14,7 @@ alias p='python3.7'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias open='xdg-open'
+alias op='xdg-open'
 
 # source local and private aliases
 if [ -f ~/.bash_aliases_local ]; then
@@ -42,4 +43,5 @@ shopt -s autocd
 neofetch 2>/dev/null
 
 # Fuzzy finder fzf
+# This must be at the end of bashrc, otherwise ** completion will not work.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
