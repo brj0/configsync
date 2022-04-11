@@ -105,6 +105,9 @@ ab tempcpp -1read ~/.vim/templates/skeleton.cpp
 ab tempbeamer -1read ~/.vim/templates/beamer.tex
 ab templetter -1read ~/.vim/templates/letter.tex
 
+" Yank to tmux buffer
+nnoremap <leader>yy "ayy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('a')))<CR>
+vnoremap <leader>y "ay<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('a')))<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 """ LATEX
