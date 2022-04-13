@@ -76,6 +76,16 @@ vnoremap > >gv
 " Reselect pasted text
 nnoremap gp `[v`]
 
+" Comment / uncomment
+autocmd FileType python vnoremap <leader>c :norm I# <Esc>
+autocmd FileType python vnoremap <leader>C :norm 2x<Esc>
+autocmd FileType c,cpp,javascript vnoremap <leader>c :norm I// <Esc>
+autocmd FileType c,cpp,javascript vnoremap <leader>C :norm 3x<Esc>
+autocmd FileType css vnoremap <leader>c :norm I/* <CR>gv :norm A */<Esc>
+autocmd FileType css vnoremap <leader>C :norm ^3x$xxx<Esc>
+autocmd FileType html,htmldjango vnoremap <leader>c :norm I<!-- <CR>gv :norm A --><Esc>
+autocmd FileType html,htmldjango vnoremap <leader>C :norm ^5x$xxxx<Esc>
+
 " Searching
 set hlsearch " highlight matches
 set ignorecase smartcase " ignores cases for search function
