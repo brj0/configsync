@@ -73,6 +73,9 @@ set listchars=tab:▸·
 vnoremap < <gv
 vnoremap > >gv
 
+" Reselect pasted text
+nnoremap gp `[v`]
+
 " Searching
 set hlsearch " highlight matches
 set ignorecase smartcase " ignores cases for search function
