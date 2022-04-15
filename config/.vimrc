@@ -38,6 +38,9 @@ set mouse=a
 " Show line number
 set number
 
+" Toggle between absolute and relative line numbers
+nnoremap <leader>rn :set rnu!<cr>
+
 " Show all trailing whitespace
 " MUST be inserted before colorscheme command
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -73,12 +76,22 @@ set listchars=tab:▸·
 vnoremap < <gv
 vnoremap > >gv
 
+" Moving Lines
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
 " Reselect pasted text
 nnoremap gp `[v`]
 
 " Comment / uncomment
 autocmd FileType python vnoremap <leader>c :norm I# <Esc>
 autocmd FileType python vnoremap <leader>C :norm 2x<Esc>
+autocmd FileType tex vnoremap <leader>c :norm I% <Esc>
+autocmd FileType tex vnoremap <leader>C :norm 2x<Esc>
 autocmd FileType c,cpp,javascript vnoremap <leader>c :norm I// <Esc>
 autocmd FileType c,cpp,javascript vnoremap <leader>C :norm 3x<Esc>
 autocmd FileType css vnoremap <leader>c :norm I/* <CR>gv :norm A */<Esc>
@@ -95,6 +108,9 @@ set incsearch " see search results as you type
 " Search down into subfolders
 " Provides tab-completion for all file related tasks
 set path+=**
+
+" Search project for current word
+nnoremap <leader>* :grep -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
 
 " Display all matching commands/files when we tab complete
 set wildmenu
@@ -121,6 +137,17 @@ ab templetter -1read ~/.vim/templates/letter.tex
 " Yank to tmux buffer
 nnoremap <leader>yy yy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>
 vnoremap <leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>
+
+" Enable :Man command to access man pages
+runtime ftplugin/man.vim
+
+" Open url under curser
+nmap gx :!sensible-browser <C-r><C-a><CR><CR>
+
+
+" Swap word with next word. 
+nmap <leader>s :s/\([[:alnum:]#_="'.-]*\%#[[:alnum:]#_="'.-]\+\)\([, ]\+\)\([[:alnum:]#_="'.-]\+\)/\3\2\1/<CR><C-o><C-l>
+
 
 """"""""""""""""""""""""""""""""""""""""
 """ LATEX
