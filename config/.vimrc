@@ -10,6 +10,7 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 " Initialize plugin system
 call plug#end()
 
+
 """"""""""""""""""""""""""""""""""""""""
 """ GENERAL
 """"""""""""""""""""""""""""""""""""""""
@@ -20,7 +21,6 @@ let mapleader = ","
 
 " Local leader for plugins
 let maplocalleader = "<"
-
 
 " Fast saving
 nmap <leader>w :w<cr>
