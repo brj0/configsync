@@ -1,10 +1,26 @@
 """"""""""""""""""""""""""""""""""""""""
+""" PLUGINS
+""""""""""""""""""""""""""""""""""""""""
+
+call plug#begin('~/.vim/plugged')
+
+" R support within vim
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
+
+" Initialize plugin system
+call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""
 """ GENERAL
 """"""""""""""""""""""""""""""""""""""""
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
+
+" Local leader for plugins
+let maplocalleader = "<"
+
 
 " Fast saving
 nmap <leader>w :w<cr>
@@ -88,6 +104,8 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 nnoremap gp `[v`]
 
 " Comment / uncomment
+autocmd FileType vim vnoremap <leader>c :norm I" <Esc>
+autocmd FileType vim vnoremap <leader>C :norm 2x<Esc>
 autocmd FileType python vnoremap <leader>c :norm I# <Esc>
 autocmd FileType python vnoremap <leader>C :norm 2x<Esc>
 autocmd FileType tex vnoremap <leader>c :norm I% <Esc>
