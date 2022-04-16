@@ -33,7 +33,7 @@ do
 done;
 
 # Create symbolic link for this script in ~/bin.
-this_script_ln=$HOME/bin/$(basename $this_script)
+this_script_ln=$HOME/bin/configsync
 if [ -L $this_script_ln ]
   then
     rm $this_script_ln
