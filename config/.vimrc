@@ -103,20 +103,6 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 " Reselect pasted text
 nnoremap gp `[v`]
 
-" Comment / uncomment
-autocmd FileType vim vnoremap <leader>c :norm I" <Esc>
-autocmd FileType vim vnoremap <leader>C :norm 2x<Esc>
-autocmd FileType python vnoremap <leader>c :norm I# <Esc>
-autocmd FileType python vnoremap <leader>C :norm 2x<Esc>
-autocmd FileType tex vnoremap <leader>c :norm I% <Esc>
-autocmd FileType tex vnoremap <leader>C :norm 2x<Esc>
-autocmd FileType c,cpp,javascript vnoremap <leader>c :norm I// <Esc>
-autocmd FileType c,cpp,javascript vnoremap <leader>C :norm 3x<Esc>
-autocmd FileType css vnoremap <leader>c :norm I/* <CR>gv :norm A */<Esc>
-autocmd FileType css vnoremap <leader>C :norm ^3x$xxx<Esc>
-autocmd FileType html,htmldjango vnoremap <leader>c :norm I<!-- <CR>gv :norm A --><Esc>
-autocmd FileType html,htmldjango vnoremap <leader>C :norm ^5x$xxxx<Esc>
-
 " Searching
 set hlsearch " highlight matches
 set ignorecase smartcase " ignores cases for search function
@@ -165,6 +151,70 @@ nmap gx :!sensible-browser <C-r><C-a><CR><CR>
 
 " Swap word with next word. 
 nmap <leader>s :s/\([[:alnum:]#_="'.-]*\%#[[:alnum:]#_="'.-]\+\)\([, ]\+\)\([[:alnum:]#_="'.-]\+\)/\3\2\1/<CR><C-o><C-l>
+
+
+
+""""""""""""""""""""""""""""""""""""""""
+""" COMMENT / UNCOMMENT 
+""""""""""""""""""""""""""""""""""""""""
+
+let s:comment_map_start = { 
+    \   "c": '\/\/',
+    \   "cpp": '\/\/',
+    \   "css": '/*',
+    \   "html": '<!--',
+    \   "htmldjango": '<!--',
+    \   "javascript": '\/\/',
+    \   "python": '#',
+    \   "sh": '#',
+    \   "vim": '"',
+    \   "tex": '%',
+    \ }
+
+let s:comment_map_end = { 
+    \   "css": '*/',
+    \   "html": '-->',
+    \   "htmldjango": '-->',
+    \ }
+
+function! Comment()
+if has_key(s:comment_map_start, &filetype)
+    let comment_start = s:comment_map_start[&filetype]
+    " Comment the line
+    execute "silent s/^\\(\\s*\\)/\\1" . comment_start . " /"
+else
+    echo "No comment leader found for filetype"
+end
+if has_key(s:comment_map_end, &filetype)
+    let comment_end = s:comment_map_end[&filetype]
+    " Comment the line
+    execute "silent s/$/ " . comment_end . "/"
+endif
+endfunction
+
+function! UnComment()
+if has_key(s:comment_map_start, &filetype)
+    let comment_start = s:comment_map_start[&filetype]
+    if getline('.') =~ "^\\s*" . comment_start 
+        " Uncomment the line
+        execute "silent s/^\\(\\s*\\)" . comment_start . " \\=/\\1/"
+    endif
+else
+    echo "No comment leader found for filetype"
+end
+if has_key(s:comment_map_end, &filetype)
+    let comment_end = s:comment_map_end[&filetype]
+    if getline('.') =~ comment_end . "$" 
+        " Uncomment the line
+        execute "silent s/ \\=" . comment_end . "$//"
+    endif
+endif
+endfunction
+
+vnoremap <leader>c :call Comment()<CR>
+nnoremap <leader>c :call Comment()<CR>
+vnoremap <leader>C :call UnComment()<CR>
+nnoremap <leader>C :call UnComment()<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""
