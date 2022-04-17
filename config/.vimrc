@@ -161,7 +161,7 @@ nmap <leader>s :s/\([[:alnum:]#_="'.-]*\%#[[:alnum:]#_="'.-]\+\)\([, ]\+\)\([[:a
 let s:comment_map_start = { 
     \   "c": '\/\/',
     \   "cpp": '\/\/',
-    \   "css": '/*',
+    \   "css": '\/\*',
     \   "html": '<!--',
     \   "htmldjango": '<!--',
     \   "javascript": '\/\/',
@@ -172,7 +172,7 @@ let s:comment_map_start = {
     \ }
 
 let s:comment_map_end = { 
-    \   "css": '*/',
+    \   "css": '\*\/',
     \   "html": '-->',
     \   "htmldjango": '-->',
     \ }
