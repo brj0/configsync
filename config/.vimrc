@@ -54,6 +54,9 @@ set mouse=a
 " Show line number
 set number
 
+" Set ruler
+set ruler
+
 " Toggle between absolute and relative line numbers
 nnoremap <leader>rn :set rnu!<cr>
 
