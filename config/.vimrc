@@ -1,6 +1,6 @@
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ PLUGINS
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
 
@@ -11,9 +11,9 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 call plug#end()
 
 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ GENERAL
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -40,6 +40,7 @@ nnoremap tk :tabnext<CR>
 nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
+nnoremap tm :tabm<Space>
 
 " Backspace working as usual
 nnoremap <bs> X
@@ -56,6 +57,12 @@ set number
 
 " Set ruler
 set ruler
+
+" Show incomplete commands
+set showcmd
+
+" Map Q to formatting instead of Ex mode
+map Q gq
 
 " Toggle between absolute and relative line numbers
 nnoremap <leader>rn :set rnu!<cr>
@@ -83,7 +90,6 @@ ab hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
 set tabstop=4 " number of visual spaces per TAB
 set softtabstop=4 " number deleted by pressing backspace
 set shiftwidth=4 " should be the same as softtabstop
-set textwidth=120 " Maximal text width
 set autoindent " continue with upper indentation
 set expandtab " tabs are spaces
 
@@ -156,10 +162,9 @@ nmap gx :!sensible-browser <C-r><C-a><CR><CR>
 nmap <leader>s :s/\([[:alnum:]#_="'.-]*\%#[[:alnum:]#_="'.-]\+\)\([, ]\+\)\([[:alnum:]#_="'.-]\+\)/\3\2\1/<CR><C-o><C-l>
 
 
-
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ COMMENT / UNCOMMENT 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let s:comment_map_start = { 
     \   "c": '\/\/',
@@ -180,7 +185,7 @@ let s:comment_map_end = {
     \   "htmldjango": '-->',
     \ }
 
-function! Comment()
+function s:Comment()
 if has_key(s:comment_map_start, &filetype)
     let comment_start = s:comment_map_start[&filetype]
     " Comment the line
@@ -195,7 +200,7 @@ if has_key(s:comment_map_end, &filetype)
 endif
 endfunction
 
-function! UnComment()
+function s:UnComment()
 if has_key(s:comment_map_start, &filetype)
     let comment_start = s:comment_map_start[&filetype]
     if getline('.') =~ "^\\s*" . comment_start 
@@ -214,18 +219,21 @@ if has_key(s:comment_map_end, &filetype)
 endif
 endfunction
 
-vnoremap <leader>c :call Comment()<CR>
-nnoremap <leader>c :call Comment()<CR>
-vnoremap <leader>C :call UnComment()<CR>
-nnoremap <leader>C :call UnComment()<CR>
+vnoremap <leader>c :call <SID>Comment()<CR>
+nnoremap <leader>c :call <SID>Comment()<CR>
+vnoremap <leader>C :call <SID>UnComment()<CR>
+nnoremap <leader>C :call <SID>UnComment()<CR>
 
 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ LATEX
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Spell check
 autocmd FileType tex setlocal spell! spelllang=en_us,de
+
+" Set maximal textwidth
+autocmd FileType tex set textwidth=79
 
 " Compiling / Bibliography
 " Add file my_bibliography.bib in same folder as my_file.tex
@@ -275,17 +283,17 @@ autocmd FileType tex inoremap ,- <Esc>"zdiWi\<C-R>z{}<++><Esc>T{i
 autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-R>z}<Enter><++><Esc>2ki
 
 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ PYTHON
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Python debugging
 inoremap pdb import pdb; pdb.set_trace()
 
 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ HTML
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Set syntax to jinja for all html files
 au BufNewFile,BufRead *.html set syntax=htmljinja
@@ -300,17 +308,17 @@ autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
 autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
 
 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ CSS
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " For css use 2 spaces
 autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ JAVASCRIPT
-""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " For javascript use 2 spaces
 autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
