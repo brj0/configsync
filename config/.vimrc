@@ -229,6 +229,9 @@ nnoremap <leader>C :call <SID>UnComment()<CR>
 """ LATEX
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" For LaTeX use 2 spaces
+autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
 " Spell check
 autocmd FileType tex setlocal spell! spelllang=en_us,de
 
