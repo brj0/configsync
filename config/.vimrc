@@ -2,16 +2,7 @@
 """ PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" call plug#begin('~/.vim/plugged')
-" 
-" " R support within vim
-" Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
-" 
-" " Initialize plugin system
-" call plug#end()
-" 
-" " vim-plug automatically executes filetype plugin indent on and syntax enable
-" filetype indent off
+autocmd FileType tex packadd Nvim-R
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -148,7 +139,6 @@ map <f7> :setlocal spell! spelllang=de<CR>
 autocmd FileType tex setlocal spell! spelllang=en_us,de
 autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
 
-
 " Template files
 ab temphtml -1read ~/.vim/templates/skeleton.html
 ab tempc -1read ~/.vim/templates/skeleton.c
@@ -237,7 +227,6 @@ nnoremap <leader>C :call <SID>UnComment()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ LATEX
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 " Set maximal textwidth
 autocmd FileType tex set textwidth=79
