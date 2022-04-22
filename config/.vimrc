@@ -93,6 +93,9 @@ set shiftwidth=4 " should be the same as softtabstop
 set autoindent " continue with upper indentation
 set expandtab " tabs are spaces
 
+" Use 2 spaces for certain filetypes
+autocmd FileType css,html,htmldjango,javascript,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
 " Highlight tabs
 set list
 set listchars=tab:▸·
@@ -139,6 +142,9 @@ map ,, <Esc>/<++><Enter>"_c4l
 " Spell check
 map <f6> :setlocal spell! spelllang=en_us<CR>
 map <f7> :setlocal spell! spelllang=de<CR>
+autocmd FileType tex setlocal spell! spelllang=en_us,de
+autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
+
 
 " Template files
 ab temphtml -1read ~/.vim/templates/skeleton.html
@@ -229,11 +235,6 @@ nnoremap <leader>C :call <SID>UnComment()<CR>
 """ LATEX
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" For LaTeX use 2 spaces
-autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-" Spell check
-autocmd FileType tex setlocal spell! spelllang=en_us,de
 
 " Set maximal textwidth
 autocmd FileType tex set textwidth=79
@@ -301,27 +302,5 @@ inoremap pdb import pdb; pdb.set_trace()
 " Set syntax to jinja for all html files
 au BufNewFile,BufRead *.html set syntax=htmljinja
 
-" For html use 2 spaces
-autocmd FileType html,htmldjango setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-" Spell check
-autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
-
 " Snippets
 autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" CSS
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" For css use 2 spaces
-autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" JAVASCRIPT
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" For javascript use 2 spaces
-autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
