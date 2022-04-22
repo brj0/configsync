@@ -10,6 +10,9 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 " Initialize plugin system
 call plug#end()
 
+" vim-plug automatically executes filetype plugin indent on and syntax enable
+filetype indent off
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ GENERAL
