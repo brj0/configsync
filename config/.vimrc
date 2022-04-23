@@ -2,16 +2,19 @@
 """ PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" call plug#begin('~/.vim/plugged')
-" 
-" " R support within vim
-" Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
-" 
-" " Initialize plugin system
-" call plug#end()
-" 
-" " vim-plug automatically executes filetype plugin indent on and syntax enable
-" filetype indent off
+call plug#begin('~/.vim/plugged')
+
+" R support within vim
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
+
+" Initialize plugin system
+call plug#end()
+
+" vim-plug automatically executes filetype plugin indent on and syntax enable
+filetype indent off
+
+" Manually add file-type-plugins in ~/.vim/pack/*/opt/
+" ab AddPlug runtime! ALL ftplugin/*.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -293,7 +296,7 @@ autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Python debugging
-inoremap pdb import pdb; pdb.set_trace()
+autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
