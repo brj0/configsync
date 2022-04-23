@@ -14,7 +14,7 @@
 " filetype indent off
 
 " Manually add file-type-plugins in ~/.vim/pack/*/opt/
-" ab AddPlug runtime! ALL ftplugin/*.vim
+ab AddPlug runtime! ALL ftplugin/*.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
