@@ -198,6 +198,10 @@ let s:comment_map_end = {
     \ }
 
 function s:Comment()
+if getline('.') =~ "^\\s*$" 
+    " Ignore empty line
+    return 1
+endif
 if has_key(s:comment_map_start, &filetype)
     let comment_start = s:comment_map_start[&filetype]
     " Comment the line
