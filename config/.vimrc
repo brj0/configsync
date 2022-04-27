@@ -197,7 +197,7 @@ let s:comment_map_end = {
     \   "htmldjango": '-->',
     \ }
 
-function s:Comment()
+function! s:Comment()
 if getline('.') =~ "^\\s*$" 
     " Ignore empty line
     return 1
@@ -216,7 +216,7 @@ if has_key(s:comment_map_end, &filetype)
 endif
 endfunction
 
-function s:UnComment()
+function! s:UnComment()
 if has_key(s:comment_map_start, &filetype)
     let comment_start = s:comment_map_start[&filetype]
     if getline('.') =~ "^\\s*" . comment_start 
