@@ -48,6 +48,10 @@ nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 nnoremap tm :tabm<Space>
 
+" change the direction of new splits
+set splitbelow
+set splitright
+
 " Backspace working as usual
 nnoremap <bs> X
 set backspace=indent,eol,start " backspace working as usual in insert mode
