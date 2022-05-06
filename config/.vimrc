@@ -37,6 +37,10 @@ nmap <leader>q :q<cr>
 " Make jk do esc
 inoremap jk <Esc>
 
+" Map to something useful
+nmap ö :
+vmap ö :
+
 " Shows data name on terminal bar
 set title
 
@@ -138,6 +142,13 @@ set path+=**
 " Search project for current word
 nnoremap <leader>* :grep -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
 
+" Search current selection
+vnoremap * "zy/<C-R>z<Enter>
+vnoremap # "zy?<C-R>z<Enter>
+
+" Search and replace word under curser
+nnoremap <leader>R *Ncw
+
 " Display all matching commands/files when we tab complete
 set wildmenu
 
@@ -163,8 +174,8 @@ ab tempbeamer -1read ~/.vim/templates/beamer.tex
 ab templetter -1read ~/.vim/templates/letter.tex
 
 " Yank to tmux buffer
-nnoremap <leader>yy yy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>
-vnoremap <leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>
+nnoremap <leader>yy yy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
+vnoremap <leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
 
 " Enable :Man command to access man pages
 runtime ftplugin/man.vim
