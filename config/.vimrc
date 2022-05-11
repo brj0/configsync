@@ -85,13 +85,13 @@ nnoremap <leader>rn :set rnu!<cr>
 " MUST be inserted before colorscheme command
 highlight ExtraWhitespace ctermbg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
-autocmd BufWinEnter * syntax match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * syntax match ExtraWhitespace /\s\+$/ containedin=ALL
 
 " Show snipped sequence <++>
 " MUST be inserted before colorscheme command
 highlight SnippedSign ctermbg=green ctermfg=black
 autocmd ColorScheme * highlight SnippedSign ctermbg=green ctermfg=black
-autocmd BufWinEnter * syntax match SnippedSign /<++>/
+autocmd BufWinEnter * syntax match SnippedSign /<++>/ containedin=ALL
 
 " Syntax color
 colorscheme default " colors
@@ -106,6 +106,9 @@ set softtabstop=4 " number deleted by pressing backspace
 set shiftwidth=4 " should be the same as softtabstop
 set autoindent " continue with upper indentation
 set expandtab " tabs are spaces
+
+" Rounds the indent spacing to the next multiple of shiftwidth
+set shiftround
 
 " Use 2 spaces for certain filetypes
 autocmd FileType css,html,htmldjango,javascript,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
