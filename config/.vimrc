@@ -83,8 +83,8 @@ nnoremap <leader>rn :set rnu!<cr>
 
 " Show all trailing whitespace
 " MUST be inserted before colorscheme command
-highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=red ctermfg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red ctermfg=red
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 
 " Show snipped sequence <++>
