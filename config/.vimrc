@@ -3,13 +3,13 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " call plug#begin('~/.vim/plugged')
-" 
+"
 " " R support within vim
 " Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
-" 
+"
 " " Initialize plugin system
 " call plug#end()
-" 
+"
 " " vim-plug automatically executes filetype plugin indent on and syntax enable
 " filetype indent off
 
@@ -187,16 +187,15 @@ runtime ftplugin/man.vim
 nmap gx :!sensible-browser <C-r><C-a><CR><CR>
 
 
-" Swap word with next word. 
+" Swap word with next word.
 nmap <leader>s :s/\([[:alnum:]#_="'.&*+-]*\%#[[:alnum:]#_="'.&*+-]\+\)\([, ]\+\)\([[:alnum:]#_="'.&*+-]\+\)/\3\2\1/<CR><C-o><C-l>
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" COMMENT / UNCOMMENT 
+""" COMMENT / UNCOMMENT
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:comment_map_start = { 
+let s:comment_map_start = {
     \   "c": '\/\/',
     \   "cpp": '\/\/',
     \   "css": '\/\*',
@@ -209,14 +208,14 @@ let s:comment_map_start = {
     \   "tex": '%',
     \ }
 
-let s:comment_map_end = { 
+let s:comment_map_end = {
     \   "css": '\*\/',
     \   "html": '-->',
     \   "htmldjango": '-->',
     \ }
 
 function! s:Comment()
-if getline('.') =~ "^\\s*$" 
+if getline('.') =~ "^\\s*$"
     " Ignore empty line
     return 1
 endif
@@ -237,7 +236,7 @@ endfunction
 function! s:UnComment()
 if has_key(s:comment_map_start, &filetype)
     let comment_start = s:comment_map_start[&filetype]
-    if getline('.') =~ "^\\s*" . comment_start 
+    if getline('.') =~ "^\\s*" . comment_start
         " Uncomment the line
         execute "silent s/^\\(\\s*\\)" . comment_start . " \\=/\\1/"
     endif
@@ -246,7 +245,7 @@ else
 end
 if has_key(s:comment_map_end, &filetype)
     let comment_end = s:comment_map_end[&filetype]
-    if getline('.') =~ comment_end . "$" 
+    if getline('.') =~ comment_end . "$"
         " Uncomment the line
         execute "silent s/ \\=" . comment_end . "$//"
     endif
