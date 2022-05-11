@@ -85,13 +85,13 @@ nnoremap <leader>rn :set rnu!<cr>
 " MUST be inserted before colorscheme command
 highlight ExtraWhitespace ctermbg=red ctermfg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red ctermfg=red
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * syntax match ExtraWhitespace /\s\+$/
 
 " Show snipped sequence <++>
 " MUST be inserted before colorscheme command
 highlight SnippedSign ctermbg=green ctermfg=black
 autocmd ColorScheme * highlight SnippedSign ctermbg=green ctermfg=black
-autocmd BufWinEnter * match SnippedSign /<++>/
+autocmd BufWinEnter * syntax match SnippedSign /<++>/
 
 " Syntax color
 colorscheme default " colors
