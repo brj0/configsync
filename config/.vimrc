@@ -263,7 +263,7 @@ nnoremap <leader>C :call <SID>UnComment()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Set maximal textwidth
-autocmd FileType tex set textwidth=79
+autocmd FileType tex set textwidth=90
 
 " Compiling / Bibliography
 " Add file my_bibliography.bib in same folder as my_file.tex
