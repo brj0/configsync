@@ -38,8 +38,11 @@ nmap <leader>q :q<cr>
 inoremap jk <Esc>
 
 " Map to something useful
-nmap ö :
-vmap ö :
+nnoremap ö ;
+nnoremap é ,
+
+" Minimum line numbers above/under curser
+set scrolloff=5
 
 " Shows data name on terminal bar
 set title
@@ -54,6 +57,9 @@ nnoremap tm :tabm<Space>
 
 " Always show tabline
 set showtabline=2
+
+" Open filesystem in vertical split
+noremap <leader>t :vsplit<CR>:e .<CR>:vertical resize 30<CR>
 
 " change the direction of new splits
 set splitbelow
@@ -82,6 +88,7 @@ set showcmd
 map Q gq
 
 " Toggle between absolute and relative line numbers
+set rnu
 nnoremap <leader>rn :set rnu!<cr>
 
 " Show all trailing whitespace
@@ -134,6 +141,9 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Reselect pasted text
 nnoremap gp `[v`]
+
+" Reclace selected text with "-register without changing it
+vnoremap <leader>p "_dP
 
 " Searching
 set hlsearch " highlight matches
