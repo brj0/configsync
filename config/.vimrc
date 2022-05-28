@@ -52,6 +52,9 @@ nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 nnoremap tm :tabm<Space>
 
+" Always show tabline
+set showtabline=2
+
 " change the direction of new splits
 set splitbelow
 set splitright
