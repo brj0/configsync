@@ -142,8 +142,10 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 " Reselect pasted text
 nnoremap gp `[v`]
 
-" Reclace selected text with "-register without changing it
-vnoremap <leader>p "_dP
+" Paste last thing yanked, not deleted
+vnoremap <leader>p "0p
+noremap <leader>p "0p
+noremap <leader>P "0P
 
 " Searching
 set hlsearch " highlight matches
