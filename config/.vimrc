@@ -40,6 +40,7 @@ inoremap jk <Esc>
 " Map to something useful
 nnoremap ö ;
 nnoremap é ,
+nnoremap ä :
 
 " Minimum line numbers above/under curser
 set scrolloff=5
@@ -78,6 +79,10 @@ set mouse=a
 " Show line number
 set number
 
+" Toggle between absolute and relative line numbers
+set rnu
+nnoremap <leader>rn :set rnu!<cr>
+
 " Set ruler
 set ruler
 
@@ -86,10 +91,6 @@ set showcmd
 
 " Map Q to formatting instead of Ex mode
 map Q gq
-
-" Toggle between absolute and relative line numbers
-set rnu
-nnoremap <leader>rn :set rnu!<cr>
 
 " Show all trailing whitespace
 " MUST be inserted before colorscheme command
