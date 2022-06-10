@@ -196,6 +196,9 @@ ab templetter -1read ~/.vim/templates/letter.tex
 nnoremap <leader>yy yy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
 vnoremap <leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
 
+" Make Y work like C, D
+nnoremap Y y$
+
 " Enable :Man command to access man pages
 runtime ftplugin/man.vim
 
