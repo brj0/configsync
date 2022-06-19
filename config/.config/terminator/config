@@ -1,0 +1,24 @@
+[global_config]
+[keybindings]
+  layout_launcher = None
+  split_horiz = <Primary><Shift>o
+  split_vert = <Primary><Shift>e
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_color = "#ffffff"
+    cursor_color = "#aaaaaa"
+    font = Hack 12
+    foreground_color = "#000000"
+    palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+    show_titlebar = False
+    use_system_font = False
