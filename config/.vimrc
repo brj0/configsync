@@ -86,6 +86,9 @@ nnoremap <leader>rn :set rnu!<cr>
 " Set ruler
 set ruler
 
+" No swapfile
+set noswapfile
+
 " Show incomplete commands
 set showcmd
 
