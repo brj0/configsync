@@ -161,8 +161,8 @@ set incsearch " see search results as you type
 " Provides tab-completion for all file related tasks
 set path+=**
 
-" Search project for current word
-nnoremap <leader>* :grep -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
+" Search project for current word and highlight it
+nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
 
 " Search current selection
 vnoremap * "zy/<C-R>z<Enter>
@@ -170,6 +170,23 @@ vnoremap # "zy?<C-R>z<Enter>
 
 " Search and replace word under curser
 nnoremap <leader>R *Ncw
+
+" Moving fast in quickfix
+let s:quickfix_on = 0
+
+function! s:ToggleQuickfix()
+    if s:quickfix_on
+        execute ":ccl"
+        let s:quickfix_on = 0
+    else
+        execute ":cw"
+        let s:quickfix_on = 1
+    endif
+endfunction
+
+nnoremap <leader>f :call <SID>ToggleQuickfix()<CR>
+nnoremap <leader>n :cn<Enter>
+nnoremap <leader>N :cp<Enter>
 
 " Display all matching commands/files when we tab complete
 set wildmenu
