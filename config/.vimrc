@@ -162,7 +162,7 @@ set incsearch " see search results as you type
 set path+=**
 
 " Search project for current word and highlight it
-nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
+nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
 
 " Search current selection
 vnoremap * "zy/<C-R>z<Enter>
