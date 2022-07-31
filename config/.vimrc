@@ -31,6 +31,9 @@ let maplocalleader = "<"
 " Fast saving
 nmap <leader>w :w<cr>
 
+" Save changes in files needing sudo permission
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
 " Fast closing
 nmap <leader>q :q<cr>
 
@@ -55,6 +58,11 @@ nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 nnoremap tm :tabm<Space>
+
+"Switch between header files
+nnoremap <Leader>oc :e %<.c<CR>
+nnoremap <Leader>oC :e %<.cpp<CR>
+nnoremap <Leader>oh :e %<.h<CR>
 
 " Always show tabline
 set showtabline=2
