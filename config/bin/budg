@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pdftotext -layout $1 - | grep "^ [0-9][0-9]." | sed 's/^ //' | awk '{print $1, $3, $4}' FS='  +' OFS=', '
+
