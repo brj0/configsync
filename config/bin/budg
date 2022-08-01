@@ -2,44 +2,55 @@
 
 if [[ "$1" != "--prelim" ]]; then
     ftype="$(file -b $1)"
-    echo $ftype
 fi
 
 if [[ "$ftype" == *"PDF"* ]]; then
     pdftotext -layout $1 - \
     | grep "^ [0-9][0-9]." \
     | sed 's/^ //' \
-    | awk '{print $1, $3, $4}' FS='  +' OFS=', '
-
-    libreoffice --headless --convert-to csv --infilter=CSV:44,34,76,1 $1
+    | awk '{print $1, $3, $4}' FS='  +' OFS=','
 fi
 
 if [[ "$ftype" == *"Excel"* ]]; then
+    libreoffice --headless --convert-to csv --infilter=CSV:44,34,76,1 $1
+
+    # Wait for conversion to finish
+    sleep 0.5
+
     fname=$1
     fname_csv=${fname%.xls}.csv
     # First remove newline within quotes
     # then replace ',' within quotes by ';'
     # then extract information
+    # then grep lines beginning with number
     # then remove '"'
     cat $fname_csv \
     | gawk -v RS='"' 'NR % 2 == 0 { gsub(/\n/, "") } { printf("%s%s", $0, RT) }' \
     | awk '{for (i=2; i<=NF; i+=2) gsub(",", ";", $i)} 1' FS='"' OFS='' \
-    | awk '{print $2, $6, $11}' FS=',' OFS=', ' \
+    | awk '{print $2, $6, $11}' FS=',' OFS=',' \
+    | grep "^[0-9]" \
     | sed 's/"//g'
+
+    rm $fname_csv
 fi
 
 if [[ "$1" == "--prelim" ]]; then
+    libreoffice --headless --convert-to csv --infilter=CSV:44,34,76,1 $2
+
+    # Wait for conversion to finish
+    sleep 0.5
+
     fname=$2
     fname_csv=${fname%.xls}.csv
     # First replace ',' in quotes by '.',
     # then grep transactions
     # then extract information
-    # then (last 3 lines) change date format
+    # then remove time from date format
     cat $fname_csv \
     | awk '{for (i=2; i<=NF; i+=2) gsub(",", ".", $i)} 1' FS='"' OFS='' \
     | grep "^[0-9]" \
-    | awk '{print $3, $4, $6}' FS=',' OFS=', ' \
-    | awk '{t = $1; $1 = $2; $2 = t; print}' FS='/' OFS='/' \
-    | sed 's/\//./' \
-    | sed 's/\//./'
+    | awk '{print $3, $4, $6}' FS=',' OFS=',' \
+    | awk '{print $1 $2}' FS=' 00:00' OFS='' \
+
+    rm $fname_csv
 fi
