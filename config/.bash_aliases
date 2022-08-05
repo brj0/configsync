@@ -7,7 +7,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-alias l.='la | grep "^\."'
+alias l.=' ls -d .* --color=auto'
 alias cp='cp -i'
 alias mv='mv -i'
 alias p='python3'
