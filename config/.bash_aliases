@@ -16,6 +16,9 @@ alias open='xdg-open'
 alias p='python3'
 alias vdir='vdir --color=auto'
 
+# Enables tab-completion
+complete -o default -o bashdefault op
+
 # White backgound theme for bat
 alias bat='bat --theme=OneHalfLight'
 
