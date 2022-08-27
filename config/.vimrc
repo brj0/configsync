@@ -354,7 +354,7 @@ autocmd FileType tex inoremap ,it \begin{itemize}<Enter><Enter>\end{itemize}<Ent
 autocmd FileType tex inoremap ,ce \begin{center}<Enter><Enter>\end{center}<Enter><++><Esc>2ki
 autocmd FileType tex inoremap ,ta \begin{tabular}{}<Enter><++><Enter>\end{tabular}<Enter><++><Esc>3k$i
 
-autocmd FileType tex inoremap \\ \\<Enter>
+" autocmd FileType tex inoremap \\ \\<Enter>
 autocmd FileType tex inoremap ,ii <Enter>\item<Space>
 autocmd FileType tex inoremap ,- <Esc>"zdiWi\<C-R>z{}<++><Esc>T{i
 autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-R>z}<Enter><++><Esc>2ki
