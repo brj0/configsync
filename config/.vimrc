@@ -133,7 +133,7 @@ set expandtab " tabs are spaces
 set shiftround
 
 " Use 2 spaces for certain filetypes
-autocmd FileType css,html,htmldjango,javascript,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType css,html,htmldjango,javascript,sh,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 " Highlight tabs
 set list
@@ -216,6 +216,7 @@ autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
 " Template files
 ab temphtml -1read ~/.vim/templates/skeleton.html
 ab tempc -1read ~/.vim/templates/skeleton.c
+ab tempsh -1read ~/.vim/templates/skeleton.sh
 ab tempcpp -1read ~/.vim/templates/skeleton.cpp
 ab tempbeamer -1read ~/.vim/templates/beamer.tex
 ab templetter -1read ~/.vim/templates/letter.tex
