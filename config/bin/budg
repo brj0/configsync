@@ -6,7 +6,7 @@ fi
 
 if [[ "$ftype" == *"PDF"* ]]; then
     pdftotext -layout $1 - \
-    | grep "^ [0-9][0-9]." \
+    | grep "^[[:space:]]*[0-9][0-9]\." \
     | sed 's/^ //' \
     | sed 's/,//' \
     | awk '{print $1, $3, $4}' FS='  +' OFS=','
