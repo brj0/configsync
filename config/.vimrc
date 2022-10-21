@@ -123,11 +123,11 @@ syntax on " Switch Syntax highlighting on
 ab hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
 
 " Format style
-set tabstop=4 " number of visual spaces per TAB
-set softtabstop=4 " number deleted by pressing backspace
-set shiftwidth=4 " should be the same as softtabstop
-set autoindent " continue with upper indentation
-set expandtab " tabs are spaces
+set tabstop=4 " Number of visual spaces per TAB
+set softtabstop=4 " Number deleted by pressing backspace
+set shiftwidth=4 " Should be the same as softtabstop
+set autoindent " Continue with upper indentation
+set expandtab " Tabs are spaces
 
 " Rounds the indent spacing to the next multiple of shiftwidth
 set shiftround
@@ -160,10 +160,10 @@ noremap <leader>p "0p
 noremap <leader>P "0P
 
 " Searching
-set hlsearch " highlight matches
-set ignorecase smartcase " ignores cases for search function
-set shortmess-=S " show count of search hits
-set incsearch " see search results as you type
+set hlsearch " Highlight matches
+set ignorecase smartcase " Ignores cases for search function
+set shortmess-=S " Show count of search hits
+set incsearch " See search results as you type
 
 " Search down into subfolders
 " Provides tab-completion for all file related tasks
@@ -176,7 +176,7 @@ nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp
 vnoremap * "zy/<C-R>z<Enter>
 vnoremap # "zy?<C-R>z<Enter>
 
-" Search and replace word under curser
+" Search and replace word under cursor
 nnoremap <leader>R *Ncw
 
 " Moving fast in quickfix
@@ -199,7 +199,7 @@ nnoremap <leader>N :cp<Enter>
 " Display all matching commands/files when we tab complete
 set wildmenu
 
-" ctrl-x ctrl-o completion
+" Ctrl-x Ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
 
 " Navigate within snippets
@@ -233,7 +233,6 @@ runtime ftplugin/man.vim
 
 " Open url under curser
 nmap gx :!sensible-browser <C-r><C-a><CR><CR>
-
 
 " Swap word with next word.
 nmap <leader>s :s/\([[:alnum:]#_="'.&*+-]*\%#[[:alnum:]#_="'.&*+-]\+\)\([, ]\+\)\([[:alnum:]#_="'.&*+-]\+\)/\3\2\1/<CR><C-o><C-l>
@@ -310,7 +309,7 @@ nnoremap <leader>C :call <SID>UnComment()<CR>
 """ LATEX
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Set maximal textwidth
+" Set maximal text width
 autocmd FileType tex set textwidth=90
 
 " Compiling / Bibliography
