@@ -92,7 +92,8 @@ set clipboard=unnamedplus
 set mouse=a
 
 " Use relative line numbers
-set relativenumber
+set number
+set rnu
 
 " Toggle between absolute and relative line numbers
 nnoremap <leader>l :set rnu!<cr>
