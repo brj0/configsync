@@ -19,7 +19,7 @@
 " filetype indent off
 
 " Manually add file-type-plugins in ~/.vim/pack/*/opt/
-ab AddPlug runtime! ALL ftplugin/*.vim
+" ab AddPlug runtime! ALL ftplugin/*.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -44,6 +44,12 @@ nmap <leader>q :q<cr>
 
 " Make jk do esc
 inoremap jk <Esc>
+
+" Open this file in new tab
+ab vimrc tabnew $MYVIMRC<CR>
+
+" Source this file
+ab svimrc source $MYVIMRC<CR>
 
 " Modify time waited for key codes and mapped keys to complete. Fixes long
 " waiting time after pressing <Esc>O in insert mode.
