@@ -330,10 +330,13 @@ if has_key(s:comment_map_end, &filetype)
 endif
 endfunction
 
-vnoremap <leader>c :call <SID>Comment()<CR>
+" Comment line/lines of code
 nnoremap <leader>c :call <SID>Comment()<CR>
-vnoremap <leader>C :call <SID>UnComment()<CR>
+vnoremap <leader>c :call <SID>Comment()<CR>
+
+" Uncomment line/lines of code
 nnoremap <leader>C :call <SID>UnComment()<CR>
+vnoremap <leader>C :call <SID>UnComment()<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
