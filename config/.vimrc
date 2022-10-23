@@ -1,4 +1,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" VIM CONFIGURATION FILE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -45,7 +50,7 @@ nnoremap ö ;
 nnoremap é ,
 nnoremap ä :
 
-" Minimum line numbers above/under curser
+" Minimum line numbers above/under cursor
 set scrolloff=5
 
 " Shows data name on terminal bar
@@ -59,24 +64,19 @@ nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 nnoremap tm :tabm<Space>
 
-"Switch between header files
-nnoremap <Leader>oc :e %<.c<CR>
-nnoremap <Leader>oC :e %<.cpp<CR>
-nnoremap <Leader>oh :e %<.h<CR>
-
-" Always show tabline
+" Always show tabline with filename at the top
 set showtabline=2
 
-" Open filesystem in vertical split
+" Open working directory in vertical split
 noremap <leader>t :vsplit<CR>:e .<CR>:vertical resize 30<CR>
 
-" change the direction of new splits
+" Change the direction of new splits
 set splitbelow
 set splitright
 
-" Backspace working as usual
+" Backspace working as usual in normal and insert mode
 nnoremap <bs> X
-set backspace=indent,eol,start " backspace working as usual in insert mode
+set backspace=indent,eol,start
 
 " Enables copying into os clipboard
 set clipboard=unnamedplus
@@ -87,14 +87,16 @@ set mouse=a
 " Show line number
 set number
 
-" Toggle between absolute and relative line numbers
+" Use relative line numbers
 set rnu
-nnoremap <leader>rn :set rnu!<cr>
 
-" Set ruler
+" Toggle between absolute and relative line numbers
+nnoremap <leader>l :set rnu!<cr>
+
+" Show the line and column number of the cursor position at the bottom
 set ruler
 
-" No swapfile
+" Turn off backup sawp-files
 set noswapfile
 
 " Show incomplete commands
@@ -116,21 +118,28 @@ autocmd ColorScheme * highlight SnippedSign ctermbg=green ctermfg=black
 autocmd BufWinEnter * syntax match SnippedSign /<++>/ containedin=ALL
 
 " Syntax color
-colorscheme default " colors
-syntax on " Switch Syntax highlighting on
+colorscheme default
+syntax on
 
 " Show all highlighting colors
 ab hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
 
-" Format style
-set tabstop=4 " Number of visual spaces per TAB
-set softtabstop=4 " Number deleted by pressing backspace
-set shiftwidth=4 " Should be the same as softtabstop
-set autoindent " Continue with upper indentation
-set expandtab " Tabs are spaces
+" Copy indent from current line when starting new line using o, O, <CR>
+set autoindent
+
+" Tabs are spaces
+set expandtab
 
 " Rounds the indent spacing to the next multiple of shiftwidth
 set shiftround
+
+" 1 tab == 4 spaces
+" tabstop: Number of visual spaces per tab
+" softtabstop: Number deleted by pressing backspace
+" shiftwidth: Number of spaces to use for autoindent with <<,  >>
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " Use 2 spaces for certain filetypes
 autocmd FileType css,html,htmldjango,javascript,sh,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
@@ -143,27 +152,41 @@ set listchars=tab:▸·
 vnoremap < <gv
 vnoremap > >gv
 
-" Moving Lines
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-inoremap <C-j> <Esc>:m .+1<CR>==gi
-inoremap <C-k> <Esc>:m .-2<CR>==gi
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+" Moving between windows
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
-" Reselect pasted text
+" Reselect pasted text, similar to gv
 nnoremap gp `[v`]
 
 " Paste last thing yanked, not deleted
 vnoremap <leader>p "0p
+vnoremap <leader>P "0P
 noremap <leader>p "0p
 noremap <leader>P "0P
 
-" Searching
-set hlsearch " Highlight matches
-set ignorecase smartcase " Ignores cases for search function
-set shortmess-=S " Show count of search hits
-set incsearch " See search results as you type
+" Highlight search results
+set hlsearch
+
+" Disable highlight
+nnoremap <leader><CR> :noh<CR>
+
+" Remap for fast searching
+nnoremap <Space> /
+nnoremap <leader><Space> ?
+
+" See search results as you type
+set incsearch
+
+" Ignores cases for search function except if search term contains capital
+" letters
+set ignorecase
+set smartcase
+
+" Show count of search hits (needs at least vim 8.2)
+set shortmess-=S
 
 " Search down into subfolders
 " Provides tab-completion for all file related tasks
@@ -177,7 +200,7 @@ vnoremap * "zy/<C-R>z<Enter>
 vnoremap # "zy?<C-R>z<Enter>
 
 " Search and replace word under cursor
-nnoremap <leader>R *Ncw
+nnoremap <leader>r *Ncw
 
 " Moving fast in quickfix
 let s:quickfix_on = 0
@@ -207,11 +230,13 @@ inoremap ,, <Esc>/<++><Enter>"_c4l
 vnoremap ,, <Esc>/<++><Enter>"_c4l
 map ,, <Esc>/<++><Enter>"_c4l
 
-" Spell check
-map <f6> :setlocal spell! spelllang=en_us<CR>
-map <f7> :setlocal spell! spelllang=de<CR>
-autocmd FileType tex setlocal spell! spelllang=en_us,de
-autocmd FileType html,htmldjango setlocal spell! spelllang=en_us
+" Dictionary spell check
+nnoremap <leader>de :set nospell<CR>:setlocal spell spelllang=en_us<CR>
+nnoremap <leader>dg :set nospell<CR>:setlocal spell spelllang=de<CR>
+nnoremap <leader>dm :set nospell<CR>:setlocal spell spelllang=en_us,de<CR>
+nnoremap <leader>dd :set nospell<CR>
+autocmd FileType tex setlocal spell spelllang=en_us,de
+autocmd FileType html,htmldjango setlocal spell spelllang=en_us
 
 " Template files
 ab temphtml -1read ~/.vim/templates/skeleton.html
@@ -251,8 +276,9 @@ let s:comment_map_start = {
     \   "javascript": '\/\/',
     \   "python": '#',
     \   "sh": '#',
-    \   "vim": '"',
     \   "tex": '%',
+    \   "tmux": '#',
+    \   "vim": '"',
     \ }
 
 let s:comment_map_end = {
@@ -377,3 +403,14 @@ au BufNewFile,BufRead *.html set syntax=htmljinja
 
 " Snippets
 autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" C/C++
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Switch between header and source files
+autocmd FileType c,cpp noremap <Leader>oh :e %<.h<CR>
+autocmd FileType c noremap <Leader>oc :e %<.c<CR>
+autocmd FileType cpp noremap <Leader>oc :e %<.cpp<CR>
+
