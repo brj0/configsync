@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script creates symbolid links for some dotfiles. Existing dotfiles
+# This script creates symbolic links for several dotfiles. Existing dotfiles
 # will not be replaced.
 
 this_script=$(realpath $0)
@@ -40,7 +40,7 @@ if [ -L $this_script_ln ]
 fi
 ln -sv $this_script $this_script_ln
 
-# push to GitHub
+# Push to GitHub
 git -C $this_script_dir add -A
 git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
 git -C $this_script_dir push origin main
