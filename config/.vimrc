@@ -45,6 +45,10 @@ nmap <leader>q :q<cr>
 " Make jk do esc
 inoremap jk <Esc>
 
+" Modify time waited for key codes and mapped keys to complete. Fixes long
+" waiting time after pressing <Esc>O in insert mode.
+set timeout timeoutlen=1000 ttimeoutlen=100
+
 " Map to something useful
 nnoremap ö ;
 nnoremap é ,
@@ -152,7 +156,7 @@ set listchars=tab:▸·
 vnoremap < <gv
 vnoremap > >gv
 
-" Moving between windows
+" Move between windows
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
