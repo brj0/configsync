@@ -48,9 +48,6 @@ inoremap jk <Esc>
 " Open this file in new tab
 ab vimrc tabnew $MYVIMRC<CR>
 
-" Source this file
-ab svimrc source $MYVIMRC<CR>
-
 " Modify time waited for key codes and mapped keys to complete. Fixes long
 " waiting time after pressing <Esc>O in insert mode.
 set timeout timeoutlen=1000 ttimeoutlen=100
