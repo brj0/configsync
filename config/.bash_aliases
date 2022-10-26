@@ -1,7 +1,7 @@
-# Personalized bashrc modifications that will be sourced by ubuntu's
+# Personalized bashrc modifications that will be sourced by Ubuntu's
 # standard ~/.bashrc file
 
-# aliases
+# Aliases
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -19,7 +19,7 @@ alias vdir='vdir --color=auto'
 # Enables tab-completion
 complete -o default -o bashdefault op
 
-# White backgound theme for bat
+# White background theme for bat
 alias bat='bat --theme=OneHalfLight'
 
 # Source local and private aliases
