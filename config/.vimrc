@@ -255,10 +255,11 @@ ab templetter -1read ~/.vim/templates/letter.tex
 nnoremap <silent><leader>yy yy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
 vnoremap <silent><leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
 
-" Inserts the current line with a <CR>, starting at the cursor position, into
-" the first tmux pane. Can be used to process line by line with the python
-" interpreter.
+" Inserts the current line with a <CR>, starting at the cursor position (first
+" command) or simply a <CR> (second command), into the first tmux pane. Can be
+" used to process line by line with the python interpreter.
 nnoremap <leader>e y$j:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:exe "silent !tmux paste-buffer -t 1; tmux send-keys -t 1 Enter"<CR>:redraw!<CR>
+nnoremap <leader>E :exe "silent !tmux send-keys -t 1 Enter"<CR>:redraw!<CR>
 
 " Make Y work like C, D
 nnoremap Y y$
