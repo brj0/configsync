@@ -22,7 +22,7 @@ complete -o default -o bashdefault op
 # White backgound theme for bat
 alias bat='bat --theme=OneHalfLight'
 
-# source local and private aliases
+# Source local and private aliases
 if [ -f ~/.bash_aliases_local ]; then
     . ~/.bash_aliases_local
 fi
@@ -30,7 +30,13 @@ fi
 # vim mode
 set -o vi
 
-# colored GCC warnings and errors
+# Use vim for man pages
+export MANPAGER='/bin/bash -c "vim -MRn \
+  -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" \
+  -c \"normal L\" \
+  -c \"nmap q :qa<CR>\" </dev/tty <(col -b)"'
+
+# Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Colos for man pages
