@@ -1,10 +1,11 @@
 #!/bin/bash
 
+# git add, commit and push in one command
+
 msg="New backup $(date +'%Y-%m-%d %H:%M:%S')"
 
 if [ "$#" -eq 1 ]; then
     msg=$1
-    echo $msg
 fi
 
 if [ "$#" -gt 1 ]; then
