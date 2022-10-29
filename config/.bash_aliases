@@ -8,20 +8,25 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 alias cp='cp -i'
+alias mv='mv -i'
+
 alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
-alias grep='grep --color=auto'
+
 alias l.='ls -d .* --color=auto'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias ls='ls --color=auto'
-alias mv='mv -i'
+
 alias op='xdg-open'
 alias open='xdg-open'
+
 alias p='python3'
-alias vdir='vdir --color=auto'
 
 # For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
