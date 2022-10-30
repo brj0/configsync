@@ -41,6 +41,10 @@ export HISTCONTROL=ignoreboth:erasedups
 # Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
+# Clean up history file by removing all duplicates when opening new console
+tac "$HISTFILE" | awk '!x[$0]++' > /tmp/.bash_history &&
+    tac /tmp/.bash_history > "$HISTFILE"
+
 # Enables tab-completion
 complete -o default -o bashdefault op
 
@@ -57,9 +61,9 @@ set -o vi
 
 # Use vim for man pages
 export MANPAGER='/bin/bash -c "vim -MRn \
-  -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" \
-  -c \"normal L\" \
-  -c \"nmap q :qa<CR>\" </dev/tty <(col -b)"'
+    -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" \
+    -c \"normal L\" \
+    -c \"nmap q :qa<CR>\" </dev/tty <(col -b)"'
 
 # Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

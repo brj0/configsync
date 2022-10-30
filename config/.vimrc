@@ -147,7 +147,7 @@ set softtabstop=4
 set shiftwidth=4
 
 " Use 2 spaces for certain filetypes
-autocmd FileType css,html,htmldjango,javascript,sh,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType css,html,htmldjango,javascript,tex setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 " Highlight tabs
 set list
