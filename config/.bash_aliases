@@ -42,8 +42,8 @@ export HISTCONTROL=ignoreboth:erasedups
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Clean up history file by removing all duplicates when opening new console
-tac "$HISTFILE" | awk '!x[$0]++' > /tmp/.bash_history &&
-    tac /tmp/.bash_history > "$HISTFILE"
+tac "$HISTFILE" | awk '!x[$0]++' > /tmp/.bash_history_reverse &&
+    tac /tmp/.bash_history_reverse > "$HISTFILE"
 
 # Enables tab-completion
 complete -o default -o bashdefault op
