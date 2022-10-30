@@ -266,10 +266,10 @@ function! s:RunInConsole(mode)
     " Copy from start of cursor.
     else
         norm "zy$
-        let code = shellescape(getreg('"z'))
+        let code = shellescape(getreg('z'))
     endif
     " Ignore empty line
-    if code !~ "'\\s*'"
+    if code !~ "^'\\s*'$"
         silent call system('tmux set-buffer ' . code)
         silent call system('tmux paste-buffer -t 1')
     endif
