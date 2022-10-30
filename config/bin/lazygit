@@ -13,11 +13,6 @@ if [ "$#" -gt 1 ]; then
     exit
 fi
 
-function start_lazygit() {
-    git add -A
-    git commit -m "$msg"
-    git push origin main
-    echo "git push successful"
-}
-
-start_lazygit
+git add -A
+git commit -m "$msg"
+git push origin main
