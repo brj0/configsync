@@ -91,6 +91,13 @@ set clipboard=unnamedplus
 " Enables mouse
 set mouse=a
 
+" Enables resizing windows with mouse in tmux and prefers 'sgr' if available.
+if has("mouse_sgr")
+    set ttymouse=sgr
+else
+    set ttymouse=xterm2
+end
+
 " Use relative line numbers
 set number
 set rnu
