@@ -3,6 +3,7 @@
   split_horiz = <Primary><Shift>o
   split_vert = <Primary><Shift>e
   layout_launcher = None
+  help = ""
 [profiles]
   [[default]]
     background_color = "#ffffff"
