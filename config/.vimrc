@@ -217,9 +217,9 @@ nnoremap <leader>r *Ncw
 " Moving fast in quickfix
 function! s:ToggleQuickfix()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
-            copen
+        copen
     else
-            cclose
+        cclose
     endif
 endfunction
 
