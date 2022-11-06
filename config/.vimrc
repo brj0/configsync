@@ -75,7 +75,7 @@ nnoremap tm :tabm<Space>
 set showtabline=2
 
 " Open working directory in vertical split
-noremap <leader>t :vsplit<CR>:e .<CR>:vertical resize 30<CR>
+noremap <leader>t :30vsplit .<CR>
 
 " Change the direction of new splits
 set splitbelow
