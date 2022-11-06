@@ -205,7 +205,7 @@ set shortmess-=S
 set path+=**
 
 " Search project for current word and highlight it
-nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>
+nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>:cw<CR>
 
 " Search current selection
 vnoremap * "zy/<C-R>z<Enter>
@@ -215,15 +215,11 @@ vnoremap # "zy?<C-R>z<Enter>
 nnoremap <leader>r *Ncw
 
 " Moving fast in quickfix
-let s:quickfix_on = 0
-
 function! s:ToggleQuickfix()
-    if s:quickfix_on
-        execute ":ccl"
-        let s:quickfix_on = 0
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+            copen
     else
-        execute ":cw"
-        let s:quickfix_on = 1
+            cclose
     endif
 endfunction
 
