@@ -188,26 +188,51 @@ font:
 # Colors (Terminal.app Basic)
 colors:
   primary:
-    background: '#FFFFFF'
+    background: '#ffffff'
     foreground: '#000000'
   normal:
     black:      '#000000'
     red:        '#990000'
-    green:      '#00A600'
+    green:      '#00a600'
     yellow:     '#e1b600'
-    blue:       '#0000B2'
-    magenta:    '#B200B2'
-    cyan:       '#00A6B2'
-    white:      '#BFBFBF'
+    blue:       '#0000b2'
+    magenta:    '#b200b2'
+    cyan:       '#00a6b2'
+    white:      '#bfbfbf'
   bright:
     black:      '#666666'
-    red:        '#E50000'
-    green:      '#00D900'
-    yellow:     '#e1b600'
-    blue:       '#0000FF'
-    magenta:    '#E500E5'
-    cyan:       '#00E5E5'
-    white:      '#E5E5E5'
+    red:        '#e50000'
+    green:      '#00d900'
+    yellow:     '#f5e600'
+    #yellow:     '#e1b600'
+    blue:       '#0000ff'
+    magenta:    '#e500e5'
+    cyan:       '#00e5e5'
+    white:      '#eeeeee'
+
+# # Terminator colors
+# colors:
+  # primary:
+    # background: '#ffffff'
+    # foreground: '#000000'
+  # normal:
+    # black:      '#000000'
+    # red:        '#aa0000'
+    # green:      '#00aa00'
+    # yellow:     '#aa5500'
+    # blue:       '#0000aa'
+    # magenta:    '#aa00aa'
+    # cyan:       '#00aaaa'
+    # white:      '#aaaaaa'
+  # bright:
+    # black:      '#555555'
+    # red:        '#ff5555'
+    # green:      '#55ff55'
+    # yellow:     '#ffff55'
+    # blue:       '#5555ff'
+    # magenta:    '#ff55ff'
+    # cyan:       '#55ffff'
+    # white:      '#ffffff'
 
 # Colors (Tomorrow Night)
 #colors:

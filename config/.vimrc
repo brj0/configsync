@@ -312,6 +312,7 @@ let s:comment_map_start = {
     \   "tex": '%',
     \   "tmux": '#',
     \   "vim": '"',
+    \   "yaml": '#',
     \ }
 
 let s:comment_map_end = {
