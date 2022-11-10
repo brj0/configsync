@@ -74,6 +74,9 @@ setxkbmap -option caps:escape 2>/dev/null
 # Set environment variables
 export PATH="$HOME/bin:$PATH"
 
+# Date in format YYYY-MM-DD
+DATE=$(date -I)
+
 # Disable ctrl-s and ctrl-q
 stty -ixon
 
