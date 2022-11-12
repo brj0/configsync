@@ -18,7 +18,7 @@
 " " vim-plug automatically executes filetype plugin indent on and syntax enable
 " filetype indent off
 
-" Manually add file-type-plugins in ~/.vim/pack/*/opt/
+" " Manually add file-type-plugins in ~/.vim/pack/*/opt/
 " ab AddPlug runtime! ALL ftplugin/*.vim
 
 
@@ -47,6 +47,9 @@ inoremap jk <Esc>
 
 " Open this file in new tab
 ab vimrc tabnew $MYVIMRC<CR>
+
+" Compile file and open quickfix if there are errors
+nnoremap <leader>mm :w<CR>:silent make\|redraw!\|cw<CR>
 
 " Modify time waited for key codes and mapped keys to complete. Fixes long
 " waiting time after pressing <Esc>O in insert mode.
@@ -101,6 +104,9 @@ end
 " Use relative line numbers
 set number
 set rnu
+
+" Redraw screen (if error occurs)
+noremap <leader>R :redraw!<CR>
 
 " Toggle between absolute and relative line numbers
 nnoremap <leader>l :set rnu!<cr>
@@ -372,34 +378,58 @@ vnoremap <leader>C :call <SID>UnComment()<CR>
 """ LATEX
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Set maximal text width
-autocmd FileType tex set textwidth=90
-
 " Compiling / Bibliography
-" Add file my_bibliography.bib in same folder as my_file.tex
+" ========================
+" File my_bibliography.bib and sty/bst-files in same folder as my_file.tex
+" (alternatively include bibliography in tex file with package 'filecontents')
+" Add if non-cited files should be included
+"   \nocite{*} or \nocite{<bibkey>}
+"
+" 1. Possibility - Biber/BibLaTeX
 " Add to my_file.tex header:
 "   \usepackage[backend=biber]{biblatex}
 "   \addbibresource{my_bibliography.bib}
-" Add if non-cited files should be included
-"   \nocite{*} or \nocite{<bibkey>}
 " Print bibliography with
 "   \printbibliography
 " Correct command ordering:
 "   1. pdflatex my_file.tex
 "   2. biber my_file
 "   3. pdflatex my_file.tex
+"
+" 2. Possibility - BibTeX
+" Print bibliography with
+"   \bibliography{my_bibliography}
+" Correct command ordering:
+"   1. pdflatex my_file.tex
+"   2. bitex my_file.aux
+"   3. pdflatex my_file.tex
+"   4. pdflatex my_file.tex
+
+" Easy compilation with latexmk
+"   latexmk my_file.tex
+"
 
 " pdflatex my_file.tex
 autocmd FileType tex map <f2> :w<CR>:! pdflatex %<CR><CR>
 
-" Open my_file.pdf
-autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
-
 " biber my_file
 autocmd FileType tex map <f4> :w<CR>:! biber %:r<CR><CR>
 
-" Full command list:
+" Full command list (Biber):
 autocmd FileType tex map <f5> <f2><f4><f2><f3>
+
+" latexmk my_file.tex
+autocmd FileType tex set makeprg=latexmk\ \-g\ \-file\-line\-error\ \-interaction=nonstopmode\ %
+
+" Delete auxiliary files (log, aux, toc, bbl, ...) keep pdf
+autocmd FileType tex map <leader>mc :w<CR>:!latexmk -c<CR><CR>:!rm *.{bbl,nav,snm,xml}<CR><CR>
+
+" Open my_file.pdf
+autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
+autocmd FileType tex map <leader>ms :! xdg-open %:r.pdf & disown<CR><CR>
+
+" Set maximal text width
+autocmd FileType tex set textwidth=90
 
 " Snippets
 autocmd FileType tex inoremap ,tb \textbf{}<++><Esc>T{i
