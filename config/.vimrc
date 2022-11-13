@@ -105,9 +105,6 @@ end
 set number
 set rnu
 
-" Redraw screen (if error occurs)
-noremap <leader>R :redraw!<CR>
-
 " Toggle between absolute and relative line numbers
 nnoremap <leader>l :set rnu!<cr>
 
@@ -188,8 +185,8 @@ noremap <leader>P "0P
 " Highlight search results
 set hlsearch
 
-" Disable highlight
-nnoremap <leader><CR> :noh<CR>
+" Disable highlight and redraw screen
+nnoremap <leader><CR> :noh<CR>:redraw!<CR>
 
 " Remap for fast searching
 nnoremap <Space> /
