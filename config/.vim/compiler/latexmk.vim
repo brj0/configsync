@@ -7,7 +7,7 @@ if exists(":CompilerSet") != 2
     command -nargs=* CompilerSet setlocal <args>
 endif
 
-" If makefile do not redefine makeprg
+" If makefile exists do not redefine makeprg
 if (filereadable('Makefile') || filereadable('makefile'))
     let current_compiler = 'make'
     finish
