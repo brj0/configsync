@@ -416,10 +416,11 @@ autocmd FileType tex map <f4> :w<CR>:! biber %:r<CR><CR>
 autocmd FileType tex map <f5> <f2><f4><f2><f3>
 
 " latexmk my_file.tex
-autocmd FileType tex set makeprg=latexmk\ \-g\ \-file\-line\-error\ \-interaction=nonstopmode\ %
+autocmd FileType tex setlocal makeprg=latexmk\ \-g\ \-file\-line\-error\ \-interaction=nonstopmode\ %
+autocmd FileType tex setlocal makeprg=rubber\ %:r
 
-" Delete auxiliary files (log, aux, toc, bbl, ...) keep pdf
-autocmd FileType tex map <leader>mc :w<CR>:!latexmk -c<CR><CR>:!rm *.{bbl,nav,snm,xml}<CR><CR>
+" Delete auxiliary files (log, aux, toc, bbl, ...), keep pdf
+autocmd FileType tex map <buffer> <leader>mc :cd %:p:h<CR>:!rm -f *.{aux,bbl,blg,dvi,fdb_latexmk,fls,log,nav,out,rubbercache,snm,toc,xml}<CR><CR>
 
 " Open my_file.pdf
 autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
