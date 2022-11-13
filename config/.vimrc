@@ -59,6 +59,7 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 nnoremap ö ;
 nnoremap é ,
 nnoremap ä :
+vnoremap ä :
 
 " Minimum line numbers above/under cursor
 set scrolloff=5
