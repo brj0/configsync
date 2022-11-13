@@ -49,7 +49,7 @@ inoremap jk <Esc>
 ab vimrc tabnew $MYVIMRC<CR>
 
 " Compile file and open quickfix if there are errors
-nnoremap <leader>mm :w<CR>:silent make\|redraw!\|cw<CR>
+nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
 
 " Modify time waited for key codes and mapped keys to complete. Fixes long
 " waiting time after pressing <Esc>O in insert mode.
@@ -402,9 +402,9 @@ vnoremap <leader>C :call <SID>UnComment()<CR>
 "   3. pdflatex my_file.tex
 "   4. pdflatex my_file.tex
 
-" Easy compilation with latexmk
+" Easy compilation with latexmk or rubber
 "   latexmk my_file.tex
-"
+"   rubber my_file
 
 " pdflatex my_file.tex
 autocmd FileType tex map <f2> :w<CR>:! pdflatex %<CR><CR>
@@ -416,8 +416,8 @@ autocmd FileType tex map <f4> :w<CR>:! biber %:r<CR><CR>
 autocmd FileType tex map <f5> <f2><f4><f2><f3>
 
 " latexmk my_file.tex
-autocmd FileType tex setlocal makeprg=latexmk\ \-g\ \-file\-line\-error\ \-interaction=nonstopmode\ %
-autocmd FileType tex setlocal makeprg=rubber\ %:r
+autocmd FileType tex compiler latexmk
+" autocmd FileType tex compiler rubber
 
 " Delete auxiliary files (log, aux, toc, bbl, ...), keep pdf
 autocmd FileType tex map <buffer> <leader>mc :cd %:p:h<CR>:!rm -f *.{aux,bbl,blg,dvi,fdb_latexmk,fls,log,nav,out,rubbercache,snm,toc,xml}<CR><CR>
