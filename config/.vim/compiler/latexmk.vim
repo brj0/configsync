@@ -15,5 +15,5 @@ else
     let current_compiler = 'latexmk'
 endif
 
-CompilerSet makeprg=latexmk\ \-g\ \-file\-line\-error\ \-interaction=nonstopmode\ %
+CompilerSet makeprg=latexmk\ \-g\ \-pdf\ \-file\-line\-error\ \-interaction=nonstopmode\ %
 CompilerSet errorformat=%f:%l:\ %m
