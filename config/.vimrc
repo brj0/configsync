@@ -421,7 +421,7 @@ autocmd FileType tex compiler latexmk
 " autocmd FileType tex compiler rubber
 
 " Delete auxiliary files (log, aux, toc, bbl, ...), keep pdf
-autocmd FileType tex map <buffer> <leader>mc :cd %:p:h<CR>:!rm -f *.{aux,bbl,blg,dvi,fdb_latexmk,fls,log,nav,out,rubbercache,snm,toc,xml}<CR><CR>
+autocmd FileType tex map <buffer> <leader>mc :cd %:p:h<CR>:!rm -f *.{aux,bcf,bbl,blg,dvi,fdb_latexmk,fls,log,nav,out,rubbercache,snm,toc,xml}<CR><CR>
 
 " Open my_file.pdf
 autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
