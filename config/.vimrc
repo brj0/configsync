@@ -264,27 +264,19 @@ vnoremap <silent><leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(g
 
 " Inserts the current line with a <CR>, starting at the cursor position (first
 " command) or simply a <CR> (second command), into the first tmux pane. Can be
-" used to process line by line with the python interpreter.
-function! s:RunInConsole(mode)
-    " Copy from start of visual block.
-    if a:mode == "v"
-        let start = getpos("'<")[2] - 1
-        let code = shellescape(getline('v')[start:])
-    " Copy from start of cursor.
-    else
-        norm "zy$
-        let code = shellescape(getreg('z'))
+" used to process line by line with an interpreter.
+function! s:RunInConsole(register)
+    let code = getreg(a:register)
+    silent call system('tmux set-buffer ' . shellescape(code))
+    silent call system('tmux paste-buffer -t 1')
+    " If last line ends without CR, add one manually
+    if code !~ ".*\n$"
+        silent call system('tmux send-keys -t 1 Enter')
     endif
-    " Ignore empty line
-    if code !~ "^'\\s*'$"
-        silent call system('tmux set-buffer ' . code)
-        silent call system('tmux paste-buffer -t 1')
-    endif
-    silent call system('tmux send-keys -t 1 Enter')
 endfunction
 
-nnoremap <leader>e :call <SID>RunInConsole("n")<CR>j
-vnoremap <leader>e :call <SID>RunInConsole("v")<CR>
+nnoremap <leader>e v$"zyj:call <SID>RunInConsole('z')<CR>
+vnoremap <leader>e $"zy'>j:call <SID>RunInConsole('z')<CR>
 nnoremap <leader>E :call system('tmux send-keys -t 1 Enter')<CR>
 
 " Make Y work like C, D
