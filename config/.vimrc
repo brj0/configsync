@@ -267,12 +267,12 @@ vnoremap <silent><leader>y y<Esc>:echo system('tmux set-buffer ' . shellescape(g
 " used to process line by line with an interpreter.
 function! s:RunInConsole(register)
     let code = getreg(a:register)
-    silent call system('tmux set-buffer ' . shellescape(code))
-    silent call system('tmux paste-buffer -t 1')
     " If last line ends without CR, add one manually
     if code !~ ".*\n$"
-        silent call system('tmux send-keys -t 1 Enter')
+        let code = code . "\n"
     endif
+    silent call system('tmux set-buffer ' . shellescape(code))
+    silent call system('tmux paste-buffer -t 1')
 endfunction
 
 nnoremap <leader>e v$"zy:call <SID>RunInConsole('z')<CR>j
