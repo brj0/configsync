@@ -275,8 +275,8 @@ function! s:RunInConsole(register)
     endif
 endfunction
 
-nnoremap <leader>e v$"zyj:call <SID>RunInConsole('z')<CR>
-vnoremap <leader>e $"zy'>j:call <SID>RunInConsole('z')<CR>
+nnoremap <leader>e v$"zy:call <SID>RunInConsole('z')<CR>j
+vnoremap <leader>e $"zy'>:call <SID>RunInConsole('z')<CR>j
 nnoremap <leader>E :call system('tmux send-keys -t 1 Enter')<CR>
 
 " Make Y work like C, D
