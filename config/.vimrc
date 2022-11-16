@@ -275,7 +275,7 @@ function! s:RunInConsole(register)
     silent call system('tmux paste-buffer -t 1')
 endfunction
 
-nnoremap <leader>e v$"zy:call <SID>RunInConsole('z')<CR>j
+nnoremap <leader>e "zy$:call <SID>RunInConsole('z')<CR>j
 vnoremap <leader>e $"zy'>:call <SID>RunInConsole('z')<CR>j
 nnoremap <leader>E :call system('tmux send-keys -t 1 Enter')<CR>
 
