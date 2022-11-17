@@ -216,7 +216,7 @@ vnoremap * "zy/<C-R>z<Enter>
 vnoremap # "zy?<C-R>z<Enter>
 
 " Search and replace word under cursor
-nnoremap <leader>r *Ncw
+nnoremap <leader>r /\<<C-R><C-W>\>\C<CR>Ncw
 
 " Moving fast in quickfix
 function! s:ToggleQuickfix()
