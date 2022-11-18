@@ -418,6 +418,7 @@ autocmd FileType tex map <buffer> <leader>mc :cd %:p:h<CR>:!rm -f *.{aux,bcf,bbl
 " Open my_file.pdf
 autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
 autocmd FileType tex map <leader>ms :! xdg-open %:r.pdf & disown<CR><CR>
+autocmd FileType tex map <leader>mz :! zathura %:r.pdf & disown<CR><CR>
 
 " Set maximal text width
 autocmd FileType tex set textwidth=90
