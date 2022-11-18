@@ -231,6 +231,37 @@ nnoremap <leader>f :call <SID>ToggleQuickfix()<CR>
 nnoremap <leader>n :cn<Enter>
 nnoremap <leader>N :cp<Enter>
 
+" Toggle between motion and g-motion
+let s:wrapenabled = 0
+function! s:ToggleWrap()
+    if s:wrapenabled
+        unmap j
+        unmap k
+        unmap 0
+        unmap ^
+        unmap $
+        let s:wrapenabled = 0
+    else
+        nnoremap j gj
+        nnoremap k gk
+        nnoremap 0 g0
+        nnoremap ^ g^
+        nnoremap $ g$
+        vnoremap j gj
+        vnoremap k gk
+        vnoremap 0 g0
+        vnoremap ^ g^
+        vnoremap $ g$
+        let s:wrapenabled = 1
+    endif
+endfunction
+
+autocmd FileType tex call <SID>ToggleWrap()
+map <leader>g :call <SID>ToggleWrap()<CR>
+
+" Wrap text at the end of a word
+autocmd FileType tex,markdown set linebreak
+
 " Display all matching commands/files when we tab complete
 set wildmenu
 
@@ -419,9 +450,6 @@ autocmd FileType tex map <buffer> <leader>mc :cd %:p:h<CR>:!rm -f *.{aux,bcf,bbl
 autocmd FileType tex map <f3> :! xdg-open %:r.pdf & disown<CR><CR>
 autocmd FileType tex map <leader>ms :! xdg-open %:r.pdf & disown<CR><CR>
 autocmd FileType tex map <leader>mz :! zathura %:r.pdf & disown<CR><CR>
-
-" Set maximal text width
-autocmd FileType tex set textwidth=90
 
 " Snippets
 autocmd FileType tex inoremap ,tb \textbf{}<++><Esc>T{i
