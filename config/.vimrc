@@ -260,7 +260,7 @@ autocmd FileType tex call <SID>ToggleWrap()
 nnoremap <leader>g :call <SID>ToggleWrap()<CR>
 
 " Wrap text at the end of a word
-autocmd FileType tex,markdown setlocal linebreak
+autocmd FileType tex,markdown set linebreak
 
 " Display all matching commands/files when we tab complete
 set wildmenu
