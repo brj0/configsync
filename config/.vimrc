@@ -271,7 +271,7 @@ set omnifunc=syntaxcomplete#Complete
 " Navigate within snippets
 inoremap ,, <Esc>/<++><Enter>"_c4l
 vnoremap ,, <Esc>/<++><Enter>"_c4l
-nnoremap ,, <Esc>/<++><Enter>"_c4l
+map ,, <Esc>/<++><Enter>"_c4l
 
 " Dictionary spell check
 nnoremap <leader>de :set nospell<CR>:setlocal spell spelllang=en_us<CR>
