@@ -257,7 +257,7 @@ function! s:ToggleWrap()
 endfunction
 
 autocmd FileType tex call <SID>ToggleWrap()
-nnoremap <leader>g :call <SID>ToggleWrap()<CR>
+map <leader>g :call <SID>ToggleWrap()<CR>
 
 " Wrap text at the end of a word
 autocmd FileType tex,markdown set linebreak
