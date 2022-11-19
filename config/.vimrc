@@ -257,10 +257,10 @@ function! s:ToggleWrap()
 endfunction
 
 autocmd FileType tex call <SID>ToggleWrap()
-map <leader>g :call <SID>ToggleWrap()<CR>
+nnoremap <leader>g :call <SID>ToggleWrap()<CR>
 
 " Wrap text at the end of a word
-autocmd FileType tex,markdown set linebreak
+autocmd FileType tex,markdown setlocal linebreak
 
 " Display all matching commands/files when we tab complete
 set wildmenu
@@ -271,7 +271,7 @@ set omnifunc=syntaxcomplete#Complete
 " Navigate within snippets
 inoremap ,, <Esc>/<++><Enter>"_c4l
 vnoremap ,, <Esc>/<++><Enter>"_c4l
-map ,, <Esc>/<++><Enter>"_c4l
+nnoremap ,, <Esc>/<++><Enter>"_c4l
 
 " Dictionary spell check
 nnoremap <leader>de :set nospell<CR>:setlocal spell spelllang=en_us<CR>
