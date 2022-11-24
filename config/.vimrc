@@ -209,7 +209,7 @@ set shortmess-=S
 set path+=**
 
 " Search project for current word and highlight it
-nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log}<CR><CR>:cw<CR>
+nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log,tags}<CR><CR>:cw<CR>
 
 " Search current selection
 vnoremap * "zy/<C-R>z<Enter>
@@ -264,6 +264,9 @@ autocmd FileType tex,markdown set linebreak
 
 " Display all matching commands/files when we tab complete
 set wildmenu
+
+" Ignore some files when we tab complete
+set wildignore=*.pyc
 
 " Ctrl-x Ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
