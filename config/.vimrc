@@ -209,7 +209,7 @@ set shortmess-=S
 set path+=**
 
 " Search project for current word and highlight it
-nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log,tags}<CR><CR>:cw<CR>
+nnoremap <leader>* /<C-R><C-W>\C<CR>N:grep! -R <cword> * --exclude-dir={.git,tmp,log} --exclude=tags<CR><CR>:cw<CR>
 
 " Search current selection
 vnoremap * "zy/<C-R>z<Enter>
