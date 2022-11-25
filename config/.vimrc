@@ -61,6 +61,18 @@ nnoremap é ,
 nnoremap ä :
 vnoremap ä :
 
+" Paired maps - moving fast in quickfix
+nnoremap 'f :cprevious<CR>
+nnoremap üf :cnext<CR>
+nnoremap 'F :cfirst<CR>
+nnoremap üF :clast<CR>
+nnoremap 'o :colder<CR><CR>
+nnoremap üo :cnewer<CR><CR>
+
+" Paired maps - add empty line above/below cursor
+nnoremap '<Space> O<Esc>j
+nnoremap ü<Space> o<Esc>k
+
 " Minimum line numbers above/under cursor
 set scrolloff=5
 
