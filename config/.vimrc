@@ -293,7 +293,7 @@ nnoremap <leader>de :set nospell<CR>:setlocal spell spelllang=en_us<CR>
 nnoremap <leader>dg :set nospell<CR>:setlocal spell spelllang=de<CR>
 nnoremap <leader>dm :set nospell<CR>:setlocal spell spelllang=en_us,de<CR>
 nnoremap <leader>dd :set nospell<CR>
-autocmd FileType tex setlocal spell spelllang=en_us,de
+autocmd FileType tex setlocal spell spelllang=de
 autocmd FileType html,htmldjango setlocal spell spelllang=en_us
 
 " Template files
