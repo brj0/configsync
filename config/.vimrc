@@ -81,6 +81,7 @@ set title
 
 " Shortcuts for tabs
 nnoremap tn :tabnew<Space>
+nnoremap tf :tabfind<Space>
 nnoremap tk :tabnext<CR>
 nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
