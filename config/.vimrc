@@ -517,4 +517,4 @@ autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></
 autocmd FileType c,cpp noremap <Leader>oh :e %<.h<CR>
 autocmd FileType c noremap <Leader>oc :e %<.c<CR>
 autocmd FileType cpp noremap <Leader>oc :e %<.cpp<CR>
-
+autocmd FileType c,cpp nnoremap <buffer> <leader>mc :w<CR>:silent make clean\|redraw!\|cw<CR>
