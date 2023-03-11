@@ -185,30 +185,94 @@ font:
 #draw_bold_text_with_bright_colors: false
 
 
-# Colors (Terminal.app Basic)
+# Dracula theme for Alacritty
+# https://draculatheme.com/alacritty
+#
+# Color palette
+# https://spec.draculatheme.com
+#
+# Template
+# https://github.com/alacritty/alacritty/blob/master/alacritty.yml
+
 colors:
   primary:
-    background: '#ffffff'
-    foreground: '#000000'
+    background: '#282a36'
+    foreground: '#f8f8f2'
+    bright_foreground: '#ffffff'
+  cursor:
+    text: CellBackground
+    cursor: CellForeground
+  vi_mode_cursor:
+    text: CellBackground
+    cursor: CellForeground
+  search:
+    matches:
+      foreground: '#44475a'
+      background: '#50fa7b'
+    focused_match:
+      foreground: '#44475a'
+      background: '#ffb86c'
+  footer_bar:
+    background: '#282a36'
+    foreground: '#f8f8f2'
+  hints:
+    start:
+      foreground: '#282a36'
+      background: '#f1fa8c'
+    end:
+      foreground: '#f1fa8c'
+      background: '#282a36'
+  line_indicator:
+    foreground: None
+    background: None
+  selection:
+    text: CellForeground
+    background: '#44475a'
   normal:
-    black:      '#000000'
-    red:        '#990000'
-    green:      '#00a600'
-    yellow:     '#e1b600'
-    blue:       '#0000b2'
-    magenta:    '#b200b2'
-    cyan:       '#00a6b2'
-    white:      '#bfbfbf'
+    black: '#21222c'
+    red: '#ff5555'
+    green: '#50fa7b'
+    yellow: '#f1fa8c'
+    blue: '#bd93f9'
+    magenta: '#ff79c6'
+    cyan: '#8be9fd'
+    white: '#f8f8f2'
   bright:
-    black:      '#666666'
-    red:        '#e50000'
-    green:      '#00d900'
-    yellow:     '#f5e600'
-    #yellow:     '#e1b600'
-    blue:       '#0000ff'
-    magenta:    '#e500e5'
-    cyan:       '#00e5e5'
-    white:      '#eeeeee'
+    black: '#6272a4'
+    red: '#ff6e6e'
+    green: '#69ff94'
+    yellow: '#ffffa5'
+    blue: '#d6acff'
+    magenta: '#ff92df'
+    cyan: '#a4ffff'
+    white: '#ffffff'
+
+
+# # Colors (Terminal.app Basic)
+# colors:
+  # primary:
+    # background: '#ffffff'
+    # foreground: '#000000'
+  # normal:
+    # black:      '#000000'
+    # red:        '#990000'
+    # green:      '#00a600'
+    # yellow:     '#e1b600'
+    # blue:       '#0000b2'
+    # magenta:    '#b200b2'
+    # cyan:       '#00a6b2'
+    # white:      '#bfbfbf'
+  # bright:
+    # black:      '#666666'
+    # red:        '#e50000'
+    # green:      '#00d900'
+    # yellow:     '#f5e600'
+    # #yellow:     '#e1b600'
+    # blue:       '#0000ff'
+    # magenta:    '#e500e5'
+    # cyan:       '#00e5e5'
+    # white:      '#eeeeee'
+
 
 # # Terminator colors
 # colors:
@@ -233,6 +297,7 @@ colors:
     # magenta:    '#ff55ff'
     # cyan:       '#55ffff'
     # white:      '#ffffff'
+
 
 # Colors (Tomorrow Night)
 #colors:
