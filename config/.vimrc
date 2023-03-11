@@ -147,7 +147,7 @@ autocmd ColorScheme * highlight SnippedSign ctermbg=green ctermfg=black
 autocmd BufWinEnter * syntax match SnippedSign /<++>/ containedin=ALL
 
 " Syntax color
-colorscheme default
+colorscheme delek
 syntax on
 
 " Show all highlighting colors
