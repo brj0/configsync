@@ -199,6 +199,9 @@ noremap <leader>P "0P
 " Highlight search results
 set hlsearch
 
+" Set color for search rsults
+highlight Search ctermfg=Black ctermbg=Yellow guibg=Yellow guifg=Black
+
 " Disable highlight and redraw screen
 nnoremap <leader><CR> :noh<CR>:redraw!<CR>
 
