@@ -53,4 +53,12 @@ hi Special    cterm=NONE ctermfg=LightRed    gui=NONE guifg=deeppink
 hi Statement  cterm=bold ctermfg=Blue	     gui=bold guifg=blue
 hi Type	      cterm=NONE ctermfg=Blue	     gui=bold guifg=blue
 
+" spell
+if has("spell")
+    hi SpellBad                ctermbg=88
+    hi SpellCap                ctermbg=20
+    hi SpellLocal              ctermbg=20
+    hi SpellRare  ctermfg=none ctermbg=none  cterm=reverse
+endif
+
 " vim: sw=2
