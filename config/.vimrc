@@ -147,8 +147,9 @@ autocmd ColorScheme * highlight SnippedSign ctermbg=green ctermfg=black
 autocmd BufWinEnter * syntax match SnippedSign /<++>/ containedin=ALL
 
 " Syntax color
-colorscheme delek
 syntax on
+set background=dark
+colorscheme delek2001
 
 " Show all highlighting colors
 ab hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
