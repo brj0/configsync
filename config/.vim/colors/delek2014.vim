@@ -32,6 +32,7 @@ if &background == "light"
     hi Search     ctermfg=NONE	   ctermbg=Yellow guibg=Yellow guifg=NONE
 else
     hi Search     ctermfg=Black	   ctermbg=Yellow guibg=Yellow guifg=Black
+    hi TabLineFill     ctermfg=252
 endif
 hi SpecialKey ctermfg=DarkBlue	   guifg=Blue
 hi StatusLine cterm=bold	   ctermbg=blue ctermfg=yellow guibg=gold guifg=blue
