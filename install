@@ -23,20 +23,22 @@ mkdir -p $home_dirs
 # Create symbolic links for all files
 for f in $sync_files;
 do
-  f_ln=$(echo "$f" | sed "s|^$config_dir|$HOME|")
-  # Removes symbolic links if they exist.
-  if [ -L $f_ln ]
-    then
-        rm $f_ln
-  fi
-  ln -sv $f $f_ln
+    f_ln=$(echo "$f" | sed "s|^$config_dir|$HOME|")
+    # Removes symbolic links if they exist.
+    if [ -L $f_ln ]
+        then
+            rm $f_ln
+            ln -s $f $f_ln
+    else
+        ln -sv $f $f_ln
+    fi
 done;
 
 # Create symbolic link for this script in ~/bin.
 this_script_ln=$HOME/bin/configsync
 if [ -L $this_script_ln ]
-  then
-    rm $this_script_ln
+    then
+        rm $this_script_ln
 fi
 ln -sv $this_script $this_script_ln
 
