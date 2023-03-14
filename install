@@ -40,7 +40,7 @@ if [ -L $this_script_ln ]
     then
         rm $this_script_ln
 fi
-ln -sv $this_script $this_script_ln
+ln -s $this_script $this_script_ln
 
 # Push to GitHub
 git -C $this_script_dir add -A
