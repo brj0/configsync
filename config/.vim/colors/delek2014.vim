@@ -58,7 +58,7 @@ if has("spell")
     hi SpellBad   cterm=underline ctermul=red  ctermbg=NONE
     hi SpellCap   cterm=underline ctermul=blue  ctermbg=NONE
     hi SpellLocal cterm=underline ctermul=blue  ctermbg=NONE
-    hi SpellRare  ctermfg=none    ctermbg=none  cterm=reverse
+    hi SpellRare  ctermfg=NONE    ctermbg=NONE  cterm=reverse
 endif
 
 " vim: sw=2
