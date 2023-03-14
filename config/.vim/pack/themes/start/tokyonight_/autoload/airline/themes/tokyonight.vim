@@ -1,0 +1,1 @@
+/home/dr_b/.configsync/config/.vim/pack/themes/start/tokyonight/autoload/airline/themes/tokyonight.vim
