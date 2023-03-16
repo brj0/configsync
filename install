@@ -25,10 +25,9 @@ for f in $sync_files;
 do
     f_ln=$(echo "$f" | sed "s|^$config_dir|$HOME|")
     # Removes symbolic links if they exist.
-    if [ -L $f_ln ]
-        then
-            rm $f_ln
-            ln -s $f $f_ln
+    if [ -L $f_ln ]; then
+        rm $f_ln
+        ln -s $f $f_ln
     else
         ln -sv $f $f_ln
     fi
