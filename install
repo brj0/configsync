@@ -45,4 +45,11 @@ ln -s $this_script $this_script_ln
 # Push to GitHub
 git -C $this_script_dir add -A
 git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+
+if [ -n $(git -C $this_script_dir status -s)]; then
+    echo "Changes detected"
+else
+    echo "No changes detected"
+fi
+
 git -C $this_script_dir push origin main
