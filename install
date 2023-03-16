@@ -47,7 +47,7 @@ git -C $this_script_dir add -A
 git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
 
 if [ -n "$(git -C $this_script_dir status -s)" ]; then
-    echo "Changes detected"
+    echo "Changes detected."
 else
     echo "No changes detected"
 fi
