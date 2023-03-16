@@ -36,9 +36,8 @@ done;
 
 # Create symbolic link for this script in ~/bin.
 this_script_ln=$HOME/bin/configsync
-if [ -L $this_script_ln ]
-    then
-        rm $this_script_ln
+if [ -L $this_script_ln ]; then
+    rm $this_script_ln
 fi
 ln -s $this_script $this_script_ln
 
