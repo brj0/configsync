@@ -16,3 +16,6 @@ $(appname): $(objects)
 
 clean:
 	rm -fr *.o $(appname)
+
+run:
+	./$(appname)
