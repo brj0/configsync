@@ -52,7 +52,7 @@ ab vimrc tabnew $MYVIMRC<CR>
 nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
 
 " Run file
-nnoremap <leader>mr :make run<CR>
+nnoremap <leader>mr :cex system("make run")<CR>:copen<CR>
 
 " Modify time waited for key codes and mapped keys to complete. Fixes long
 " waiting time after pressing <Esc>O in insert mode.
