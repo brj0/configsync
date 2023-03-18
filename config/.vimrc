@@ -51,6 +51,9 @@ ab vimrc tabnew $MYVIMRC<CR>
 " Compile file and open quickfix if there are errors
 nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
 
+" Run file
+nnoremap <leader>mr :make run<CR>
+
 " Modify time waited for key codes and mapped keys to complete. Fixes long
 " waiting time after pressing <Esc>O in insert mode.
 set timeout timeoutlen=1000 ttimeoutlen=100
