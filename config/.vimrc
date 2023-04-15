@@ -216,6 +216,10 @@ nnoremap <leader><Space> ?
 " See search results as you type
 set incsearch
 
+" Make 'n' always search forwards, regardless of whether / or ? was used
+noremap <expr> n (v:searchforward ? 'n' : 'N')
+noremap <expr> N (v:searchforward ? 'N' : 'n')
+
 " Ignores cases for search function except if search term contains capital
 " letters
 set ignorecase
