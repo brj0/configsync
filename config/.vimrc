@@ -51,6 +51,9 @@ ab vimrc tabnew $MYVIMRC<CR>
 " Compile file and open quickfix if there are errors
 nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
 
+" Compile file in debug mode and open quickfix if there are errors
+nnoremap <leader>md :w<CR>:silent make! debug\|redraw!\|cw<CR>
+
 " Run binary and display output in quickfix
 nnoremap <leader>mf :cex system("make run")<CR>:copen<CR>
 
