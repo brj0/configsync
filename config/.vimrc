@@ -365,6 +365,7 @@ let s:comment_map_start = {
     \   "html": '<!--',
     \   "htmldjango": '<!--',
     \   "javascript": '\/\/',
+    \   "make": '#',
     \   "python": '#',
     \   "r": '#',
     \   "sh": '#',
