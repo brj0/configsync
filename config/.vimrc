@@ -314,7 +314,7 @@ autocmd FileType html,htmldjango setlocal spell spelllang=en_us
 " Template files
 ab temphtml -1read ~/.vim/templates/skeleton.html<CR>:set ft=html<CR>
 ab tempc -1read ~/.vim/templates/skeleton.c<CR>:set ft=c<CR>
-ab tempm -1read ~/.vim/templates/skeleton.make<CR>:set ft=make<CR>
+ab tempm -1read ~/.vim/templates/Makefile<CR>:set ft=make<CR>
 ab tempsh -1read ~/.vim/templates/skeleton.sh<CR>:set ft=sh<CR>
 ab tempcpp -1read ~/.vim/templates/skeleton.cpp<CR>:set ft=cpp<CR>
 ab tempbeamer -1read ~/.vim/templates/beamer.tex<CR>:set ft=tex<CR>
