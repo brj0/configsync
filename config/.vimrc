@@ -360,6 +360,7 @@ nmap <leader>s :s/\([[:alnum:]#_="'.&*+-]*\%#[[:alnum:]#_="'.&*+-]\+\)\([, ]\+\)
 
 let s:comment_map_start = {
     \   "c": '\/\/',
+    \   "conf": '#',
     \   "cpp": '\/\/',
     \   "css": '\/\*',
     \   "html": '<!--',
