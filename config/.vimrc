@@ -371,6 +371,7 @@ let s:comment_map_start = {
     \   "r": '#',
     \   "sh": '#',
     \   "tex": '%',
+    \   "txt": '#',
     \   "tmux": '#',
     \   "vim": '"',
     \   "yaml": '#',
