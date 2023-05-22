@@ -50,6 +50,7 @@ ab vimrc tabnew $MYVIMRC<CR>
 
 " Compile file and open quickfix if there are errors
 nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
+nnoremap <leader>mb :w<CR>:silent make! -C build\|redraw!\|cw<CR>
 
 " Compile file in debug mode and open quickfix if there are errors
 nnoremap <leader>md :w<CR>:silent make! debug\|redraw!\|cw<CR>
@@ -293,15 +294,15 @@ autocmd FileType tex,markdown set linebreak
 set wildmenu
 
 " Ignore some files when we tab complete
-set wildignore=*.pyc
+set wildignore=*.pyc,*.nbc,*.nbi,*.o,*.d,*.cmake,*.bin,*.so,*.egg-info/
 
 " Ctrl-x Ctrl-o completion
 set omnifunc=syntaxcomplete#Complete
 
 " Navigate within snippets
-inoremap ,, <Esc>/<++><Enter>"_c4l
-vnoremap ,, <Esc>/<++><Enter>"_c4l
-map ,, <Esc>/<++><Enter>"_c4l
+inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+map <leader><leader> <Esc>/<++><Enter>"_c4l
 
 " Dictionary spell check
 nnoremap <leader>de :set nospell<CR>:setlocal spell spelllang=en_us<CR>
@@ -487,25 +488,25 @@ autocmd FileType tex map <leader>ms :! xdg-open %:r.pdf & disown<CR><CR>
 autocmd FileType tex map <leader>mz :! zathura %:r.pdf & disown<CR><CR>
 
 " Snippets
-autocmd FileType tex inoremap ,tb \textbf{}<++><Esc>T{i
-autocmd FileType tex inoremap ,ti \textit{}<++><Esc>T{i
-autocmd FileType tex inoremap ,tc \textcite{}<++><Esc>T{i
-autocmd FileType tex inoremap ,fc \footcite{}<++><Esc>T{i
-autocmd FileType tex inoremap ,u \usepackage{}<Esc>T{i
-autocmd FileType tex noremap ,u o\usepackage{}<Esc>T{i
-autocmd FileType tex inoremap ,ig \includegraphics[width=]{<++>}<Esc>T=i
+autocmd FileType tex inoremap <leader>tb \textbf{}<++><Esc>T{i
+autocmd FileType tex inoremap <leader>ti \textit{}<++><Esc>T{i
+autocmd FileType tex inoremap <leader>tc \textcite{}<++><Esc>T{i
+autocmd FileType tex inoremap <leader>fc \footcite{}<++><Esc>T{i
+autocmd FileType tex inoremap <leader>u \usepackage{}<Esc>T{i
+autocmd FileType tex noremap <leader>u o\usepackage{}<Esc>T{i
+autocmd FileType tex inoremap <leader>ig \includegraphics[width=]{<++>}<Esc>T=i
 
-autocmd FileType tex inoremap ,fr \begin{frame}{}<Enter><++><Enter>\end{frame}<Enter><Enter><++><Esc>4k$i
-autocmd FileType tex inoremap ,bl \begin{block}{}<Enter><++><Enter>\end{block}<Enter><++><Esc>3k$i
-autocmd FileType tex inoremap ,en \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><++><Esc>2ki
-autocmd FileType tex inoremap ,it \begin{itemize}<Enter><Enter>\end{itemize}<Enter><++><Esc>2ki\item<Space>
-autocmd FileType tex inoremap ,ce \begin{center}<Enter><Enter>\end{center}<Enter><++><Esc>2ki
-autocmd FileType tex inoremap ,ta \begin{tabular}{}<Enter><++><Enter>\end{tabular}<Enter><++><Esc>3k$i
+autocmd FileType tex inoremap <leader>fr \begin{frame}{}<Enter><++><Enter>\end{frame}<Enter><Enter><++><Esc>4k$i
+autocmd FileType tex inoremap <leader>bl \begin{block}{}<Enter><++><Enter>\end{block}<Enter><++><Esc>3k$i
+autocmd FileType tex inoremap <leader>en \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><++><Esc>2ki
+autocmd FileType tex inoremap <leader>it \begin{itemize}<Enter><Enter>\end{itemize}<Enter><++><Esc>2ki\item<Space>
+autocmd FileType tex inoremap <leader>ce \begin{center}<Enter><Enter>\end{center}<Enter><++><Esc>2ki
+autocmd FileType tex inoremap <leader>ta \begin{tabular}{}<Enter><++><Enter>\end{tabular}<Enter><++><Esc>3k$i
 
 " autocmd FileType tex inoremap \\ \\<Enter>
-autocmd FileType tex inoremap ,ii <Enter>\item<Space>
-autocmd FileType tex inoremap ,- <Esc>"zdiWi\<C-R>z{}<++><Esc>T{i
-autocmd FileType tex inoremap ,. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-R>z}<Enter><++><Esc>2ki
+autocmd FileType tex inoremap <leader>ii <Enter>\item<Space>
+autocmd FileType tex inoremap <leader>- <Esc>"zdiWi\<C-R>z{}<++><Esc>T{i
+autocmd FileType tex inoremap <leader>. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\end{<C-R>z}<Enter><++><Esc>2ki
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -524,7 +525,7 @@ autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 au BufNewFile,BufRead *.html set syntax=htmljinja
 
 " Snippets
-autocmd FileType html,htmldjango inoremap ,. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
+autocmd FileType html,htmldjango inoremap <leader>. <Esc>"zdiWi<<C-R>z><Enter><Enter></<C-R>z><Enter><++><Esc>2ki<Tab>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -536,3 +537,36 @@ autocmd FileType c,cpp noremap <Leader>oh :e %<.h<CR>
 autocmd FileType c noremap <Leader>oc :e %<.c<CR>
 autocmd FileType cpp noremap <Leader>oc :e %<.cpp<CR>
 autocmd FileType c,cpp nnoremap <buffer> <leader>mc :w<CR>:silent make clean\|redraw!\|cw<CR>
+
+" Snippets
+autocmd FileType c,cpp inoremap <leader>.b <Esc>o{<CR>}<Esc>O<Tab>
+autocmd FileType c,cpp nnoremap <leader>.b <Esc>o{<CR>}<Esc>O<Tab>
+
+autocmd FileType c,cpp inoremap <leader>.r <Esc>o(<CR>)<Esc>O<Tab>
+autocmd FileType c,cpp nnoremap <leader>.r <Esc>o(<CR>)<Esc>O<Tab>
+
+autocmd FileType c,cpp inoremap <leader>.f  for (; <++>; <++>)<CR>{<CR>}<Esc>O<Tab><++><Esc>kkF(a
+autocmd FileType c,cpp nnoremap <leader>.f ofor (; <++>; <++>)<CR>{<CR>}<Esc>O<Tab><++><Esc>kkF(a
+
+autocmd FileType c,cpp inoremap <leader>.w  while ()<CR>{<CR>}<Esc>O<Tab><++><Esc>kk$i
+autocmd FileType c,cpp nnoremap <leader>.w owhile ()<CR>{<CR>}<Esc>O<Tab><++><Esc>kk$i
+
+autocmd FileType c,cpp inoremap <leader>.c  class <CR>{<CR>private:<CR><Tab><++><CR><BS>public:<CR><Tab><++><CR><BS>};<Esc>6kA
+autocmd FileType c,cpp nnoremap <leader>.c oclass <CR>{<CR>private:<CR><Tab><++><CR><BS>public:<CR><Tab><++><CR><BS>};<CR><Esc>7kA
+
+autocmd FileType c,cpp inoremap <leader>.s  struct <CR>{<CR><Tab><++><CR><BS>};<Esc>3kA
+autocmd FileType c,cpp nnoremap <leader>.s ostruct <CR>{<CR><Tab><++><CR><BS>};<Esc>3kA
+
+autocmd FileType c,cpp inoremap <leader>.i if  ()<CR>{<CR>}<Esc>O<Tab><++><Esc>kk$i
+autocmd FileType c,cpp nnoremap <leader>.i oif ()<CR>{<CR>}<Esc>O<Tab><++><Esc>kk$i
+
+autocmd FileType c,cpp inoremap <leader>.e   else<CR>{<CR>}<Esc>O<Tab>
+autocmd FileType c,cpp inoremap <leader>.el  else<CR>{<CR>}<Esc>O<Tab>
+autocmd FileType c,cpp nnoremap <leader>.e  oelse<CR>{<CR>}<Esc>O<Tab>
+autocmd FileType c,cpp nnoremap <leader>.el oelse<CR>{<CR>}<Esc>O<Tab>
+
+autocmd FileType c,cpp inoremap <leader>.ei  else if ()<CR>{<CR>}<Esc>O<Tab><++><Esc>kk$i
+autocmd FileType c,cpp nnoremap <leader>.ei oelse if ()<CR>{<CR>}<Esc>O<Tab><++><Esc>kk$i
+
+autocmd FileType c,cpp inoremap <leader>.o  std::cout << <Esc>A
+autocmd FileType c,cpp nnoremap <leader>.o ostd::cout << <Esc>A
