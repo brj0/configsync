@@ -365,6 +365,7 @@ let s:comment_map_start = {
     \   "conf": '#',
     \   "cpp": '\/\/',
     \   "css": '\/\*',
+    \   "dockerfile": '#',
     \   "html": '<!--',
     \   "htmldjango": '<!--',
     \   "javascript": '\/\/',

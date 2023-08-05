@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Function to convert time to seconds
+time_in_seconds() {
+    local time="$1"
+    local minutes="${time%:*}"
+    local seconds="${time#*:}"
+    echo $((minutes * 60 + seconds))
+}
+
+# Function to display the countdown timer
+display_timer() {
+    local seconds="$1"
+    while [ $seconds -gt 0 ]; do
+        printf "\r%02d:%02d" $((seconds / 60)) $((seconds % 60))
+        sleep 1
+        seconds=$((seconds - 1))
+    done
+    printf "\r00:00\n"
+    paplay /usr/share/sounds/freedesktop/stereo/complete.oga
+    /usr/bin/notify-send -u critical "Countdown reached!"
+}
+
+if [ $# -ne 1 ]; then
+    echo "Invalid input format."
+    echo "Please use the format '$(basename "$0") <minutes>:<seconds>'."
+    exit 1
+fi
+
+if ! [[ $1 =~ ^([0-9]+):([0-9]+)$ ]]; then
+    echo "Invalid input format."
+    echo "Please use the format '$(basename "$0") <minutes>:<seconds>'."
+    exit 1
+fi
+
+# Convert input time to seconds
+countdown_seconds=$(time_in_seconds "$1")
+
+# Display the countdown timer
+display_timer "$countdown_seconds"
