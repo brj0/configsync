@@ -17,7 +17,7 @@ display_timer() {
         seconds=$((seconds - 1))
     done
     printf "\r00:00\n"
-    paplay /usr/share/sounds/freedesktop/stereo/complete.oga
+    paplay /usr/share/sounds/freedesktop/stereo/complete.oga &
     /usr/bin/notify-send -u critical "Countdown reached!"
 }
 
