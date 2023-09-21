@@ -284,7 +284,7 @@ function! s:ToggleWrap()
     endif
 endfunction
 
-autocmd FileType tex call <SID>ToggleWrap()
+autocmd FileType tex,markdown call <SID>ToggleWrap()
 map <leader>g :call <SID>ToggleWrap()<CR>
 
 " Wrap text at the end of a word
