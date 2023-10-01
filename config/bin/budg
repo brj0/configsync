@@ -19,7 +19,7 @@ if [[ "$ftype" == *"Excel"* ]]; then
     sleep 0.5
 
     fname=$1
-    fname_csv=${fname%.xls}.csv
+    fname_csv=${fname%.*}.csv
     # First remove newline within quotes
     # then replace ',' within quotes by ';'
     # then extract information
@@ -42,7 +42,7 @@ if [[ "$1" == "--prelim" ]]; then
     sleep 0.5
 
     fname=$2
-    fname_csv=${fname%.xls}.csv
+    fname_csv=${fname%.*}.csv
     # First replace ',' in quotes by '.',
     # then grep transactions
     # then extract information
