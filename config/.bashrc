@@ -79,9 +79,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # Add ~/bin to PATH
 [ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
 
-# Date in format YYYY-MM-DD
-DATE=$(date -I)
-
 
 ### ALIASES
 ###############################################################################
@@ -111,6 +108,9 @@ alias op='xdg-open'
 alias open='xdg-open'
 
 alias p='python3'
+
+# Date in format YYYY-MM-DD
+alias da='date -I'
 
 # White background theme for bat
 alias bat='bat --theme=OneHalfLight'
