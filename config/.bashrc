@@ -61,6 +61,9 @@ shopt -s autocd
 # Disable ctrl-s and ctrl-q (will freeze screen)
 stty -ixon
 
+# Fast switching between tmux sessions
+bind -x '"\C-f": tmux-sessionizer'
+
 # Make less more friendly for non-text input files, see lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
