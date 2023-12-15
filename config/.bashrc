@@ -61,9 +61,6 @@ shopt -s autocd
 # Disable ctrl-s and ctrl-q (will freeze screen)
 stty -ixon
 
-# Fast switching between tmux sessions
-bind -x '"\C-f": tmux-sessionizer'
-
 # Make less more friendly for non-text input files, see lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -163,6 +160,9 @@ export MANPAGER='/bin/bash -c "vim -MRn \
 
 ### START
 ###############################################################################
+
+# Fast switching between tmux sessions
+bind -x '"\C-f": tmux-sessionizer'
 
 # Start screen
 neofetch 2>/dev/null
