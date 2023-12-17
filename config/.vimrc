@@ -342,6 +342,9 @@ nnoremap <leader>e "zy$:call <SID>RunInConsole('z')<CR>j
 vnoremap <leader>e $"zy'>:call <SID>RunInConsole('z')<CR>j
 nnoremap <leader>E :call system('tmux send-keys -t 1 Enter')<CR>
 
+" Change tmux session
+nnoremap <C-@> :!tmux-sessionizer<CR><CR>
+
 " Make Y work like C, D
 nnoremap Y y$
 

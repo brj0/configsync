@@ -162,7 +162,7 @@ export MANPAGER='/bin/bash -c "vim -MRn \
 ###############################################################################
 
 # Fast switching between tmux sessions
-bind -x '"\C-f": tmux-sessionizer'
+bind -x '"\C- ": tmux-sessionizer'
 
 # Start screen
 neofetch 2>/dev/null
