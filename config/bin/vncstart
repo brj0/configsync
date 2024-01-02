@@ -2,4 +2,4 @@
 
 vnc4server -kill :1
 sleep 10
-vnc4server -geometry 1680x1050 -alwaysshared :1
+vnc4server -geometry 1920x1200 -alwaysshared :1
