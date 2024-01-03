@@ -10,19 +10,19 @@ fi
 for zip_file in "$@"; do
     if [ -f "$zip_file" ]; then
         case "$zip_file" in
-            *.tar.bz2)   tar xvjf "$zip_file" ;;
-            *.tar.gz)    tar xvzf "$zip_file" ;;
-            *.tar.xz)    tar xvf "$zip_file"  ;;
-            *.bz2)       bunzip2 "$zip_file" ;;
-            *.rar)       unrar x "$zip_file" ;;
-            *.gz)        gunzip "$zip_file"  ;;
-            *.tar)       tar xvf "$zip_file" ;;
-            *.tbz2)      tar xvjf "$zip_file" ;;
-            *.tgz)       tar xvzf "$zip_file" ;;
-            *.zip)       unzip "$zip_file"   ;;
-            *.Z)         uncompress "$zip_file" ;;
-            *.7z)        7z x "$zip_file"     ;;
-            *)           echo "Don't know how to extract '$zip_file'..." ;;
+            *.tar.bz2) tar xvjf   "$zip_file" ;;
+            *.tar.gz)  tar xvzf   "$zip_file" ;;
+            *.tar.xz)  tar xvf    "$zip_file" ;;
+            *.bz2)     bunzip2    "$zip_file" ;;
+            *.rar)     unrar x    "$zip_file" ;;
+            *.gz)      gunzip     "$zip_file" ;;
+            *.tar)     tar xvf    "$zip_file" ;;
+            *.tbz2)    tar xvjf   "$zip_file" ;;
+            *.tgz)     tar xvzf   "$zip_file" ;;
+            *.zip)     unzip      "$zip_file" ;;
+            *.Z)       uncompress "$zip_file" ;;
+            *.7z)      7z x       "$zip_file" ;;
+            *)         echo "Don't know how to extract '$zip_file'..." ;;
         esac
     else
         echo "'$zip_file' is not a valid file!"
