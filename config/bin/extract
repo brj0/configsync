@@ -1,21 +1,30 @@
 #!/bin/bash
 
-if [ -f $1 ] ; then
-   case $1 in
-       *.tar.bz2)   tar xvjf $1    ;;
-       *.tar.gz)    tar xvzf $1    ;;
-       *.tar.xz)    tar xvf $1     ;;
-       *.bz2)       bunzip2 $1     ;;
-       *.rar)       unrar x $1     ;;
-       *.gz)        gunzip $1      ;;
-       *.tar)       tar xvf $1     ;;
-       *.tbz2)      tar xvjf $1    ;;
-       *.tgz)       tar xvzf $1    ;;
-       *.zip)       unzip $1       ;;
-       *.Z)         uncompress $1  ;;
-       *.7z)        7z x $1        ;;
-       *)           echo "don't know how to extract '$1'..." ;;
-   esac
-else
-   echo "'$1' is not a valid file!"
+# Check if at least one argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <zip_file1> [<zip_file2> ...]"
+    exit 1
 fi
+
+# Loop through all zip files provided as arguments
+for zip_file in "$@"; do
+    if [ -f "$zip_file" ]; then
+        case "$zip_file" in
+            *.tar.bz2)   tar xvjf "$zip_file" ;;
+            *.tar.gz)    tar xvzf "$zip_file" ;;
+            *.tar.xz)    tar xvf "$zip_file"  ;;
+            *.bz2)       bunzip2 "$zip_file" ;;
+            *.rar)       unrar x "$zip_file" ;;
+            *.gz)        gunzip "$zip_file"  ;;
+            *.tar)       tar xvf "$zip_file" ;;
+            *.tbz2)      tar xvjf "$zip_file" ;;
+            *.tgz)       tar xvzf "$zip_file" ;;
+            *.zip)       unzip "$zip_file"   ;;
+            *.Z)         uncompress "$zip_file" ;;
+            *.7z)        7z x "$zip_file"     ;;
+            *)           echo "Don't know how to extract '$zip_file'..." ;;
+        esac
+    else
+        echo "'$zip_file' is not a valid file!"
+    fi
+done
