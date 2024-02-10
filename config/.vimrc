@@ -98,8 +98,14 @@ nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 nnoremap tm :tabm<Space>
 
+" Hack to make netrw wait for the shortcuts above.
+autocmd FileType netrw nnoremap <buffer> tt <Nop>
+
 " Always show tabline with filename at the top
 set showtabline=2
+
+" Open entry in quickfix in new tap
+nnoremap tt <C-W><Enter><C-W>T
 
 " Open working directory in vertical split
 noremap <leader>t :30vsplit .<CR>
