@@ -235,6 +235,12 @@ noremap <expr> N (v:searchforward ? 'N' : 'n')
 set ignorecase
 set smartcase
 
+" Dont use ignorecase when using * and #
+nnoremap <silent>  * :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=1<CR>n
+nnoremap <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=0<CR>n
+nnoremap <silent> g* :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=1<CR>n
+nnoremap <silent> g# :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=0<CR>n
+
 " Show count of search hits (needs at least vim 8.2)
 set shortmess-=S
 
