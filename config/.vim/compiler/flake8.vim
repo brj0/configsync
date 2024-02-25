@@ -15,6 +15,6 @@ else
     let current_compiler = "flake8"
 endif
 
-CompilerSet makeprg=flake8\ --format=%f:%l:%c:\ %t%n\ %m
+CompilerSet makeprg=flake8\ %
 CompilerSet errorformat=%f:%l:%c:\ %t%n\ %m
 

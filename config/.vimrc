@@ -536,6 +536,7 @@ autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 autocmd FileType python ab black !black -l 79 %<CR>
 autocmd FileType python ab isort !isort --profile black -l 79 %<CR>
 autocmd FileType python ab pylint compiler pylint<CR>:make %<CR>
+autocmd FileType python ab flake8 compiler flake8<CR>:make<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
