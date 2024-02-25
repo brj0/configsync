@@ -532,6 +532,11 @@ autocmd FileType tex inoremap <leader>. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\
 " Python debugging
 autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 
+" Python linting
+autocmd FileType python ab black !black -l 79 %<CR>
+autocmd FileType python ab isort !isort --profile black -l 79 %<CR>
+autocmd FileType python ab pylint compiler pylint<CR>:make %<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ HTML
