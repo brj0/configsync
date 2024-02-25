@@ -46,7 +46,7 @@ nmap <leader>q :q<cr>
 inoremap jk <Esc>
 
 " Open this file in new tab
-ab vimrc tabnew $MYVIMRC<CR>
+command! Vimrc tabnew $MYVIMRC
 
 " Compile file and open quickfix if there are errors
 nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
@@ -168,7 +168,7 @@ set background=dark
 colorscheme delek2014
 
 " Show all highlighting colors
-ab hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
+command! Hitest source<Space>$VIMRUNTIME/syntax/hitest.vim
 
 " Copy indent from current line when starting new line using o, O, <CR>
 set autoindent
@@ -325,13 +325,13 @@ autocmd FileType tex setlocal spell spelllang=de
 autocmd FileType html,htmldjango setlocal spell spelllang=en_us
 
 " Template files
-ab temphtml -1read ~/.vim/templates/skeleton.html<CR>:set ft=html<CR>
-ab tempc -1read ~/.vim/templates/skeleton.c<CR>:set ft=c<CR>
-ab tempm -1read ~/.vim/templates/Makefile<CR>:set ft=make<CR>
-ab tempsh -1read ~/.vim/templates/skeleton.sh<CR>:set ft=sh<CR>
-ab tempcpp -1read ~/.vim/templates/skeleton.cpp<CR>:set ft=cpp<CR>
-ab tempbeamer -1read ~/.vim/templates/beamer.tex<CR>:set ft=tex<CR>
-ab templetter -1read ~/.vim/templates/letter.tex<CR>:set ft=tex<CR>
+command! Tempbeamer execute '-1read ~/.vim/templates/beamer.tex' | set ft=tex
+command! Tempc execute '-1read ~/.vim/templates/skeleton.c' | set ft=c
+command! Tempcpp execute '-1read ~/.vim/templates/skeleton.cpp' | set ft=cpp
+command! Temphtml execute '-1read ~/.vim/templates/skeleton.html' | set ft=html
+command! Templetter execute '-1read ~/.vim/templates/letter.tex' | set ft=tex
+command! Tempm execute '-1read ~/.vim/templates/Makefile' | set ft=make
+command! Tempsh execute '-1read ~/.vim/templates/skeleton.sh' | set ft=sh
 
 " Yank to tmux buffer
 nnoremap <silent><leader>yy yy<Esc>:echo system('tmux set-buffer ' . shellescape(getreg('"')))<CR>:echo "yanked to tmux buffer"<CR>
