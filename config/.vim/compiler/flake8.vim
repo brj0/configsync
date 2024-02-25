@@ -12,9 +12,9 @@ if (filereadable('Makefile') || filereadable('makefile'))
     let current_compiler = 'make'
     finish
 else
-    let current_compiler = "flake8"
+    let current_compiler = 'flake8'
 endif
 
-CompilerSet makeprg=flake8\ %
+CompilerSet makeprg=flake8
 CompilerSet errorformat=%f:%l:%c:\ %t%n\ %m
 
