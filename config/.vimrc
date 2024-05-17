@@ -346,8 +346,19 @@ function! s:RunInConsole(register)
     if code !~ ".*\n$"
         let code = code . "\n"
     endif
-    silent call system('tmux set-buffer ' . shellescape(code))
-    silent call system('tmux paste-buffer -t 1')
+
+    " Split the code into chunks of 1024 characters (ensure no buffer overflow)
+    let chunk_size = 1024
+    let code_chunks = []
+    for i in range(0, len(code), chunk_size)
+        call add(code_chunks, strpart(code, i, chunk_size))
+    endfor
+
+    " Send each chunk to tmux
+    for chunk in code_chunks
+        call system('tmux set-buffer ' . shellescape(chunk))
+        call system('tmux paste-buffer -t 1')
+    endfor
 endfunction
 
 nnoremap <leader>e "zy$:call <SID>RunInConsole('z')<CR>j
