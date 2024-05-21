@@ -545,9 +545,13 @@ autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 
 " Python linting
 autocmd FileType python command! -nargs=0 Black !black -l 79 %
+autocmd FileType python command! -nargs=0 Bruff !ruff format --line-length 79 %
 autocmd FileType python command! -nargs=0 Isort !isort --profile black -l 79 %
+autocmd FileType python command! -nargs=0 Iruff !ruff check --select I --fix %
 autocmd FileType python command! -nargs=0 Pylint compiler pylint | make %
+autocmd FileType python command! -nargs=0 Pruff compiler ruff | make check --select PL %
 autocmd FileType python command! -nargs=0 Flake8 compiler flake8 | make %
+autocmd FileType python command! -nargs=0 Fruff compiler ruff | make check %
 
 
 
