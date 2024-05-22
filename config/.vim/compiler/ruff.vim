@@ -15,5 +15,5 @@ else
     let current_compiler = 'ruff'
 endif
 
-CompilerSet makeprg=ruff
+CompilerSet makeprg=ruff\ check\ %
 CompilerSet errorformat=%f:%l:%c:\ %m

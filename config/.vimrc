@@ -50,6 +50,7 @@ command! Vimrc tabnew $MYVIMRC
 
 " Compile file and open quickfix if there are errors
 nnoremap <leader>mm :w<CR>:silent make!\|redraw!\|cw<CR>
+nnoremap <leader>mp :w<CR>:silent make! %\|redraw!\|cw<CR>
 nnoremap <leader>mb :w<CR>:silent make! -C build\|redraw!\|cw<CR>
 
 " Compile file in debug mode and open quickfix if there are errors
@@ -544,15 +545,15 @@ autocmd FileType tex inoremap <leader>. <Esc>"zdiWi\begin{<C-R>z}<Enter><Enter>\
 autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 
 " Python linting
-autocmd FileType python command! -nargs=0 Black !black -l 79 %
+autocmd FileType python compiler ruff
+autocmd FileType python command! -nargs=0 Ruff compiler ruff | normal <leader>mm
 autocmd FileType python command! -nargs=0 Bruff !ruff format --line-length 79 %
-autocmd FileType python command! -nargs=0 Isort !isort --profile black -l 79 %
 autocmd FileType python command! -nargs=0 Iruff !ruff check --select I --fix %
-autocmd FileType python command! -nargs=0 Pylint compiler pylint | make %
-autocmd FileType python command! -nargs=0 Pruff compiler ruff | make check --select PL %
-autocmd FileType python command! -nargs=0 Flake8 compiler flake8 | make %
-autocmd FileType python command! -nargs=0 Fruff compiler ruff | make check %
 
+autocmd FileType python command! -nargs=0 Black !black -l 79 %
+autocmd FileType python command! -nargs=0 Isort !isort --profile black -l 79 %
+autocmd FileType python command! -nargs=0 Pylint compiler pylint | normal <leader>mp
+autocmd FileType python command! -nargs=0 Flake8 compiler flake8 | normal <leader>mm
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
