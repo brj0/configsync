@@ -16,5 +16,4 @@ else
 endif
 
 CompilerSet makeprg=ruff
-CompilerSet errorformat=%f:%l:%c:\ %t%n\ %m
-CompilerSet errorformat+=%f:%l:%c:\ %t%*[^0-9]%n\ %m
+CompilerSet errorformat=%f:%l:%c:\ %m
