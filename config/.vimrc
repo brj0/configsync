@@ -401,6 +401,7 @@ let s:comment_map_start = {
     \   "r": '#',
     \   "sh": '#',
     \   "tex": '%',
+    \   "toml": '#',
     \   "tmux": '#',
     \   "vim": '"',
     \   "yaml": '#',
