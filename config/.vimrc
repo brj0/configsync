@@ -546,7 +546,7 @@ autocmd FileType python noremap <leader>b <Esc>oimport pdb; pdb.set_trace()<Esc>
 
 " Python linting
 autocmd FileType python compiler ruff
-autocmd FileType python command! -nargs=0 Ruff compiler ruff | normal <leader>mm
+autocmd FileType python command! -nargs=0 Ruff compiler ruff | normal <leader>mp
 autocmd FileType python command! -nargs=0 Bruff !ruff format --line-length 79 %
 autocmd FileType python command! -nargs=0 Iruff !ruff check --select I --fix %
 
