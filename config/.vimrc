@@ -553,7 +553,7 @@ autocmd FileType python command! -nargs=0 Iruff !ruff check --select I --fix %
 autocmd FileType python command! -nargs=0 Black !black -l 79 %
 autocmd FileType python command! -nargs=0 Isort !isort --profile black -l 79 %
 autocmd FileType python command! -nargs=0 Pylint compiler pylint | normal <leader>mp
-autocmd FileType python command! -nargs=0 Flake8 compiler flake8 | normal <leader>mm
+autocmd FileType python command! -nargs=0 Flake8 compiler flake8 | normal <leader>mp
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
