@@ -236,6 +236,10 @@ noremap <expr> N (v:searchforward ? 'N' : 'n')
 set ignorecase
 set smartcase
 
+" Make autocompletion in insert mode case sensitive
+au InsertEnter * set noignorecase
+au InsertLeave * set ignorecase
+
 " Dont use ignorecase when using * and #
 nnoremap <silent>  * :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=1<CR>n
 nnoremap <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=0<CR>n
