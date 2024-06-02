@@ -151,6 +151,9 @@ set showcmd
 " Map Q to formatting instead of Ex mode
 map Q gq
 
+" When using J or Q don't add two spaces after period
+set nojoinspaces
+
 " Show all trailing whitespace
 " MUST be inserted before colorscheme command
 highlight ExtraWhitespace ctermbg=red
