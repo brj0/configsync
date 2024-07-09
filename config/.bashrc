@@ -143,6 +143,9 @@ export MANPAGER='/bin/bash -c "vim -MRn \
     -c \"normal L\" \
     -c \"nmap q :qa<CR>\" </dev/tty <(col -b)"'
 
+# Needed for git log
+export PAGER=less
+
 
 ### SOURCE
 ###############################################################################
