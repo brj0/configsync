@@ -1,12 +1,7 @@
 #!/bin/bash
 
-if [[ -z "$PYPI_USERNAME" ]]; then
-  echo "Error: PyPI username is not set."
-  exit 1
-fi
-
-if [[ -z "$PYPI_PASSWORD" ]]; then
-  echo "Error: PyPI password is not set."
+if [[ -z "$TWINE_USERNAME" || -z "$TWINE_PASSWORD" ]]; then
+  echo "Error: PyPI username or password (token) is not set."
   exit 1
 fi
 
@@ -23,7 +18,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "Uploading the package to PyPI..."
-twine upload dist/* -u "$PYPI_USERNAME" -p "$PYPI_PASSWORD"
+twine upload dist/* -u "$TWINE_USERNAME" -p "$TWINE_PASSWORD"
 
 if [[ $? -ne 0 ]]; then
   echo "Error: Failed to upload the package to PyPI."
