@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ -z "$PYPI_USERNAME" ]]; then
+  echo "Error: PyPI username is not set."
+  exit 1
+fi
+
+if [[ -z "$PYPI_PASSWORD" ]]; then
+  echo "Error: PyPI password is not set."
+  exit 1
+fi
+
+
+echo "Cleaning old distribution files..."
+rm -rf dist/*
+
+echo "Building the package..."
+python setup.py sdist bdist_wheel
+
+if [[ $? -ne 0 ]]; then
+  echo "Error: Failed to build the package."
+  exit 1
+fi
+
+echo "Uploading the package to PyPI..."
+twine upload dist/* -u "$PYPI_USERNAME" -p "$PYPI_PASSWORD"
+
+if [[ $? -ne 0 ]]; then
+  echo "Error: Failed to upload the package to PyPI."
+  exit 1
+fi
+
+echo "Package uploaded successfully to PyPI!"
