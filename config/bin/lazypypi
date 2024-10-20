@@ -26,3 +26,6 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "Package uploaded successfully to PyPI!"
+
+echo "Delete dist and build..."
+rm -rf dist build
