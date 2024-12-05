@@ -557,6 +557,7 @@ autocmd FileType python compiler ruff
 autocmd FileType python command! -nargs=0 Ruff compiler ruff | normal <leader>mp
 autocmd FileType python command! -nargs=0 Bruff !ruff format --line-length 79 %
 autocmd FileType python command! -nargs=0 Iruff !ruff check --select I --fix %
+autocmd FileType python command! -nargs=0 Aruff !ruff check --select I --fix % && ruff format --line-length 79 %
 
 autocmd FileType python command! -nargs=0 Black !black -l 79 %
 autocmd FileType python command! -nargs=0 Isort !isort --profile black -l 79 %
