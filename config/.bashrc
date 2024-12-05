@@ -26,9 +26,7 @@ HISTCONTROL=ignoreboth:erasedups
 PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Clean up history file by removing all duplicates when opening new console
-tac "$HISTFILE" | awk '!x[$0]++' > ~/.bash_history_reverse &&
-    tac ~/.bash_history_reverse > "$HISTFILE"
-rm -f ~/.bash_history_reverse
+tac "$HISTFILE" | awk '!seen[$0]++' | tac > "${HISTFILE}.tmp" && mv "${HISTFILE}.tmp" "$HISTFILE"
 
 # Append to the history file, don't overwrite it
 shopt -s histappend
@@ -67,8 +65,13 @@ stty -ixon
 # Use colors
 export TERM="xterm-256color"
 
+# Display Git branch in PS1
+git_branch() {
+    git branch --show-current 2>/dev/null
+}
+
 # Set prompt
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\] $(git_branch)\[\033[00m\]\$ '
 
 # Set the title to user@host:dir
 PS1="\[\e]0;\u@\h: \w\a\]$PS1"
