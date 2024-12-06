@@ -26,7 +26,7 @@ HISTCONTROL=ignoreboth:erasedups
 PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Clean up history file by removing all duplicates when opening new console
-tac "$HISTFILE" | awk '!seen[$0]++' | tac > "${HISTFILE}.tmp" && mv "${HISTFILE}.tmp" "$HISTFILE"
+tac "$HISTFILE" | awk '!seen[$0]++' | tac > "${HISTFILE}.tmp" && mv -f "${HISTFILE}.tmp" "$HISTFILE"
 
 # Append to the history file, don't overwrite it
 shopt -s histappend
