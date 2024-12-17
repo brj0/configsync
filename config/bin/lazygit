@@ -10,9 +10,11 @@ fi
 
 if [ "$#" -gt 1 ]; then
     echo "Number of parameters must be 0 or 1."
-    exit
+    exit 1
 fi
+
+branch=$(git rev-parse --abbrev-ref HEAD)
 
 git add -A
 git commit -m "$msg"
-git push origin main
+git push origin "$branch"
