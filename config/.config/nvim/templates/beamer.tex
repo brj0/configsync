@@ -1,1 +1,58 @@
-/home/dr_b/.configsync/config/.vim/templates/beamer.tex
+\documentclass[10pt]{beamer}
+%\documentclass[10pt, handout]{beamer} % no pause
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{hyperref}
+\beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}} % paused elements opaque
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usefonttheme[onlymath]{serif} % make the math in beamer look like the usual LaTeX
+
+\setbeamertemplate{section in toc}[sections numbered]
+
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{filecontents} % to embed the file references.bib in your .tex file
+
+\begin{filecontents}{references.bib}
+% Ad bibfiles here. Add toreference to print ref in bibliography
+%@article{key,
+%  title={},
+%  author={},
+%  journal={},
+%  volume={},
+%  number={},
+%  pages={},
+%  year={},
+%  keywords={toreference}
+%}
+\end{filecontents}
+
+\usepackage[backend=biber,style=verbose]{biblatex}
+\addbibresource{references.bib}
+
+% titlepage
+\title{<++>}
+\author{<++>}
+\institute{<++>}
+\date{<++>}
+
+
+\begin{document}
+
+\begin{frame}{}
+\titlepage
+\end{frame}
+
+
+\begin{frame}{Referenz}
+%\nocite{key}
+\printbibliography[keyword=toreference]
+\end{frame}
+
+<++>
+
+\end{document}

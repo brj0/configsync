@@ -1,1 +1,6 @@
-/home/dr_b/.configsync/config/.vim/templates/skeleton.c
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+    <++>
+    return 0;
+}

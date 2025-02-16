@@ -1,1 +1,6 @@
-/home/dr_b/.configsync/config/.vim/templates/skeleton.cpp
+#include <iostream>
+
+int main() {
+    <++>
+    return 0;
+}

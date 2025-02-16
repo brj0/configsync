@@ -1,1 +1,1 @@
-/home/dr_b/.configsync/config/.vim/templates/skeleton.sh
+#!/bin/bash
