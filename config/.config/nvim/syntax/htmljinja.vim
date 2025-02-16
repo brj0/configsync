@@ -1,0 +1,1 @@
+/home/dr_b/.configsync/config/.vim/syntax/htmljinja.vim

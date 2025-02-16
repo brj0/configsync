@@ -62,9 +62,6 @@ stty -ixon
 # Make less more friendly for non-text input files, see lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Use colors
-export TERM="xterm-256color"
-
 # Display Git branch in PS1
 git_branch() {
     git branch --show-current 2>/dev/null
@@ -122,14 +119,14 @@ alias bat='bat --theme=OneHalfLight'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Add Generic Makefile
-alias addmake='cp ~/.vim/templates/Makefile Makefile'
+alias addmake='cp ~/.config/nvim/templates/Makefile Makefile'
 
 
 ### VIM
 ###############################################################################
 
 # vim as standard editor
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 # vim mode
@@ -144,7 +141,7 @@ command -v xset >/dev/null && xset q | grep -q "Caps Lock:   on" && xdotool key 
 setxkbmap -option caps:escape 2>/dev/null
 
 # Use vim for man pages
-export MANPAGER='/bin/bash -c "vim -MRn \
+export MANPAGER='/bin/bash -c "nvim -MRn \
     -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" \
     -c \"normal L\" \
     -c \"nmap q :qa<CR>\" </dev/tty <(col -b)"'

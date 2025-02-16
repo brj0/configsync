@@ -55,10 +55,10 @@ hi Type	      cterm=NONE ctermfg=Blue	     gui=bold guifg=blue
 
 " spell
 if has("spell")
-    hi SpellBad   cterm=underline ctermul=red  ctermbg=NONE
-    hi SpellCap   cterm=underline ctermul=blue  ctermbg=NONE
-    hi SpellLocal cterm=underline ctermul=blue  ctermbg=NONE
-    hi SpellRare  ctermfg=NONE    ctermbg=NONE  cterm=reverse
+    hi SpellBad   cterm=underline ctermfg=red  ctermbg=NONE
+    hi SpellCap   cterm=underline ctermfg=blue ctermbg=NONE
+    hi SpellLocal cterm=underline ctermfg=blue ctermbg=NONE
+    hi SpellRare  ctermfg=NONE    ctermbg=NONE cterm=reverse
 endif
 
 " vim: sw=2
