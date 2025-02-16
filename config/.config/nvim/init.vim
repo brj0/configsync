@@ -369,6 +369,8 @@ nmap gx :!sensible-browser <C-r><C-a><CR><CR>
 " Swap word with next word.
 nmap <leader>s :s/\([[:alnum:]#_="'.&*+-]*\%#[[:alnum:]#_="'.&*+-]\+\)\([, ]\+\)\([[:alnum:]#_="'.&*+-]\+\)/\3\2\1/<CR><C-o><C-l>
 
+" Close man page with 'q'
+autocmd FileType man nnoremap <buffer> q :quit<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ COMMENT / UNCOMMENT
