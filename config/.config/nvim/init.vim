@@ -7,6 +7,25 @@
 """ PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Automatically install Packer if it's not installed
+if empty(glob('~/.local/share/nvim/site/pack/packer/start/packer.nvim'))
+  silent! execute '!git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim'
+  autocmd VimEnter * PackerSync
+endif
+
+" Ensure Packer is loaded
+set runtimepath+=~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+" Use Packer to manage plugins
+lua << EOF
+require('packer').startup(function(use)
+  -- Packer itself
+  use 'wbthomason/packer.nvim'
+
+  -- Add packages
+  use 'joshdick/onedark.vim'
+end)
+EOF
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -149,7 +168,12 @@ autocmd BufWinEnter * syntax sync fromstart
 
 " Syntax color
 syntax on
-colorscheme monokai
+
+try
+  colorscheme monokai
+catch
+  colorscheme desert
+endtry
 
 
 " Show all highlighting colors
