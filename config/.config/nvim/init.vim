@@ -22,8 +22,9 @@ require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
 
-  -- Add packages
+  -- Colorscheme
   use 'joshdick/onedark.vim'
+  use 'RRethy/nvim-base16'
 end)
 EOF
 
@@ -409,6 +410,7 @@ let s:comment_map_start = {
     \   "dockerfile": '#',
     \   "html": '<!--',
     \   "htmldjango": '<!--',
+    \   "lua": '--',
     \   "javascript": '\/\/',
     \   "make": '#',
     \   "python": '#',
