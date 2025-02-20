@@ -660,6 +660,9 @@ require("lazy").setup({
         "loctvl842/monokai-pro.nvim",
     },
 
+    { -- Fast fuzzy finder
+        "ibhagwan/fzf-lua",
+    },
 })
 
 
