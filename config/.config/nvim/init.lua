@@ -87,7 +87,7 @@ vim.opt.path:append("**")
 vim.opt.omnifunc = "syntaxcomplete#Complete"
 
 -- Adjust timeouts
-vim.opt.timeoutlen = 500
+vim.opt.timeoutlen = 800
 vim.opt.ttimeoutlen = 100
 
 -- Disable automatic buffer hiding
@@ -143,7 +143,7 @@ vim.keymap.set('v', 'ä', ':', { noremap = true })
 
 -- Compilation shortcuts
 --  Compile file and open quickfix if there are errors
-vim.keymap.set('n', '<leader>ma', ':w<CR>:silent make! | redraw! | cw<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>mm', ':w<CR>:silent make! | redraw! | cw<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>mf', ':w<CR>:silent make! % | redraw! | cw<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>mb', ':w<CR>:silent make! -C build | redraw! | cw<CR>', { noremap = true, silent = true })
 
@@ -207,8 +207,13 @@ vim.keymap.set("n", "<leader>*", function()
     local word = vim.fn.expand('<cword>')
     vim.cmd("/\\C" .. word)
     vim.cmd('normal! N')
-    -- vim.cmd('vimgrep /' .. word .. '/gj **/*')
-    vim.cmd("silent! grep! -R " .. word .. " * --binary-files=without-match --exclude-dir={.git,tmp,log,_build} --exclude=tags")
+    if vim.fn.executable("rg") == 1 then
+        -- Use ripgrep if available (gj is invalid in this case)
+        vim.cmd("silent! grep! " .. vim.fn.shellescape(word) .. " **/*")
+    else
+        -- Fall back to vimgrep
+        vim.cmd("vimgrep /" .. word .. "/gj **/*")
+    end
     vim.cmd("cwindow")
 end, { desc = "Recursive grep and highlight word" })
 
@@ -310,7 +315,7 @@ function RunInConsole(register)
 end
 
 vim.keymap.set("n", "<leader>e", "\"zy$:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
-vim.keymap.set("v", "<leader>e", "\"zy'>:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
+vim.keymap.set("v", "<leader>e", "$\"zy'>:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>E", function()
     vim.fn.system("tmux send-keys -t 1 Enter")
 end, { noremap = true, silent = true })
@@ -622,9 +627,10 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 
     { -- Comment / uncomment lines/blocks of code
-        "numToStr/Comment.nvim",
-        event = "VeryLazy", -- Load only when needed
-        config = true, -- Auto-runs require("Comment").setup()
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        }
     },
 
     { -- Modern statusline
