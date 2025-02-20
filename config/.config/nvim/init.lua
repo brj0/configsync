@@ -284,6 +284,37 @@ vim.keymap.set("n", "<leader>g", toggle_motion_wrap, { noremap = true, silent = 
 -- Exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- Sends the current line or selected text to the first tmux pane for execution.
+-- This allows running code line by line in an interpreter within tmux.
+function RunInConsole(register)
+    local code = vim.fn.getreg(register)
+
+    -- If last line ends without CR, add one manually
+    if not code:match(".*\n$") then
+        code = code .. "\n"
+    end
+
+    -- Split the code into chunks of 1024 characters (to prevent buffer overflow)
+    local chunk_size = 1024
+    local code_chunks = {}
+
+    for i = 1, #code, chunk_size do
+        table.insert(code_chunks, code:sub(i, i + chunk_size - 1))
+    end
+
+    -- Send each chunk to tmux
+    for _, chunk in ipairs(code_chunks) do
+        vim.fn.system("tmux set-buffer " .. vim.fn.shellescape(chunk))
+        vim.fn.system("tmux paste-buffer -t 1")
+    end
+end
+
+vim.keymap.set("n", "<leader>e", "\"zy$:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
+vim.keymap.set("v", "<leader>e", "\"zy'>:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>E", function()
+    vim.fn.system("tmux send-keys -t 1 Enter")
+end, { noremap = true, silent = true })
+
 -- Yank to tmux buffer
 local function yank_to_tmux()
     local yanked_text = vim.fn.getreg('"')
