@@ -388,7 +388,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "netrw",
     callback = function()
-        vim.keymap.set(0, "n", "tt", "<Nop>", { noremap = true })
+        vim.keymap.set("n", "tt", "<Nop>", { noremap = true, buffer = true })
     end
 })
 
