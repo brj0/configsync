@@ -389,7 +389,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "netrw",
     callback = function()
         vim.keymap.set(0, "n", "tt", "<Nop>", { noremap = true })
-    end,
+    end
 })
 
 -- Use 2 spaces for certain file types
@@ -677,6 +677,21 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>sr", "<cmd>lua require('fzf-lua').lsp_references()<CR>", { noremap = true, silent = true })
             vim.keymap.set("n", "<leader>sd", "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", { noremap = true, silent = true })
             vim.keymap.set("n", "<leader>s*", "<cmd>lua require('fzf-lua').grep_cword()<CR>", { noremap = true, silent = true })
+        end
+    },
+
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function () 
+        local configs = require("nvim-treesitter.configs")
+
+        configs.setup({
+            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "python" },
+            sync_install = false,
+            highlight = { enable = true },
+            indent = { enable = true },  
+            })
         end
     },
 
