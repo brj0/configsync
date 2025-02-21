@@ -160,7 +160,15 @@ vim.keymap.set('n', '<leader>mr', ':make run<CR>', { noremap = true, silent = tr
 vim.keymap.set('n', 'tt', '<C-W><Enter><C-W>T', { noremap = true, silent = true })
 
 -- Open working directory in vertical split
-vim.keymap.set('n', '<leader>t', ':30vsplit .<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>t', function()
+  local win_count = #vim.api.nvim_list_wins()
+  if win_count > 1 then
+    vim.cmd("close")
+  else
+    -- Open netrw in a vertical split
+    vim.cmd("30vsplit .")
+  end
+end, { noremap = true, silent = true })
 
 -- Toggle between absolute and relative line numbers
 vim.keymap.set('n', '<leader>l', function()
@@ -628,6 +636,7 @@ require("lazy").setup({
 
     { -- Comment / uncomment lines/blocks of code
         'numToStr/Comment.nvim',
+        event = "VeryLazy",
         opts = {
             -- add any options here
         }
@@ -635,6 +644,7 @@ require("lazy").setup({
 
     { -- Modern statusline
         "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("lualine").setup({
@@ -662,6 +672,7 @@ require("lazy").setup({
 
     { -- Fast fuzzy finder
         "ibhagwan/fzf-lua",
+        event = "VeryLazy",
         -- optional for icon support
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
@@ -680,7 +691,7 @@ require("lazy").setup({
         end
     },
 
-    {
+    { -- Improves syntax coloring
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         config = function () 
@@ -693,6 +704,14 @@ require("lazy").setup({
             indent = { enable = true },  
             })
         end
+    },
+
+
+    { -- Highlight todo, notes, etc in comments
+        'folke/todo-comments.nvim',
+        event = 'VimEnter',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = { signs = false },
     },
 
 })
