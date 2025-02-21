@@ -388,7 +388,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "netrw",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, "n", "tt", "<Nop>", { noremap = true })
+        vim.keymap.set(0, "n", "tt", "<Nop>", { noremap = true })
     end,
 })
 
@@ -662,7 +662,24 @@ require("lazy").setup({
 
     { -- Fast fuzzy finder
         "ibhagwan/fzf-lua",
+        -- optional for icon support
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require("fzf-lua").setup {
+            }
+
+            -- Mapping for fzf commands
+            vim.keymap.set("n", "<leader>sf", "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>sg", "<cmd>lua require('fzf-lua').live_grep()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>sb", "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>sh", "<cmd>lua require('fzf-lua').help_tags()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>sm", "<cmd>lua require('fzf-lua').man_pages()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>sr", "<cmd>lua require('fzf-lua').lsp_references()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>sd", "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<leader>s*", "<cmd>lua require('fzf-lua').grep_cword()<CR>", { noremap = true, silent = true })
+        end
     },
+
 })
 
 
