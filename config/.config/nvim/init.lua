@@ -59,6 +59,9 @@ vim.opt.wildignore = "*.pyc,*.nbc,*.nbi,*.o,*.d,*.cmake,*.bin,*.so,*.egg-info/"
 -- Turn off backup swap files
 vim.opt.swapfile = false
 
+-- Save undo history
+-- vim.opt.undofile = true
+
 -- Preview substitutions live, as we type
 vim.opt.inccommand = 'split'
 
@@ -84,7 +87,7 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.path:append("**")
 
 -- Ctrl-x Ctrl-o completion
-vim.opt.omnifunc = "syntaxcomplete#Complete"
+-- vim.opt.omnifunc = "syntaxcomplete#Complete"
 
 -- Adjust timeouts
 vim.opt.timeoutlen = 800
@@ -92,6 +95,9 @@ vim.opt.ttimeoutlen = 100
 
 -- Disable automatic buffer hiding
 vim.opt.hidden = false
+
+-- Fallback colorscheme
+vim.cmd("colorscheme slate")
 
 
 
@@ -232,6 +238,9 @@ vim.keymap.set('v', '#', '"zy?<C-R>z<Enter>', { noremap = true })
 -- Search and replace word under cursor
 vim.keymap.set('n', '<leader>r', "/\\<<C-R><C-W>\\>\\C<CR>Ncw", { noremap = true, silent = true })
 
+-- Replace all occurrences of the word under the cursor
+vim.keymap.set("n", "<leader>R", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
 -- Moving fast in quickfix
 --  Toggle quickfix window
 vim.keymap.set('n', '<leader>f', function()
@@ -355,10 +364,10 @@ vim.keymap.set("n", "Y", "y$", { silent = true, desc = "Yank to end of line" })
 
 -- [[ Custom Commands ]]
 
--- Open neovim config directory in a new tab
+-- rOopen the Neovim config directory in the current window
 vim.api.nvim_create_user_command('OpenConfig', function()
-    vim.cmd('tabnew ~/.config/nvim')
-end, {})
+    vim.cmd('edit ~/.config/nvim')  -- Open in the current window
+end, { desc = "Open Neovim config directory in the current window" })
 
 -- Show all highlighting colors
 vim.api.nvim_create_user_command('Hitest', 'source $VIMRUNTIME/syntax/hitest.vim', {})
@@ -668,6 +677,23 @@ require("lazy").setup({
 
     { -- monokai colorscheme
         "loctvl842/monokai-pro.nvim",
+        config = function()
+            require("monokai-pro").setup({
+                override = function(c) -- Override specific colors
+                    return {
+                        QuickFixLine = { bg = c.base.dimmed3, fg = c.base.white, bold = true }, -- Selected QuickFix line
+                        Directory = { bg = "NONE", fg = c.base.cyan, bold = true }, -- Directories in netrw and non-selected QuickFix lines
+                    }
+                end
+            })
+            vim.cmd("colorscheme monokai-pro-spectrum")
+        end
+    },
+
+    { -- monokai colorscheme - faster than pro version
+        "polirritmico/monokai-nightasty.nvim",
+        lazy = false,
+        priority = 1000,
     },
 
     { -- Fast fuzzy finder
@@ -677,6 +703,11 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("fzf-lua").setup {
+                files = {
+                    hidden = true,     -- enable hidden files by default
+                    follow = false,    -- do not follow symlinks by default
+                    no_ignore = true,  -- don't respect ".gitignore"  by default
+                },
             }
 
             -- Mapping for fzf commands
@@ -698,7 +729,7 @@ require("lazy").setup({
         local configs = require("nvim-treesitter.configs")
 
         configs.setup({
-            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "python" },
+            ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "css", "html", "python" },
             sync_install = false,
             highlight = { enable = true },
             indent = { enable = true },  
@@ -714,14 +745,46 @@ require("lazy").setup({
         opts = { signs = false },
     },
 
+
+    {  -- Navigating undo history
+        "mbbill/undotree",
+        keys = {
+            { "<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree" },
+        },
+    },
+
+    {
+        "neovim/nvim-lspconfig",
+        event = "VeryLazy",
+        config = function()
+            local lspconfig = require('lspconfig')
+
+            lspconfig.ruff.setup({ autostart = false })
+
+            _G.toggle_lsp = function()
+                local clients = vim.lsp.get_active_clients()
+                local lsp_running = false
+
+                -- Check if ruff LSP is already running
+                for _, client in ipairs(clients) do
+                    if client.name == "ruff" then
+                        lsp_running = true
+                        break
+                    end
+                end
+
+                if lsp_running then
+                    vim.cmd("LspStop")  -- Stop all LSP servers
+                    vim.cmd("echo 'LSP Disabled'")
+                else
+                    vim.cmd("LspStart ruff")  -- Start ruff LSP
+                    vim.cmd("echo 'LSP Enabled'")
+                end
+            end
+
+            -- Set keybinding to toggle LSP
+            vim.api.nvim_set_keymap('n', '<leader>L', ':lua toggle_lsp()<CR>', { noremap = true, silent = true })
+        end,
+    },
+
 })
-
-
-
--- [[ Settings After Plugins are Loaded ]]
-
--- Set colorscheme
-local ok, _ = pcall(vim.cmd, "colorscheme monokai-pro-spectrum")
-if not ok then
-    vim.cmd("colorscheme desert")
-end
