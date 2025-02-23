@@ -35,8 +35,7 @@ return {
         end,
     },
 
-
-    --[[
+--[[
     -- LSP Plugins
 
     {   -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -229,22 +228,52 @@ return {
                 --
                 -- But for many setups, the LSP (`ts_ls`) will work just fine
                 -- ts_ls = {},
-                --
+
+
+                ruff = {},
+
+                -- pylsp = {
+                --     settings = {
+                --         pylsp = {
+                --             plugins = {
+                --                 pyflakes = { enabled = false },
+                --                 pycodestyle = { enabled = false },
+                --                 autopep8 = { enabled = false },
+                --                 yapf = { enabled = false },
+                --                 mccabe = { enabled = false },
+                --                 pylsp_mypy = { enabled = false },
+                --                 pylsp_black = { enabled = false },
+                --                 pylsp_isort = { enabled = false },
+                --             },
+                --         },
+                --     },
+                -- },
 
                 lua_ls = {
-                    -- cmd = { ... },
-                    -- filetypes = { ... },
+                    -- cmd = {...},
+                    -- filetypes = { ...},
                     -- capabilities = {},
                     settings = {
                         Lua = {
                             completion = {
                                 callSnippet = 'Replace',
                             },
-                            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                            -- diagnostics = { disable = { 'missing-fields' } },
+                            runtime = { version = 'LuaJIT' },
+                            workspace = {
+                                checkThirdParty = false,
+                                library = {
+                                    '${3rd}/luv/library',
+                                    unpack(vim.api.nvim_get_runtime_file('', true)),
+                                },
+                            },
+                            diagnostics = { disable = { 'missing-fields' } },
+                            format = {
+                                enable = false,
+                            },
                         },
                     },
                 },
+
             }
 
             -- Ensure the servers and tools above are installed
@@ -400,7 +429,6 @@ return {
             }
         end,
     },
-
-    --]]
+]]
 
 }

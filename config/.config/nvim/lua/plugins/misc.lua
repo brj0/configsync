@@ -9,7 +9,11 @@ return {
         }
     },
 
-    -- Highlight todo, notes, etc in comments
+    -- Highlight todo, notes, etc in comments:
+    -- TODO:
+    -- NOTE:
+    -- WARNING:
+    -- BUG:
     {
         'folke/todo-comments.nvim',
         event = 'VimEnter',
@@ -24,4 +28,5 @@ return {
             { "<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree" },
         },
     },
+
 }
