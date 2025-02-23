@@ -7,8 +7,20 @@ this_script=$(realpath $0)
 this_script_dir=$(dirname $this_script)
 config_dir=$(dirname $this_script)'/config'
 
+# Check if an argument is provided and handle options
+if [ "$1" == "--local" ]; then
+    local_mode=true
+elif [ -n "$1" ]; then
+    echo "Invalid option: $1"
+    exit 1
+else
+    local_mode=false
+fi
+
 # Look for updates.
-git -C $this_script_dir pull
+if [ "$local_mode" = false ]; then
+    git -C $this_script_dir pull
+fi
 
 # Files and dirs to sync.
 sync_files=$(find $config_dir -mindepth 1 -type f)
@@ -40,14 +52,16 @@ if [ -L $this_script_ln ]; then
 fi
 ln -s $this_script $this_script_ln
 
-# Push to GitHub
-git -C $this_script_dir add -A
-git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+# If not in local mode, push to GitHub
+if [ "$local_mode" = false ]; then
+    git -C $this_script_dir add -A
+    git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
 
-if [ -n "$(git -C $this_script_dir cherry -v)" ]; then
-    echo "Changes detected."
-else
-    echo "No changes detected."
+    if [ -n "$(git -C $this_script_dir cherry -v)" ]; then
+        echo "Changes detected."
+    else
+        echo "No changes detected."
+    fi
+
+    git -C $this_script_dir push origin main
 fi
-
-git -C $this_script_dir push origin main
