@@ -164,8 +164,11 @@ vim.keymap.set('n', '<leader>dm', ':set nospell<CR>:setlocal spell spelllang=en_
 vim.keymap.set('n', '<leader>dd', ':set nospell<CR>', { noremap = true, silent = true })
 
 -- Toggle between normal motion and soft-wrapped g-motion
+
+local M = {}
+
 local wrap_keys_enabled = false
-local function toggle_motion_wrap()
+function M.toggle_motion_wrap()
     if wrap_keys_enabled then
         -- Reset to normal `j`, `k`
         vim.api.nvim_del_keymap("n", "j")
@@ -195,7 +198,7 @@ local function toggle_motion_wrap()
     end
 end
 
-vim.keymap.set("n", "<leader>g", toggle_motion_wrap, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>g", M.toggle_motion_wrap, { noremap = true, silent = true })
 
 -- Exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -253,3 +256,5 @@ vim.keymap.set("n", "<C-@>", ":!tmux-sessionizer<CR><CR>", { silent = true, desc
 
 -- Make Y behave like C and D (yank until end of line)
 vim.keymap.set("n", "Y", "y$", { silent = true, desc = "Yank to end of line" })
+
+return M

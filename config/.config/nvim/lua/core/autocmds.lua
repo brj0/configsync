@@ -30,11 +30,12 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Auto-enable motion wrap for certain file types
+local keymaps = require("core.keymaps")
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "tex", "markdown" },
     callback = function()
         if not wrap_keys_enabled then
-        toggle_motion_wrap()
+        keymaps.toggle_motion_wrap()
         end
     end
 })
