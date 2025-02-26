@@ -16,9 +16,13 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Use 2 spaces for certain file types
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "css", "html", "htmldjango", "javascript" },
+    pattern = {
+        "css", "html", "htmldjango", "javascript", "typescript", 
+        "json", "yaml", "scss", "vue", "svelte", "markdown"
+    },
     command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2"
 })
+
 
 -- Enable spell checking in specific file types
 vim.api.nvim_create_autocmd("FileType", {
