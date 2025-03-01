@@ -1,5 +1,8 @@
 return {
 
+    -- Essential Git plugin
+    { "tpope/vim-fugitive" },
+
     -- Comment / uncomment lines/blocks of code
     {
         'numToStr/Comment.nvim',

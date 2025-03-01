@@ -196,8 +196,10 @@ font:
 
 colors:
   primary:
-    background: '#282a36'
-    foreground: '#f8f8f2'
+    # background: '#282a36'
+    background: '#222222' # Same as in nvim monokai-pro-spectrum
+    # foreground: '#f8f8f2'
+    foreground: '#f7f1ff' # Same as in nvim monokai-pro-spectrum
     bright_foreground: '#ffffff'
   cursor:
     text: CellBackground
