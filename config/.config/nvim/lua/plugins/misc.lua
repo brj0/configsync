@@ -1,7 +1,10 @@
 return {
 
     -- Essential Git plugin
-    { "tpope/vim-fugitive" },
+    {
+        "tpope/vim-fugitive",
+        event = "VeryLazy"
+    },
 
     -- Comment / uncomment lines/blocks of code
     {
