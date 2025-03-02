@@ -113,14 +113,14 @@ vim.keymap.set('n', 'g#', ":let @/='\\C' .. expand('<cword>') <CR>:let v:searchf
 -- Search project for current word and highlight it
 vim.keymap.set("n", "<leader>*", function()
     local word = vim.fn.expand('<cword>')
-    vim.cmd("/\\C" .. word)
+    vim.cmd("/\\C\\<" .. word .. "\\>")
     vim.cmd('normal! N')
     if vim.fn.executable("rg") == 1 then
         -- Use ripgrep if available (gj is invalid in this case)
-        vim.cmd("silent! grep! " .. vim.fn.shellescape(word) .. " **/*")
+        vim.cmd("silent! grep! -w " .. vim.fn.shellescape(word) .. " **/*")
     else
         -- Fall back to vimgrep
-        vim.cmd("vimgrep /" .. word .. "/gj **/*")
+        vim.cmd("vimgrep /\\<" .. word .. "\\>/gj **/*")
     end
     vim.cmd("cwindow")
 end, { desc = "Recursive grep and highlight word" })
