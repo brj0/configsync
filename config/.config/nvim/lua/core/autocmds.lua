@@ -178,13 +178,6 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_augroup("HtmlCommands", { clear = true })
 
--- Enable htmljinja syntax for HTML files
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    group = "HtmlCommands",
-    pattern = "*.html",
-    command = "set syntax=htmljinja"
-})
-
 -- Snippet to wrap a selected word with angle brackets (e.g., <div></div>)
 vim.api.nvim_create_autocmd("FileType", {
     group = "HtmlCommands",
