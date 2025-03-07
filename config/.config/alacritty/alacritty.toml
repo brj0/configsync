@@ -60,7 +60,7 @@ cursor = "CellForeground"
 text = "CellBackground"
 
 [font]
-size = 7.0
+size = 12.0
 
 [font.normal]
 family = "Hack"
