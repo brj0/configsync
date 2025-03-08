@@ -221,11 +221,18 @@ function RunInConsole(register)
         table.insert(code_chunks, code:sub(i, i + chunk_size - 1))
     end
 
+    -- Send F3 key for starting paste mode in python 3.13
+    vim.fn.system("tmux send-keys -t 1 F3")
+
     -- Send each chunk to tmux
     for _, chunk in ipairs(code_chunks) do
         vim.fn.system("tmux set-buffer " .. vim.fn.shellescape(chunk))
         vim.fn.system("tmux paste-buffer -t 1")
     end
+
+    -- Send F3 key for ending paste mode in python 3.13
+    vim.fn.system("tmux send-keys -t 1 F3")
+
 end
 
 vim.keymap.set("n", "<leader>e", "\"zy$:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
