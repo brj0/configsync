@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {
         "css", "html", "htmldjango", "javascript", "typescript", 
-        "json", "yaml", "scss", "vue", "svelte", "markdown"
+        "json", "yaml", "scss", "toml", "vue", "svelte", "markdown"
     },
     command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2"
 })
