@@ -222,7 +222,7 @@ function RunInConsole(register)
     end
 
     -- Send F3 key for starting paste mode in python 3.13
-    vim.fn.system("tmux send-keys -t 1 F3")
+    -- vim.fn.system("tmux send-keys -t 1 F3")
 
     -- Send each chunk to tmux
     for _, chunk in ipairs(code_chunks) do
@@ -231,7 +231,7 @@ function RunInConsole(register)
     end
 
     -- Send F3 key for ending paste mode in python 3.13
-    vim.fn.system("tmux send-keys -t 1 F3")
+    -- vim.fn.system("tmux send-keys -t 1 F3")
 
 end
 
