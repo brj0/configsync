@@ -216,7 +216,6 @@ end
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "python",
     callback = function()
-        -- Map <Leader>Q for visual mode to trigger the formatting function in Python files
         vim.api.nvim_set_keymap('v', '<Leader>Q', [[:lua FormatMultilineString()<CR>]], { noremap = true, silent = true })
     end
 })
