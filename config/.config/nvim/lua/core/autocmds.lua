@@ -172,6 +172,50 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
+-- Splits long string into appropriate parts
+function SplitString()
+    local max_line_width = 79
+    local current_line = vim.fn.getline('.')
+    local indentation = current_line:match("^%s*")
+    local content = current_line:gsub("^%s*(.-)%s*$", "%1")
+    local effective_width = max_line_width - #indentation
+    local result = {}
+    local line = ''
+
+    for word in content:gmatch("([^%s,]+[%s,]*)") do
+        if #line + #word + 1 > effective_width then
+            table.insert(result, indentation .. line .. '"')
+            line = '"' .. word
+        else
+            line = line .. word
+        end
+    end
+
+    if line ~= "" then
+        table.insert(result, indentation .. line)
+    end
+
+    local row = vim.fn.line('.') - 1
+    vim.api.nvim_buf_set_lines(0, row, row + 1, false, result)
+
+end
+
+-- Join multi-line strings and format them properly
+function FormatMultilineString()
+    vim.cmd('normal! gv')
+    vim.cmd('normal! J')
+    vim.cmd('silent! %s/" "//g')
+    SplitString()
+end
+
+-- Format multi-line strings in the visual selection
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function()
+        -- Map <Leader>Q for visual mode to trigger the formatting function in Python files
+        vim.api.nvim_set_keymap('v', '<Leader>Q', [[:lua FormatMultilineString()<CR>]], { noremap = true, silent = true })
+    end
+})
 
 
 -- [[ HTML ]]
