@@ -172,17 +172,25 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
--- Splits long string into appropriate parts
-function SplitString()
+-- Join multi-line strings and format them properly
+function FormatMultilineString()
+    -- Get the selected lines in visual mode
+    local start_line = vim.fn.line("'<")
+    local end_line = vim.fn.line("'>")
+    local selected_lines = vim.fn.getline(start_line, end_line)
+
+    local full_content = table.concat(selected_lines, "")
+
+    -- Remove internal quotes, and condense multiple spaces to a single space
+    full_content = '"' .. full_content:gsub('"', ''):gsub('^%s*(.-)%s*$', '%1'):gsub('%s+', ' ') .. '"'
+
     local max_line_width = 79
-    local current_line = vim.fn.getline('.')
-    local indentation = current_line:match("^%s*")
-    local content = current_line:gsub("^%s*(.-)%s*$", "%1")
+    local indentation = selected_lines[1]:match("^%s*")
     local effective_width = max_line_width - #indentation
     local result = {}
-    local line = ''
+    local line = ""
 
-    for word in content:gmatch("([^%s,]+[%s,]*)") do
+    for word in full_content:gmatch("([^%s,]+[%s,]*)") do
         if #line + #word + 1 > effective_width then
             table.insert(result, indentation .. line .. '"')
             line = '"' .. word
@@ -195,17 +203,13 @@ function SplitString()
         table.insert(result, indentation .. line)
     end
 
-    local row = vim.fn.line('.') - 1
-    vim.api.nvim_buf_set_lines(0, row, row + 1, false, result)
+    local original_lines = table.concat(selected_lines, "\n")
+    local new_lines = table.concat(result, "\n")
 
-end
-
--- Join multi-line strings and format them properly
-function FormatMultilineString()
-    vim.cmd('normal! gv')
-    vim.cmd('normal! J')
-    vim.cmd('silent! %s/" "//g')
-    SplitString()
+    -- Only update the buffer if the lines have actually changed
+    if original_lines ~= new_lines then
+        vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, result)
+    end
 end
 
 -- Format multi-line strings in the visual selection
@@ -216,6 +220,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_set_keymap('v', '<Leader>Q', [[:lua FormatMultilineString()<CR>]], { noremap = true, silent = true })
     end
 })
+
 
 
 -- [[ HTML ]]
