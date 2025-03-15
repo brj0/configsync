@@ -3,7 +3,7 @@ return {
     -- Essential Git plugin
     {
         "tpope/vim-fugitive",
-        event = "VeryLazy"
+        event = "VeryLazy",
     },
 
     -- Comment / uncomment lines/blocks of code
@@ -34,7 +34,7 @@ return {
     -- BUG:
     {
         'folke/todo-comments.nvim',
-        event = 'VimEnter',
+        event = 'VeryLazy',
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = { signs = false },
     },
@@ -42,6 +42,7 @@ return {
     -- Navigating undo history
     {
         "mbbill/undotree",
+        event = "VeryLazy",
         keys = {
             { "<leader>u", vim.cmd.UndotreeToggle, desc = "Toggle Undotree" },
         },
