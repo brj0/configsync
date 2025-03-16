@@ -20,7 +20,7 @@ fi
 # Create the backup directory if it doesn't exist
 mkdir -p "$BACKUP_DIR"
 
-# Get the basename of the source file/directory
+# Get the basename of the source file/directory (the last component of the path)
 BASENAME=$(basename "$SOURCE")
 
 # Define the destination path
@@ -38,7 +38,10 @@ if [ "$NOZIP_OPTION" == "--nozip" ]; then
 else
   # Default to zipping the backup (use zip -r for recursive zipping of directories)
   if [ -d "$SOURCE" ]; then
-    zip -r "$DEST.zip" "$SOURCE"
+    # Use pushd and popd to change directories and ensure we return to the original directory
+    pushd "$(dirname "$SOURCE")" > /dev/null
+    zip -r "$DEST.zip" "$(basename "$SOURCE")"
+    popd > /dev/null
   else
     zip "$DEST.zip" "$SOURCE"
   fi
