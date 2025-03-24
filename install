@@ -54,14 +54,13 @@ ln -s $this_script $this_script_ln
 
 # If not in local mode, push to GitHub
 if [ "$local_mode" = false ]; then
-    git -C $this_script_dir add -A
-    git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
-
-    if [ -n "$(git -C $this_script_dir cherry -v)" ]; then
-        echo "Changes detected."
+    # Check if there are any changes
+    if [ -n "$(git -C $this_script_dir status --porcelain)" ]; then
+        git -C $this_script_dir add -A
+        git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+        git -C $this_script_dir push origin main
+        echo "Changes pushed to remote."
     else
-        echo "No changes detected."
+        echo "No changes to commit."
     fi
-
-    git -C $this_script_dir push origin main
 fi
