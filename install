@@ -27,7 +27,7 @@ sync_files=$(find $config_dir -mindepth 1 -type f)
 sync_dirs=$(find $config_dir -mindepth 1 -type d)
 
 # Target dirs containing symbolic links.
-home_dirs=$(echo "$sync_dirs" | sed "s|^$config_dir|$HOME|")
+home_dirs="${sync_dirs//$config_dir/$HOME}"
 
 # Create all dirs in home dir if they do not exist.
 mkdir -p $home_dirs
@@ -35,7 +35,7 @@ mkdir -p $home_dirs
 # Create symbolic links for all files
 for f in $sync_files;
 do
-    f_ln=$(echo "$f" | sed "s|^$config_dir|$HOME|")
+    f_ln="${f/$config_dir/$HOME}"
     # Removes symbolic links if they exist.
     if [ -L $f_ln ]; then
         rm $f_ln
