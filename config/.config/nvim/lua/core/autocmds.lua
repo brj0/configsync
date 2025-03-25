@@ -168,7 +168,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.cmd("command! RuffFmt !ruff format --line-length 79 %")
         vim.cmd("command! RuffImpFix !ruff check --select I --fix %")
         vim.cmd("command! RuffAllFix !ruff check --select I --fix % && ruff format --line-length 79 %")
-        vim.cmd("command! Pylint compiler pylint | normal <leader>mf")
+        vim.cmd("command! Pylint cexpr system('pylint ' .. expand('%')) | copen")
         vim.cmd("command! PylintAll cexpr system('pylint $(find . -name \"*.py\")') | copen")
     end
 })
