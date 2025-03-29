@@ -27,6 +27,9 @@ vim.keymap.set('n', "'F", ':cfirst<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', "üF", ':clast<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', "'o", ':colder<CR><CR>', { noremap = true, silent = true })
 vim.keymap.set('n', "üo", ':cnewer<CR><CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>n', ':cnext<Enter>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>N', ':cprevious<Enter>', { noremap = true, silent = true })
+
 
 -- Add empty line above/below
 vim.keymap.set('n', "'<Space>", 'O<Esc>j', { noremap = true })
@@ -151,9 +154,6 @@ vim.keymap.set('n', '<leader>f', function()
         vim.cmd('copen')
     end
 end, { noremap = true, silent = true })
-
-vim.keymap.set('n', '<leader>n', ':cn<Enter>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>N', ':cp<Enter>', { noremap = true, silent = true })
 
 -- Navigate within snippets
 vim.keymap.set('i', '<leader><leader>', '<Esc>/<++><Enter>"_c4l', { noremap = true })
