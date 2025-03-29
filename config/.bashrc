@@ -26,7 +26,9 @@ HISTCONTROL=ignoreboth:erasedups
 PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Clean up history file by removing all duplicates when opening new console
-tac "$HISTFILE" | awk '!seen[$0]++' | tac > "${HISTFILE}.tmp" && mv -f "${HISTFILE}.tmp" "$HISTFILE"
+if [[ -f "$HISTFILE" ]]; then
+    tac "$HISTFILE" | awk '!seen[$0]++' | tac > "${HISTFILE}.tmp" && mv -f "${HISTFILE}.tmp" "$HISTFILE"
+fi
 
 # Append to the history file, don't overwrite it
 shopt -s histappend
@@ -101,11 +103,18 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-alias l.='ls -d .* --color=auto'
-alias l='ls -CF'
-alias la='ls -A'
-alias ll='ls -alF'
-alias ls='ls --color=auto'
+if command -v exa &> /dev/null; then
+    alias ls='exa'
+    alias ll='ls -alF'
+    alias la='ls -alF --icons'
+    alias l.='ls -ld .*'
+    alias tree='exa --tree'
+else
+    alias ls='ls --color=auto'
+    alias ll='ls -alF'
+    alias la='ls -ahlF'
+    alias l.='ls -ld .*'
+fi
 
 alias op='xdg-open'
 alias open='xdg-open'
@@ -127,6 +136,9 @@ alias addmake='cp ~/.config/nvim/templates/Makefile Makefile'
 
 ### VIM
 ###############################################################################
+
+# Use nvim
+alias vim='nvim'
 
 # vim as standard editor
 export VISUAL=nvim
@@ -174,4 +186,8 @@ export PAGER=less
 bind -x '"\C- ": tmux-sessionizer'
 
 # Start screen
-neofetch 2>/dev/null
+if command -v fastfetch &> /dev/null; then
+  fastfetch
+elif command -v neofetch &> /dev/null; then
+  neofetch 2>/dev/null
+fi
