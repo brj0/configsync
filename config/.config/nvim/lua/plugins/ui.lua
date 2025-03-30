@@ -49,4 +49,48 @@ return {
         end
     },
 
+    -- Start intro dashboard
+    {
+        "nvimdev/dashboard-nvim",
+        event = "VimEnter",
+        config = function()
+            -- Get Neovim version using vim.version()
+            local version = vim.version()
+            local nvim_version = string.format(
+                "NVIM v%d.%d.%d",
+                version.major,
+                version.minor,
+                version.patch
+            )
+            local datetime = os.date("  %A, %B %d    %H:%M")
+
+            require("dashboard").setup({
+                theme = "doom",
+                config = {
+                    header = {
+                        "",
+                        "                         _           ",
+                        "                        (_)          ",
+                        "   _ __   ___  _____   ___ _ __ ___  ",
+                        "  | '_ \\ / _ \\/ _ \\ \\ / / | '_ ` _ \\ ",
+                        "  | | | |  __/ (_) \\ V /| | | | | | |",
+                        "  |_| |_|\\___|\\___/ \\_/ |_|_| |_| |_|",
+                        "",
+                        "",
+                        nvim_version,
+                        "",
+                    },
+                    center = {
+                        { icon = "  ", desc = " Find File", key = "f", action = "FzfLua files" },
+                        { icon = "  ", desc = " Recent Files", key = "r", action = "FzfLua oldfiles" },
+                        { icon = "  ", desc = " New File", key = "n", action = "enew" },
+                        { icon = "⏻  ", desc = " Quit", key = "q", action = "qa" },
+                    },
+                    footer = { datetime },
+                },
+            })
+        end,
+        dependencies = { {'nvim-tree/nvim-web-devicons'}}
+    },
+
 }
