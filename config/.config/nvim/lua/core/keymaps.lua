@@ -18,7 +18,8 @@ vim.keymap.set('n', '<Space>', '/', { noremap = true })
 vim.keymap.set('n', '<leader><Space>', '?', { noremap = true })
 
 -- Save changes in files needing sudo permission
-vim.keymap.set('c', 'w!!', "execute 'silent! write !sudo tee % >/dev/null' | edit!", { noremap = true })
+-- vim.keymap.set('c', 'w!!', "execute 'silent! write !sudo tee % >/dev/null' | edit!", { noremap = true })
+vim.keymap.set('c', 'w!!', "<esc>:lua require'utils'.sudo_write()<CR>", { silent = true })
 
 -- Fast quickfix navigation
 vim.keymap.set('n', "'f", ':cprevious<CR>', { noremap = true, silent = true })

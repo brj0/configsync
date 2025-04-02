@@ -191,3 +191,4 @@ if command -v fastfetch &> /dev/null; then
 elif command -v neofetch &> /dev/null; then
   neofetch 2>/dev/null
 fi
+. "$HOME/.cargo/env"

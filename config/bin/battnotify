@@ -4,7 +4,7 @@ export DISPLAY=:0
 export XAUTHORITY=~/.Xauthority
 export XDG_RUNTIME_DIR=/run/user/1000
 
-BATTERY_LEVEL=$(acpi -b | grep -P -o '[0-9]+(?=%)' | head -1)
+BATTERY_LEVEL=$(acpi -b | grep -P -o '[0-9]+(?=%)' | sort -nr | head -1)
 POWER_CABLE=$(acpi -a | awk '{print $3}')
 SIGNAL=0
 
