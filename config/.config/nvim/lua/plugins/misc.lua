@@ -48,4 +48,10 @@ return {
         },
     },
 
+    -- Change Files with sudo permissions
+    {
+        "lambdalisue/vim-suda",
+        event = "VeryLazy",
+    },
+
 }
