@@ -156,10 +156,7 @@ command -v xset >/dev/null && xset q | grep -q "Caps Lock:   on" && xdotool key 
 setxkbmap -option caps:escape 2>/dev/null
 
 # Use vim for man pages
-export MANPAGER='/bin/bash -c "nvim -MRn \
-    -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" \
-    -c \"normal L\" \
-    -c \"nmap q :qa<CR>\" </dev/tty <(col -b)"'
+export MANPAGER='nvim +Man!'
 
 # Needed for git log
 export PAGER=less
