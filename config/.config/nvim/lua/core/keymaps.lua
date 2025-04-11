@@ -227,7 +227,7 @@ function RunInConsole(register)
     -- Send each chunk to tmux
     for _, chunk in ipairs(code_chunks) do
         vim.fn.system("tmux set-buffer " .. vim.fn.shellescape(chunk))
-        vim.fn.system("tmux paste-buffer -t 1")
+        vim.fn.system("tmux paste-buffer -p -t 1")
     end
 
     -- Send F3 key for ending paste mode in python 3.13
