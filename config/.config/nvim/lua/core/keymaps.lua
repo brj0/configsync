@@ -205,12 +205,16 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 -- Sends the current line or selected text to the first tmux pane for execution.
 -- This allows running code line by line in an interpreter within tmux.
-function RunInConsole(register)
+function RunInConsole(register, add_enter)
     local code = vim.fn.getreg(register)
 
-    -- If last line ends without CR, add one manually
-    if not code:match(".*\n$") then
-        code = code .. "\n"
+    if add_enter then
+        code = code:gsub("\n$", "")
+    else
+        -- If last line ends without CR, add one manually
+        if not code:match(".*\n$") then
+            code = code .. "\n"
+        end
     end
 
     -- Split the code into chunks of 1024 characters (to prevent buffer overflow)
@@ -222,7 +226,7 @@ function RunInConsole(register)
     end
 
     -- Send F3 key for starting paste mode in python 3.13
-    vim.fn.system("tmux send-keys -t 1 F3 \\; sleep 0.05")
+    vim.fn.system("tmux send-keys -t 1 F3 \\; sleep 0.001")
 
     -- Send each chunk to tmux
     for _, chunk in ipairs(code_chunks) do
@@ -231,13 +235,23 @@ function RunInConsole(register)
     end
 
     -- Send F3 key for ending paste mode in python 3.13
-    vim.fn.system("tmux send-keys -t 1 F3 \\; sleep 0.05")
+    vim.fn.system("tmux send-keys -t 1 F3 \\; sleep 0.001")
+
+    if add_enter then
+        vim.fn.system("tmux send-keys -t 1 Enter")
+    end
 
 end
 
-vim.keymap.set("n", "<leader>e", "\"zy$:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
-vim.keymap.set("v", "<leader>e", "$\"zy'>:lua RunInConsole('z')<CR>j", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>E", function()
+vim.keymap.set("n", "<leader>e", "\"zy$:lua RunInConsole('z', false)<CR>j", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>a", "\"zy$:lua RunInConsole('z', true)<CR>j", { noremap = true, silent = true })
+vim.keymap.set("v", "<leader>e", "$\"zy'>:lua RunInConsole('z', false)<CR>j", { noremap = true, silent = true })
+vim.keymap.set("v", "<leader>a", "$\"zy'>:lua RunInConsole('z', true)<CR>j", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>v", "vap$\"zy'>:lua RunInConsole('z', true)<CR>j", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ma", function()
+    vim.fn.system("tmux send-keys -t 1 Enter")
+end, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>me", function()
     vim.fn.system("tmux send-keys -t 1 Enter")
 end, { noremap = true, silent = true })
 
