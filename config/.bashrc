@@ -137,12 +137,13 @@ alias addmake='cp ~/.config/nvim/templates/Makefile Makefile'
 ### VIM
 ###############################################################################
 
-# Use nvim
-alias vim='nvim'
-
-# vim as standard editor
-export VISUAL=nvim
-export EDITOR="$VISUAL"
+# Use nvim as default editor and for man pages
+if command -v nvim >/dev/null; then
+    alias vim='nvim'
+    export VISUAL='nvim'
+    export EDITOR='nvim'
+    export MANPAGER='nvim +Man!'
+fi
 
 # vim mode
 set -o vi
@@ -153,10 +154,7 @@ bind -m vi-insert 'Control-l: clear-screen'
 command -v xset >/dev/null && xset q >/dev/null 2>&1 | grep -q "Caps Lock:   on" && xdotool key Caps_Lock >/dev/null 2>&1
 
 # Set caps to esc (ignore error if on remote system)
-setxkbmap -option caps:escape 2>/dev/null
-
-# Use vim for man pages
-export MANPAGER='nvim +Man!'
+command -v setxkbmap >/dev/null && setxkbmap -option caps:escape 2>/dev/null
 
 # Needed for git log
 export PAGER=less
