@@ -150,7 +150,7 @@ bind -m vi-command 'Control-l: clear-screen'
 bind -m vi-insert 'Control-l: clear-screen'
 
 # Turn off caps if it is on
-command -v xset >/dev/null && xset q | grep -q "Caps Lock:   on" && xdotool key Caps_Lock 2>/dev/null
+command -v xset >/dev/null && xset q >/dev/null 2>&1 | grep -q "Caps Lock:   on" && xdotool key Caps_Lock >/dev/null 2>&1
 
 # Set caps to esc (ignore error if on remote system)
 setxkbmap -option caps:escape 2>/dev/null
