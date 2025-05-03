@@ -208,21 +208,31 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 function RunInConsole(register, add_enter)
     local code = vim.fn.getreg(register)
 
-    if add_enter then
-        code = code:gsub("\n$", "")
-    else
-        -- If last line ends without CR, add one manually
-        if not code:match(".*\n$") then
-            code = code .. "\n"
-        end
+    -- If last line ends without CR, add one manually
+    if not code:match(".*\n$") then
+        code = code .. "\n"
     end
 
-    -- Split the code into chunks of 1024 characters (to prevent buffer overflow)
-    local chunk_size = 1024
-    local code_chunks = {}
+    -- Split into lines
+    local lines = {}
+    for line in code:gmatch("([^\n]*\n)") do
+        table.insert(lines, line)
+    end
 
-    for i = 1, #code, chunk_size do
-        table.insert(code_chunks, code:sub(i, i + chunk_size - 1))
+    -- Group lines into chunks
+    local chunk_size = 512
+    local code_chunks = {}
+    for i = 1, #lines, chunk_size do
+        local chunk = table.concat(vim.list_slice(lines, i, i + chunk_size - 1))
+
+        -- Remove trailing newline from last chunk if add_enter is set
+        if add_enter and (i + chunk_size > #lines) then
+            chunk = chunk:gsub("\n$", "")
+        end
+
+        if chunk ~= "" then
+            table.insert(code_chunks, chunk)
+        end
     end
 
     -- Send F3 key for starting paste mode in python 3.13
