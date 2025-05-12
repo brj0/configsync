@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Killing lingering Python and Jupyter processes..."
+sudo pkill -9 python3
+sudo pkill -9 jupyter
+
+echo "Restarting NVIDIA persistence daemon..."
+sudo systemctl restart nvidia-persistenced
+
+echo "Reloading nvidia_uvm module..."
+sudo rmmod nvidia_uvm
+sudo modprobe nvidia_uvm
+
+echo "CUDA environment reset."
