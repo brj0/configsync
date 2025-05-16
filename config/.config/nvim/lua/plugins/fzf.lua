@@ -7,7 +7,7 @@ return {
         require("fzf-lua").setup {
             files = {
                 hidden = true,     -- enable hidden files by default
-                follow = false,    -- do not follow symlinks by default
+                follow = true,    -- do follow symlinks
                 no_ignore = true,  -- don't respect ".gitignore"  by default
             },
         }
