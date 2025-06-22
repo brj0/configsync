@@ -19,6 +19,7 @@ for zip_file in "$@"; do
             *.tar)     tar xvf    "$zip_file" ;;
             *.tbz2)    tar xvjf   "$zip_file" ;;
             *.tgz)     tar xvzf   "$zip_file" ;;
+            *.zst)     unzstd     "$zip_file" ;;
             *.zip)     unzip      "$zip_file" ;;
             *.Z)       uncompress "$zip_file" ;;
             *.7z)      7z x       "$zip_file" ;;
