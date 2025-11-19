@@ -170,8 +170,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.cmd("command! RuffAllFix !ruff check --select I --fix % && ruff format --line-length 79 %")
         vim.cmd("command! Pylint cexpr system('pylint ' .. expand('%')) | copen")
         vim.cmd("command! PylintAll cexpr system('pylint $(find . -name \"*.py\")') | copen")
-        vim.cmd("command! Mypy cexpr system('mypy ' .. expand('%')) | copen")
-        vim.cmd("command! MypyAll cexpr system('mypy .') | copen")
+        vim.cmd("command! Mypy cgete system('mypy ' .. expand('%')) | copen")
+        vim.cmd("command! MypyAll cgete system('mypy .') | copen")
     end
 })
 
