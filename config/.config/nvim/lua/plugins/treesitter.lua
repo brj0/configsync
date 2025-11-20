@@ -14,6 +14,8 @@ return {
                 "html",
                 "javascript",
                 "lua",
+                "markdown",
+                "markdown_inline",
                 "python",
                 "rust",
                 "vim",
