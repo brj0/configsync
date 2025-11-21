@@ -1,0 +1,32 @@
+#!/bin/bash
+# Safely syncs the .git folder with the remote for any branch without touching
+# working files.
+
+set -e
+
+# Ensure we are inside a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Error: Not a git repository."
+    exit 1
+fi
+
+# Determine branch: use argument if given, otherwise current branch
+if [ -n "$1" ]; then
+    BRANCH="$1"
+else
+    BRANCH=$(git symbolic-ref --short HEAD)
+fi
+
+echo "Syncing branch '$BRANCH' with remote..."
+
+# 1. Fetch remote commits
+git fetch origin
+
+# 2. Update local branch pointer to match remote
+git update-ref refs/heads/$BRANCH origin/$BRANCH
+
+# 3. Reset index to match working directory (does not touch files)
+git reset
+
+echo ".git synced with remote. Working files untouched."
+git status
