@@ -172,6 +172,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.cmd("command! PylintAll cexpr system('pylint $(find . -name \"*.py\")') | copen")
         vim.cmd("command! Mypy cgete system('mypy ' .. expand('%')) | copen")
         vim.cmd("command! MypyAll cgete system('mypy .') | copen")
+        vim.cmd("command! Ty cgete system('ty check --output-format=concise ' .. expand('%')) | copen")
+        vim.cmd("command! TyAll cgete system('ty check --output-format=concise .') | copen")
     end
 })
 
