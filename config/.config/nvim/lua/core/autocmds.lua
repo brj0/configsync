@@ -172,8 +172,18 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.cmd("command! PylintAll cexpr system('pylint $(find . -name \"*.py\")') | copen")
         vim.cmd("command! Mypy cgete system('mypy ' .. expand('%')) | copen")
         vim.cmd("command! MypyAll cgete system('mypy .') | copen")
-        vim.cmd("command! Ty cgete system('ty check --output-format=concise ' .. expand('%')) | copen")
-        vim.cmd("command! TyAll cgete system('ty check --output-format=concise .') | copen")
+
+        vim.api.nvim_create_user_command("Ty", function()
+            local output = vim.fn.system("ty check " .. vim.fn.expand("%") .. " | sed 's/^[ ]*--> //g'")
+            vim.fn.setqflist({}, ' ', { title = 'Ty Check', lines = vim.split(output, "\n") })
+            vim.cmd("copen")
+        end, {})
+
+        vim.api.nvim_create_user_command("TyAll", function()
+            local output = vim.fn.system("ty check . | sed 's/^[ ]*--> //g'")
+            vim.fn.setqflist({}, ' ', { title = 'Ty Check All', lines = vim.split(output, "\n") })
+            vim.cmd("copen")
+        end, {})
     end
 })
 
