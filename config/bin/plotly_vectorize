@@ -1,13 +1,25 @@
 #!/usr/bin/env python3
+"""Convert Plotly scattergl traces to vector scatter and export SVG.
+
+This script reads a Plotly figure exported to JSON, converts any
+`scattergl` traces to `scatter` (vector-capable), and writes an SVG.
+"""
+
 import argparse
 import json
+from pathlib import Path
+from typing import Any, Dict, Optional
 
 import plotly.graph_objects as go
 import plotly.io as pio
 
 
-def safe_to_dict(obj):
-    """Convert Plotly objects to plain dicts when possible."""
+def safe_to_dict(obj: Any) -> Optional[Dict]:
+    """Return a plain dict representation of a Plotly object if possible.
+
+    Tries several fallbacks: direct dict conversion, to_plotly_json(),
+    and JSON roundtrip.
+    """
     if obj is None:
         return None
     if isinstance(obj, dict):
@@ -26,9 +38,13 @@ def safe_to_dict(obj):
         return {}
 
 
-def convert_scattergl_to_scatter(fig):
-    """Return a copy of `fig` where scattergl traces are converted to scatter."""
-    new_traces = []
+def convert_scattergl_to_scatter(fig: go.Figure) -> go.Figure:
+    """Return a new Figure where scattergl traces become scatter traces.
+
+    The function preserves common attributes such as x, y, mode,
+    hovertemplate, customdata, marker and line properties.
+    """
+    new_traces: list[go.Trace] = []
 
     for tr in fig.data:
         tjson = tr.to_plotly_json()
@@ -38,9 +54,8 @@ def convert_scattergl_to_scatter(fig):
             continue
 
         if tr.type == "scattergl":
-            scatter_kwargs = {}
+            scatter_kwargs: Dict[str, Any] = {}
 
-            # copy fields directly
             basic_attrs = [
                 "x",
                 "y",
@@ -61,11 +76,9 @@ def convert_scattergl_to_scatter(fig):
                 if attr in tjson:
                     scatter_kwargs[attr] = tjson[attr]
 
-            # marker
             if "marker" in tjson and tjson["marker"] is not None:
                 scatter_kwargs["marker"] = safe_to_dict(tjson["marker"])
 
-            # line
             if "line" in tjson and tjson["line"] is not None:
                 scatter_kwargs["line"] = safe_to_dict(tjson["line"])
 
@@ -76,40 +89,53 @@ def convert_scattergl_to_scatter(fig):
             new_traces.append(new_tr)
             continue
 
-        # default: keep unchanged
+        # fallback: keep unchanged (may still rasterize if inherently raster)
         new_traces.append(tr)
 
     return go.Figure(data=new_traces, layout=fig.layout)
 
 
-def main():
+def main() -> None:
+    """CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="Convert Plotly scattergl to scatter and export true vector SVG."
+        description=(
+            "Convert Plotly scattergl to scatter and export a true vector SVG."
+        )
     )
     parser.add_argument(
         "-i",
         "--input",
         required=True,
-        help="Input Plotly figure file (JSON exported via fig.write_json).",
+        help="Input Plotly figure JSON file (created via fig.write_json).",
     )
     parser.add_argument(
-        "-o", "--output", required=True, help="Output SVG file path."
+        "-o",
+        "--output",
+        required=True,
+        help="Output SVG file path.",
     )
     args = parser.parse_args()
 
-    # load input Plotly figure JSON
-    with open(args.input, "r", encoding="utf-8") as f:
+    input_path = Path(args.input)
+    output_path = Path(args.output)
+
+    if not input_path.exists():
+        raise SystemExit(f"Input file not found: {input_path}")
+
+    # load Plotly figure JSON
+    with open(input_path, encoding="utf-8") as f:
         fig_json = json.load(f)
 
     fig = go.Figure(fig_json)
 
-    # convert
     fig_vector = convert_scattergl_to_scatter(fig)
 
-    # write SVG (requires: pip install kaleido)
-    pio.write_image(fig_vector, args.output, format="svg", engine="kaleido")
+    # write SVG (requires `kaleido`)
+    pio.write_image(
+        fig_vector, str(output_path), format="svg", engine="kaleido"
+    )
 
-    print("Wrote:", args.output)
+    print(f"Wrote: {output_path}")
 
 
 if __name__ == "__main__":
