@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+import argparse
+import json
+
+import plotly.graph_objects as go
+import plotly.io as pio
+
+
+def safe_to_dict(obj):
+    """Convert Plotly objects to plain dicts when possible."""
+    if obj is None:
+        return None
+    if isinstance(obj, dict):
+        return obj
+    try:
+        return dict(obj)
+    except Exception:
+        pass
+    try:
+        return obj.to_plotly_json()
+    except Exception:
+        pass
+    try:
+        return json.loads(json.dumps(obj))
+    except Exception:
+        return {}
+
+
+def convert_scattergl_to_scatter(fig):
+    """Return a copy of `fig` where scattergl traces are converted to scatter."""
+    new_traces = []
+
+    for tr in fig.data:
+        tjson = tr.to_plotly_json()
+
+        if tr.type == "scatter":
+            new_traces.append(tr)
+            continue
+
+        if tr.type == "scattergl":
+            scatter_kwargs = {}
+
+            # copy fields directly
+            basic_attrs = [
+                "x",
+                "y",
+                "mode",
+                "name",
+                "legendgroup",
+                "showlegend",
+                "xaxis",
+                "yaxis",
+                "opacity",
+                "text",
+                "textposition",
+                "hovertemplate",
+                "hovertext",
+                "customdata",
+            ]
+            for attr in basic_attrs:
+                if attr in tjson:
+                    scatter_kwargs[attr] = tjson[attr]
+
+            # marker
+            if "marker" in tjson and tjson["marker"] is not None:
+                scatter_kwargs["marker"] = safe_to_dict(tjson["marker"])
+
+            # line
+            if "line" in tjson and tjson["line"] is not None:
+                scatter_kwargs["line"] = safe_to_dict(tjson["line"])
+
+            new_tr = go.Scatter(**scatter_kwargs)
+            if "visible" in tjson:
+                new_tr.visible = tjson["visible"]
+
+            new_traces.append(new_tr)
+            continue
+
+        # default: keep unchanged
+        new_traces.append(tr)
+
+    return go.Figure(data=new_traces, layout=fig.layout)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Convert Plotly scattergl to scatter and export true vector SVG."
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        required=True,
+        help="Input Plotly figure file (JSON exported via fig.write_json).",
+    )
+    parser.add_argument(
+        "-o", "--output", required=True, help="Output SVG file path."
+    )
+    args = parser.parse_args()
+
+    # load input Plotly figure JSON
+    with open(args.input, "r", encoding="utf-8") as f:
+        fig_json = json.load(f)
+
+    fig = go.Figure(fig_json)
+
+    # convert
+    fig_vector = convert_scattergl_to_scatter(fig)
+
+    # write SVG (requires: pip install kaleido)
+    pio.write_image(fig_vector, args.output, format="svg", engine="kaleido")
+
+    print("Wrote:", args.output)
+
+
+if __name__ == "__main__":
+    main()
