@@ -115,7 +115,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.keymap.set("n", "<F5>", "<F2><F4><F2><F3>", { buffer = true, desc = "Full compilation (pdflatex -> biber -> pdflatex)" })
 
         -- Delete auxiliary files (log, aux, toc, bbl, ...) but keep the PDF
-        vim.keymap.set("n", "<leader>mc", ":cd %:p:h<CR>:!rm -f *.{aux,bcf,bbl,blg,dvi,fdb_latexmk,fls,log,nav,out,rubbercache,snm,toc,xml}<CR><CR>", { buffer = true, desc = "Clean auxiliary files" })
+        vim.keymap.set("n", "<leader>mc", ":cd %:p:h<CR>:!rm -f *.{aux,auxlock,bcf,bbl,blg,dvi,fdb_latexmk,fls,log,nav,out,rubbercache,snm,toc,vrb,xml}<CR><CR>", { buffer = true, desc = "Clean auxiliary files" })
 
         -- Open generated PDF file
         vim.keymap.set("n", "<F3>", ":! xdg-open %:r.pdf & disown<CR><CR>", { buffer = true, desc = "Open PDF with xdg-open" })
