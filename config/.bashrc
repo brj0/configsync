@@ -173,9 +173,21 @@ export PAGER=less
 # This must be at the end, otherwise ** completion will not work.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# uv
+[ -f ~/.local/bin/env ] && source ~/.local/bin/env
+
 
 ### START
 ###############################################################################
+
+# uv shell completions (only if installed)
+if command -v uv &> /dev/null; then
+    eval "$(uv generate-shell-completion bash)"
+fi
+
+if command -v uvx &> /dev/null; then
+    eval "$(uvx --generate-shell-completion bash)"
+fi
 
 # Fast switching between tmux sessions
 bind -x '"\C- ": tmux-sessionizer'
