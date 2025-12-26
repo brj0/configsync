@@ -13,27 +13,20 @@ return {
                 "csv",
                 "html",
                 "javascript",
+                "json",
                 "lua",
                 "markdown",
                 "markdown_inline",
                 "python",
                 "rust",
+                "toml",
                 "vim",
                 "vimdoc",
+                "yaml",
             },
             sync_install = false,
             highlight = { enable = true },
-            indent = {
-                enable = false,
-            },
-        })
-
-        -- Prevent over-indentation in Python
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = "python",
-            callback = function()
-                vim.bo.indentexpr = ""
-            end,
+            indent = { enable = true },
         })
 
     end
