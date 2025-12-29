@@ -55,14 +55,14 @@ return {
                     for _, lsp in ipairs(servers) do
                         vim.lsp.enable(lsp, false)
                     end
-  
+
                     vim.cmd("LspStop")
                     vim.notify("LSP Off", vim.log.levels.WARN, { title = "LSP" })
                 else
                     for _, lsp in ipairs(servers) do
                         vim.lsp.enable(lsp, true)
                     end
- 
+
                     vim.cmd("LspStart")
                     vim.notify("LSP On", vim.log.levels.INFO, { title = "LSP" })
                 end
