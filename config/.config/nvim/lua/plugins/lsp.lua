@@ -12,38 +12,63 @@ return {
             'williamboman/mason-lspconfig.nvim',
         },
         config = function()
-            -- Mason Setup
+            -- 1. Mason Setup
             require('mason').setup()
             require('mason-lspconfig').setup({
                 ensure_installed = { 'ruff', 'lua_ls' }
             })
 
-            local lspconfig = require('lspconfig')
+            -- 2. Configure Ruff
+            vim.lsp.config.ruff = { autostart = false }
+            vim.lsp.enable("ruff", false)
 
-            -- Server setup (Python & Lua)
-            -- We set autostart = false so they never run on their own
-            local servers = { 'ruff', 'lua_ls' }
-            for _, lsp in ipairs(servers) do
-                lspconfig[lsp].setup({
-                    autostart = false,
-                })
-            end
+            -- 3. Configure Lua (with Root Detection & Neovim Support)
+            vim.lsp.config.lua_ls = {
+                autostart = false,
+                -- This fixes the "Root directory: nil" issue
+                root_dir = vim.fs.root(0, { ".git", "init.lua", ".luarc.json" }),
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            -- Recognizes the 'vim' global variable
+                            globals = { 'vim' },
+                        },
+                        workspace = {
+                            -- Makes the server aware of Neovim runtime files
+                            library = vim.api.nvim_get_runtime_file("", true),
+                            checkThirdParty = false,
+                        },
+                        telemetry = { enable = false },
+                    },
+                },
+            }
+            vim.lsp.enable("lua_ls", false)
 
-            -- Toggle Logic
+            -- 4. Toggle Logic
             -- This checks if LSP is running: if yes, stops it; if no, starts it.
             local function toggle_lsp()
                 local bufnr = vim.api.nvim_get_current_buf()
                 local clients = vim.lsp.get_clients({ bufnr = bufnr })
+                local servers = { 'ruff', 'lua_ls' }
+
                 if #clients > 0 then
+                    for _, lsp in ipairs(servers) do
+                        vim.lsp.enable(lsp, false)
+                    end
+  
                     vim.cmd("LspStop")
-                    vim.notify("LSP Off", 3, { title = "LSP" })
+                    vim.notify("LSP Off", vim.log.levels.WARN, { title = "LSP" })
                 else
+                    for _, lsp in ipairs(servers) do
+                        vim.lsp.enable(lsp, true)
+                    end
+ 
                     vim.cmd("LspStart")
-                    vim.notify("LSP On", 2, { title = "LSP" })
+                    vim.notify("LSP On", vim.log.levels.INFO, { title = "LSP" })
                 end
             end
 
-            -- 4. Keymap: Toggle with Leader + Shift + L
+            -- 5. Keymap: Toggle with Leader + Shift + L
             vim.keymap.set('n', '<leader>L', toggle_lsp, { desc = 'Toggle [L]SP' })
         end
     },
