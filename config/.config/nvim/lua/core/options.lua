@@ -76,3 +76,13 @@ vim.opt.hidden = false
 
 -- Fallback colorscheme
 vim.cmd("colorscheme slate")
+
+-- Show LSP diagnostic
+vim.diagnostic.config({
+    virtual_text = {
+        prefix = "■",
+    },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+})

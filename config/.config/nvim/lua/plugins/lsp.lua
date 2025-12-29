@@ -3,9 +3,20 @@ return {
     -- LSP
     {
         "neovim/nvim-lspconfig",
-        event = "VeryLazy",
+        keys = {
+            {
+                "<leader>L",
+                function()
+                    _G.toggle_lsp()
+                end,
+                desc = "Toggle Ruff LSP",
+            },
+        },
         config = function()
             vim.lsp.config.ruff = {
+                cmd = { "ruff", "server" },
+                filetypes = { "python" },
+                root_markers = { "pyproject.toml", ".git" },
                 autostart = false,
             }
 
@@ -13,24 +24,15 @@ return {
                 local clients = vim.lsp.get_clients({ name = "ruff" })
 
                 if #clients > 0 then
-                    -- Disable ruff LSP
-                    vim.cmd("LspStop")  -- Stop all LSP servers
-                    vim.notify("LSP Disabled", vim.log.levels.INFO)
+                    for _, client in ipairs(clients) do
+                        client.stop()
+                    end
+                    vim.notify("Ruff LSP disabled")
                 else
-                    -- Enable ruff LSP
                     vim.lsp.enable("ruff")
-
-                    vim.notify("LSP Enabled", vim.log.levels.INFO)
+                    vim.notify("Ruff LSP enabled")
                 end
             end
-
-            -- Keybinding
-            vim.keymap.set(
-                "n",
-                "<leader>L",
-                toggle_lsp,
-                { noremap = true, silent = true, desc = "Toggle Ruff LSP" }
-            )
         end,
     },
 
