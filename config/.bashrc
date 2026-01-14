@@ -81,6 +81,9 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # Add ~/bin to PATH
 [ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
 
+# Add opencode
+[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
+
 # Disable python3.13 paste mode
 # export PYTHON_BASIC_REPL=1
 
@@ -198,6 +201,3 @@ if command -v fastfetch &> /dev/null; then
 elif command -v neofetch &> /dev/null; then
   neofetch 2>/dev/null
 fi
-
-# opencode
-export PATH=/home/jon/.opencode/bin:$PATH
