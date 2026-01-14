@@ -198,3 +198,6 @@ if command -v fastfetch &> /dev/null; then
 elif command -v neofetch &> /dev/null; then
   neofetch 2>/dev/null
 fi
+
+# opencode
+export PATH=/home/jon/.opencode/bin:$PATH
