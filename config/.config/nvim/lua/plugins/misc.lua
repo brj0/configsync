@@ -27,6 +27,14 @@ return {
         end
     },
 
+    -- Show CSS Colors
+    {
+        'brenoprata10/nvim-highlight-colors',
+        config = function()
+            require('nvim-highlight-colors').setup({})
+        end
+    },
+
     -- Highlight todo, notes, etc in comments:
     -- TODO:
     -- NOTE:
