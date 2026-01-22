@@ -62,4 +62,9 @@ return {
         event = "VeryLazy",
     },
 
+    -- Highlight Snakefiles
+    {
+        "ShaiberAlon/snakemake-vim"
+    },
+
 }
