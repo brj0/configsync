@@ -25,10 +25,14 @@ return {
         end
     },
 
-    { -- monokai colorscheme
+    -- monokai colorscheme
+    {
         "loctvl842/monokai-pro.nvim",
+        lazy = false,
+        priority = 1000,
         config = function()
             require("monokai-pro").setup({
+                filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
                 override = function(c) -- Override specific colors
                     return {
                         QuickFixLine = { bg = c.base.dimmed3, fg = c.base.white, bold = true }, -- Selected QuickFix line
@@ -36,11 +40,12 @@ return {
                     }
                 end
             })
-            vim.cmd("colorscheme monokai-pro-spectrum")
+            vim.cmd.colorscheme("monokai-pro")
         end
     },
 
-    { -- monokai colorscheme - faster than pro version
+    -- monokai colorscheme - faster than pro version
+    {
         "polirritmico/monokai-nightasty.nvim",
         lazy = false,
         priority = 1000,
