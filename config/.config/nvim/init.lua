@@ -47,6 +47,9 @@ require("lazy").setup({
     -- UI settings (status line and color theme)
     require 'plugins.ui',
 
+    -- Autocomplete
+    require 'plugins.blink',
+
     -- Fast fuzzy finder
     require 'plugins.fzf',
 
