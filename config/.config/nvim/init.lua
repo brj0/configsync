@@ -43,23 +43,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure and install plugins ]]
 
 require("lazy").setup({
-
-    -- UI settings (status line and color theme)
-    require 'plugins.ui',
-
-    -- Autocomplete
-    require 'plugins.blink',
-
-    -- Fast fuzzy finder
-    require 'plugins.fzf',
-
-    -- Improves syntax coloring
-    require 'plugins.treesitter',
-
-    -- Contains miscellaneous small plugins
-    require 'plugins.misc',
-
-    -- Language Server Protocol
-    require 'plugins.lsp',
-
+  spec = {
+    { import = "plugins" },
+  },
 })
