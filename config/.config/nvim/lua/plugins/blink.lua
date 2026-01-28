@@ -21,7 +21,6 @@ return {
             signature = { enabled = true },
 
             sources = {
-                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
                 default = { "path", "snippets", "buffer", "lazydev", "lsp" },
                 providers = {
                     lazydev = {
