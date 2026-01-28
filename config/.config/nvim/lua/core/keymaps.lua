@@ -121,7 +121,7 @@ vim.keymap.set("n", "<leader>*", function()
     vim.fn.setreg("/", "\\V\\C\\<" .. word .. "\\>") 
     vim.cmd("normal! nN")
 
-    if vim.fn.executable("rg") == 0 then
+    if vim.fn.executable("rg") == 1 then
         -- Use ripgrep for project-wide search
         local cmd = "rg --vimgrep --case-sensitive --hidden --word-regexp " .. vim.fn.shellescape(word)
         vim.fn.setqflist(
