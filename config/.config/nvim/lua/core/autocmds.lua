@@ -231,7 +231,12 @@ end
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "python",
     callback = function()
-        vim.api.nvim_set_keymap('v', '<Leader>Q', [[:lua FormatMultilineString()<CR>]], { noremap = true, silent = true })
+        vim.keymap.set('v', '<Leader>Q', ':lua FormatMultilineString()<CR>', {
+            buffer = true,
+            noremap = true,
+            silent = true,
+            desc = "Format multiline Python string",
+        })
     end
 })
 

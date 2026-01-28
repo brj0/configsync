@@ -42,7 +42,10 @@ vim.keymap.set('n', 'tl', ':tablast<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', 'tm', ':tabm ', { noremap = true })
 
 -- Map Tab to switch to the last buffer
-vim.api.nvim_set_keymap('n', '<Tab>', ':b#<CR>', { noremap = true, silent = true })
+vim.keymap.set("n", "<Tab>", "<cmd>b#<CR>", {
+  silent = true,
+  desc = "Switch to last buffer",
+})
 
 -- Remap keys to something useful
 vim.keymap.set('n', 'ö', ';', { noremap = true })
