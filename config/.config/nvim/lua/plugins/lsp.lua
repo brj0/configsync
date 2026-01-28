@@ -24,15 +24,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            {
-                "folke/lazydev.nvim",
-                ft = "lua",
-                opts = {
-                    library = {
-                        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                    },
-                },
-            },
+            "saghen/blink.cmp",
         },
         config = function()
 
@@ -47,6 +39,24 @@ return {
             end, { desc = "Toggle diagnostics" })
 
             -- Lua
+            local capabilities = require("blink.cmp").get_lsp_capabilities()
+            vim.lsp.config("lua_ls", {
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { "vim" }
+                        },
+                        workspace = {
+                            checkThirdParty = false,
+                            library = {
+                                vim.env.VIMRUNTIME,
+                                "${3rd}/luv/library",
+                            },
+                        },
+                    },
+                },
+            })
             vim.lsp.enable("lua_ls")
 
             -- Python
