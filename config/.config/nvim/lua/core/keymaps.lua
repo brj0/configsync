@@ -129,7 +129,6 @@ vim.keymap.set("n", "<leader>*", function()
         )
     elseif vim.fn.executable("grep") == 1 then
         -- Use grep as fallback
-        -- vim.cmd("silent! grep! -w " .. vim.fn.shellescape(word) .. " **/*")
         vim.cmd("silent! grep! -wF " .. vim.fn.shellescape(word) .. " *")
     else
         -- Only fallback is vimgrep
