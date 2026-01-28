@@ -113,20 +113,32 @@ vim.keymap.set('n', '#', ":let @/='\\C\\<' .. expand('<cword>') .. '\\>'<CR>:let
 vim.keymap.set('n', 'g*', ":let @/='\\C' .. expand('<cword>') <CR>:let v:searchforward=1<CR>n", { noremap = true, silent = true })
 vim.keymap.set('n', 'g#', ":let @/='\\C' .. expand('<cword>') <CR>:let v:searchforward=0<CR>n", { noremap = true, silent = true })
 
--- Search project for current word and highlight it
+-- Search project for current word and highlight it without moving cursor
 vim.keymap.set("n", "<leader>*", function()
-    local word = vim.fn.expand('<cword>')
-    vim.cmd("/\\C\\<" .. word .. "\\>")
-    vim.cmd('normal! N')
-    if vim.fn.executable("rg") == 1 then
-        -- Use ripgrep if available (gj is invalid in this case)
-        vim.cmd("silent! grep! -w " .. vim.fn.shellescape(word) .. " **/*")
+    local word = vim.fn.expand("<cword>")
+
+    -- case-sensitive highlight, keep cursor
+    vim.fn.setreg("/", "\\V\\C\\<" .. word .. "\\>") 
+    vim.cmd("normal! nN")
+
+    if vim.fn.executable("rg") == 0 then
+        -- Use ripgrep for project-wide search
+        local cmd = "rg --vimgrep --case-sensitive --hidden --word-regexp " .. vim.fn.shellescape(word)
+        vim.fn.setqflist(
+                {}, " ", { title = "rg results", lines = vim.fn.systemlist(cmd) }
+        )
+    elseif vim.fn.executable("grep") == 1 then
+        -- Use grep as fallback
+        -- vim.cmd("silent! grep! -w " .. vim.fn.shellescape(word) .. " **/*")
+        vim.cmd("silent! grep! -wF " .. vim.fn.shellescape(word) .. " *")
     else
-        -- Fall back to vimgrep
+        -- Only fallback is vimgrep
         vim.cmd("vimgrep /\\<" .. word .. "\\>/gj **/*")
     end
-    vim.cmd("cwindow")
-end, { desc = "Recursive grep and highlight word" })
+
+    -- Open quickfix window
+    vim.cmd("copen")
+end, { desc = "Recursive search for current word using rg or vimgrep" })
 
 -- Search current selection
 vim.keymap.set('v', '*', '"zy/<C-R>z<Enter>', { noremap = true })
