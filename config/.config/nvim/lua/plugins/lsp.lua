@@ -12,6 +12,7 @@ return {
                 'lua_ls',
                 -- 'pyright',
                 'ruff',
+                'texlab',
             },
         },
         dependencies = {
@@ -62,6 +63,29 @@ return {
             -- Python
             vim.lsp.enable("ruff")
             -- vim.lsp.enable("pyright")
+
+            -- LaTeX (TexLab LSP)
+            vim.lsp.config("texlab", {
+                capabilities = capabilities,
+                settings = {
+                    texlab = {
+                        build = {
+                            executable = "latexmk",
+                            args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                            onSave = false,
+                            forwardSearchAfter = false,
+                        },
+                        forwardSearch = {
+                            executable = "zathura",
+                            args = { "--synctex-forward", "%l:%c:%f", "%p" },
+                        },
+                        lint = {
+                            onChange = true,
+                        },
+                    },
+                },
+            })
+            vim.lsp.enable("texlab")
 
         end
     },

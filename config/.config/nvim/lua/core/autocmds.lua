@@ -98,10 +98,24 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_augroup("LatexCommands", { clear = true })
 
+local function TexBuild()
+    vim.api.nvim_echo({{"Compiling LaTeX…", "Normal"}}, false, {})
+    vim.cmd("LspTexlabBuild")
+    vim.defer_fn(function() vim.api.nvim_echo({}, false, {}) end, 2000)
+end
+
 vim.api.nvim_create_autocmd("FileType", {
     group = "LatexCommands",
     pattern = "tex",
     callback = function()
+        -- Use Texlab LSP compiler
+        vim.keymap.set(
+            "n",
+            "<leader>lb",
+            TexBuild,
+            { desc = "TeX: Compile LaTeX", buffer = true, silent = true }
+        )
+
         -- latexmk (automatic compilation tool)
         vim.cmd("compiler latexmk")
 
