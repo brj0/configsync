@@ -108,6 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = "LatexCommands",
     pattern = "tex",
     callback = function()
+
         -- Use Texlab LSP compiler
         vim.keymap.set(
             "n",
