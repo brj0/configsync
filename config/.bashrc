@@ -78,9 +78,6 @@ PS1="\[\e]0;\u@\h: \w\a\]$PS1"
 # Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Add ~/bin to PATH
-[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
-
 # Add opencode
 [ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
 
