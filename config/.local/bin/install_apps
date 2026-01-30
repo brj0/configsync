@@ -1,0 +1,251 @@
+#!/bin/bash
+
+set -euo pipefail
+
+LOGFILE="$HOME/Downloads/failed_installations.log"
+touch "$LOGFILE"
+
+# -----------------------------
+# Helpers
+# -----------------------------
+log_fail() {
+    echo "[$(date '+%F %T')] Failed to install $1" >> "$LOGFILE"
+}
+
+install_pkg() {
+    local pkg="$1"
+    if ! dpkg -s "$pkg" &>/dev/null; then
+        sudo apt install -y "$pkg" || log_fail "$pkg"
+    fi
+}
+
+install_many() {
+    for pkg in "$@"; do
+        install_pkg "$pkg"
+    done
+}
+
+command_exists() {
+    command -v "$1" &>/dev/null
+}
+
+add_ppa() {
+    sudo add-apt-repository -y "$1"
+    sudo apt update
+}
+
+
+# -----------------------------
+# Package Groups
+# -----------------------------
+
+update_and_upgrade() {
+    sudo apt update && sudo apt upgrade -y
+}
+
+install_dev() {
+    install_pkg git
+    install_pkg make
+    install_pkg cmake
+    install_pkg gcc
+    install_pkg g++
+}
+
+install_utils() {
+    install_pkg htop
+    install_pkg acpi
+    install_pkg numlockx
+    install_pkg ripgrep
+    install_pkg pdfgrep
+    install_pkg xsel
+    install_pkg xdotool
+    install_pkg fd-find
+    install_pkg eza
+    install_pkg alacritty
+    install_pkg espeak
+    install_pkg # fonts-hack-ttf
+    install_pkg numix-icon-theme-circle
+}
+
+install_media() {
+    install_pkg vlc
+    install_pkg gimp
+    install_pkg inkscape
+    install_pkg okular
+    install_pkg fbreader
+}
+
+install_latex() {
+    install_pkg texlive-bibtex-extra
+    install_pkg texlive-fonts-extra
+    install_pkg texlive-fonts-recommended
+    install_pkg texlive-lang-german
+    install_pkg texlive-latex-extra
+    install_pkg latexmk
+    install_pkg biber
+    install_pkg rubber
+    install_pkg zathura
+}
+
+install_python() {
+    install_pkg pipx
+    install_pkg python3-pip
+    install_pkg python3.12-dev python3.12-venv
+    install_pkg python3.13-dev python3.13-venv
+}
+
+install_dotfiles() {
+    command -v configsync &>/dev/null && return
+
+    git clone https://github.com/brj0/configsync.git ~/.configsync
+    [ -f "$HOME/.bashrc" ] && mv "$HOME/.bashrc" "$HOME/.bashrc.bak"
+    ~/.configsync/install
+}
+
+install_fzf() {
+    [ -d "$HOME/.fzf" ] && return
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all
+}
+
+install_tmux() {
+    command_exists tmux && return
+
+    install_many libevent-dev ncurses-dev build-essential bison pkg-config wget
+    TMUX_VERSION=$(curl -s https://api.github.com/repos/tmux/tmux/releases/latest |
+        grep -Po '"tag_name": "\K.*?(?=")')
+
+    cd ~/Downloads
+    wget "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz"
+    tar xzf "tmux-${TMUX_VERSION}.tar.gz"
+    cd "tmux-${TMUX_VERSION}"
+    ./configure
+    make
+    sudo make install
+}
+
+install_neovim() {
+    command_exists nvim && return
+
+    install_many ninja-build gettext cmake unzip curl build-essential git
+    git clone https://github.com/neovim/neovim.git ~/Downloads/neovim
+    cd ~/Downloads/neovim
+    git checkout stable
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    sudo make install
+    # install_rust
+    # cargo install --locked tree-sitter-cli
+}
+
+install_jb_nerd_font() {
+    local dir="$HOME/.local/share/fonts"
+    mkdir -p "$dir" && cd "$dir" || return
+    curl -fLo JetBrainsMono.zip \
+        https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip &&
+        unzip -o JetBrainsMono.zip &&
+        fc-cache -fv
+    cd "$HOME"
+}
+
+install_hack_nerd_font() {
+    local dir="$HOME/.local/share/fonts"
+    mkdir -p "$dir" && cd "$dir" || return
+    curl -fLo Hack.zip \
+        https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip &&
+        unzip -o Hack.zip &&
+        fc-cache -fv
+    cd "$HOME"
+}
+
+install_rust() {
+    command_exists cargo && return
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
+install_r(){
+    install_pkg r-base
+}
+
+install_cloud() {
+    install_pkg dropbox
+    command_exists megasync && return
+
+    cd ~/Downloads
+    wget https://mega.nz/linux/repo/xUbuntu_24.04/amd64/megasync-xUbuntu_24.04_amd64.deb
+    install_pkg ./megasync-xUbuntu_24.04_amd64.deb
+}
+
+install_fastfetch() {
+    command -v fastfetch &>/dev/null && return
+
+    add_ppa "ppa:zhangsongcui3371/fastfetch"
+    install_pkg fastfetch
+}
+
+# -----------------------------
+# Multi-Select Menu
+# -----------------------------
+CHOICES=$(whiptail --title "System Setup" \
+--checklist "Use the checklist to select what to install:
+
+- ↑ / ↓ : move between items
+- SPACE : toggle selection ON/OFF
+- TAB   : switch to OK/Cancel
+- ENTER : confirm selection and start installation
+- ESC   : abort" 30 70 14 \
+"UPDATE"    "System update & upgrade" ON \
+"DEV"       "Development tools" ON \
+"UTILS"     "System utilities" ON \
+"DOTFILES"  "Dotfiles (configsync)" ON \
+"FZF"       "fzf" ON \
+"TMUX"      "tmux (from source)" ON \
+"LATEX"     "LaTeX stack" OFF \
+"MEDIA"     "Media & graphics" OFF \
+"R"         "R dev env" OFF \
+"PYTHON"    "Python dev env" OFF \
+"CLOUD"     "Cloud tools" OFF \
+"RUST"      "Rust toolchain" OFF \
+"NVIM"      "Neovim (from source)" OFF \
+"FASTFETCH" "Fastfetch" OFF \
+"HACK"      "Hack nerd font" OFF \
+"JETBRAIN"  "JetBrain nerd font" OFF \
+3>&1 1>&2 2>&3)
+
+# Exit if cancelled
+[ $? -ne 0 ] && exit 1
+
+# -----------------------------
+# Execute Selections
+# -----------------------------
+
+for choice in $CHOICES; do
+    case "${choice//\"/}" in
+        UPDATE)    update_and_upgrade ;;
+        DEV)       install_dev ;;
+        UTILS)     install_utils ;;
+        DOTFILES)  install_dotfiles ;;
+        FZF)       install_fzf ;;
+        TMUX)      install_tmux ;;
+        LATEX)     install_latex ;;
+        MEDIA)     install_media ;;
+        R)         install_r ;;
+        PYTHON)    install_python ;;
+        CLOUD)     install_cloud ;;
+        RUST)      install_rust ;;
+        NVIM)      install_neovim ;;
+        FASTFETCH) install_fastfetch ;;
+        HACK)      install_hack_nerd_font ;;
+        JETBRAIN)  install_jb_nerd_font ;;
+    esac
+done
+
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+if [ -s "$LOGFILE" ]; then
+    echo -e "${RED}⚠ Some installations failed. See details below:${NC}"
+    cat "$LOGFILE"
+else
+    echo "✔ No installation failures."
+fi
