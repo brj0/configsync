@@ -47,6 +47,11 @@ vim.keymap.set("n", "<Tab>", "<cmd>b#<CR>", {
   desc = "Switch to last buffer",
 })
 
+-- Open curret file in file explorer
+vim.keymap.set("n", "-", "<cmd>Oil<CR>", {
+  desc = "Open parent directory in Oil",
+})
+
 -- Remap keys to something useful
 vim.keymap.set('n', 'ö', ';', { noremap = true })
 vim.keymap.set('n', 'é', ',', { noremap = true })
