@@ -5,23 +5,25 @@ set -euo pipefail
 LOGFILE="$HOME/Downloads/failed_installations.log"
 touch "$LOGFILE"
 
+
 # -----------------------------
 # Helpers
 # -----------------------------
+
 log_fail() {
     echo "[$(date '+%F %T')] Failed to install $1" >> "$LOGFILE"
 }
 
-install_pkg() {
+install_if_missing() {
     local pkg="$1"
     if ! dpkg -s "$pkg" &>/dev/null; then
         sudo apt install -y "$pkg" || log_fail "$pkg"
     fi
 }
 
-install_many() {
+install_pkgs() {
     for pkg in "$@"; do
-        install_pkg "$pkg"
+        install_if_missing "$pkg"
     done
 }
 
@@ -44,54 +46,54 @@ update_and_upgrade() {
 }
 
 install_dev() {
-    install_pkg git
-    install_pkg make
-    install_pkg cmake
-    install_pkg gcc
-    install_pkg g++
+    install_pkgs git
+    install_pkgs make
+    install_pkgs cmake
+    install_pkgs gcc
+    install_pkgs g++
 }
 
 install_utils() {
-    install_pkg htop
-    install_pkg acpi
-    install_pkg numlockx
-    install_pkg ripgrep
-    install_pkg pdfgrep
-    install_pkg xsel
-    install_pkg xdotool
-    install_pkg fd-find
-    install_pkg eza
-    install_pkg alacritty
-    install_pkg espeak
-    install_pkg # fonts-hack-ttf
-    install_pkg numix-icon-theme-circle
+    install_pkgs htop
+    install_pkgs acpi
+    install_pkgs numlockx
+    install_pkgs ripgrep
+    install_pkgs pdfgrep
+    install_pkgs xsel
+    install_pkgs xdotool
+    install_pkgs fd-find
+    install_pkgs eza
+    install_pkgs alacritty
+    install_pkgs espeak
+    install_pkgs # fonts-hack-ttf
+    install_pkgs numix-icon-theme-circle
 }
 
 install_media() {
-    install_pkg vlc
-    install_pkg gimp
-    install_pkg inkscape
-    install_pkg okular
-    install_pkg fbreader
+    install_pkgs vlc
+    install_pkgs gimp
+    install_pkgs inkscape
+    install_pkgs okular
+    install_pkgs fbreader
 }
 
 install_latex() {
-    install_pkg texlive-bibtex-extra
-    install_pkg texlive-fonts-extra
-    install_pkg texlive-fonts-recommended
-    install_pkg texlive-lang-german
-    install_pkg texlive-latex-extra
-    install_pkg latexmk
-    install_pkg biber
-    install_pkg rubber
-    install_pkg zathura
+    install_pkgs texlive-bibtex-extra
+    install_pkgs texlive-fonts-extra
+    install_pkgs texlive-fonts-recommended
+    install_pkgs texlive-lang-german
+    install_pkgs texlive-latex-extra
+    install_pkgs latexmk
+    install_pkgs biber
+    install_pkgs rubber
+    install_pkgs zathura
 }
 
 install_python() {
-    install_pkg pipx
-    install_pkg python3-pip
-    install_pkg python3.12-dev python3.12-venv
-    install_pkg python3.13-dev python3.13-venv
+    install_pkgs pipx
+    install_pkgs python3-pip
+    install_pkgs python3.12-dev python3.12-venv
+    install_pkgs python3.13-dev python3.13-venv
 }
 
 install_dotfiles() {
@@ -111,7 +113,7 @@ install_fzf() {
 install_tmux() {
     command_exists tmux && return
 
-    install_many libevent-dev ncurses-dev build-essential bison pkg-config wget
+    install_pkgs libevent-dev ncurses-dev build-essential bison pkg-config wget
     TMUX_VERSION=$(curl -s https://api.github.com/repos/tmux/tmux/releases/latest |
         grep -Po '"tag_name": "\K.*?(?=")')
 
@@ -127,7 +129,7 @@ install_tmux() {
 install_neovim() {
     command_exists nvim && return
 
-    install_many ninja-build gettext cmake unzip curl build-essential git
+    install_pkgs ninja-build gettext cmake unzip curl build-essential git
     git clone https://github.com/neovim/neovim.git ~/Downloads/neovim
     cd ~/Downloads/neovim
     git checkout stable
@@ -163,28 +165,30 @@ install_rust() {
 }
 
 install_r(){
-    install_pkg r-base
+    install_pkgs r-base
 }
 
 install_cloud() {
-    install_pkg dropbox
+    install_pkgs dropbox
     command_exists megasync && return
 
     cd ~/Downloads
     wget https://mega.nz/linux/repo/xUbuntu_24.04/amd64/megasync-xUbuntu_24.04_amd64.deb
-    install_pkg ./megasync-xUbuntu_24.04_amd64.deb
+    install_pkgs ./megasync-xUbuntu_24.04_amd64.deb
 }
 
 install_fastfetch() {
     command -v fastfetch &>/dev/null && return
 
     add_ppa "ppa:zhangsongcui3371/fastfetch"
-    install_pkg fastfetch
+    install_pkgs fastfetch
 }
+
 
 # -----------------------------
 # Multi-Select Menu
 # -----------------------------
+
 CHOICES=$(whiptail --title "System Setup" \
 --checklist "Use the checklist to select what to install:
 
@@ -214,6 +218,7 @@ CHOICES=$(whiptail --title "System Setup" \
 # Exit if cancelled
 [ $? -ne 0 ] && exit 1
 
+
 # -----------------------------
 # Execute Selections
 # -----------------------------
@@ -238,7 +243,6 @@ for choice in $CHOICES; do
         JETBRAIN)  install_jb_nerd_font ;;
     esac
 done
-
 
 RED='\033[0;31m'
 NC='\033[0m'
