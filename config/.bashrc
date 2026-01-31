@@ -103,12 +103,12 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-if command -v exa &> /dev/null; then
-    alias ls='exa'
+if command -v eza &> /dev/null; then
+    alias ls='eza'
     alias ll='ls -alF'
     alias la='ls -alF --icons'
     alias l.='ls -ld .*'
-    alias tree='exa --tree'
+    alias tree='eza --tree'
 else
     alias ls='ls --color=auto'
     alias ll='ls -alF'
