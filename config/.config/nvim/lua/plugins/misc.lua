@@ -8,11 +8,11 @@ return {
 
     -- Comment / uncomment lines/blocks of code
     {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         event = "VeryLazy",
         opts = {
             -- add any options here
-        }
+        },
     },
 
     -- Add/delete/change surrounding pairs
@@ -24,15 +24,15 @@ return {
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
             })
-        end
+        end,
     },
 
     -- Show CSS Colors
     {
-        'brenoprata10/nvim-highlight-colors',
+        "brenoprata10/nvim-highlight-colors",
         config = function()
-            require('nvim-highlight-colors').setup({})
-        end
+            require("nvim-highlight-colors").setup({})
+        end,
     },
 
     -- Highlight todo, notes, etc in comments:
@@ -41,9 +41,9 @@ return {
     -- WARNING:
     -- BUG:
     {
-        'folke/todo-comments.nvim',
-        event = 'VeryLazy',
-        dependencies = { 'nvim-lua/plenary.nvim' },
+        "folke/todo-comments.nvim",
+        event = "VeryLazy",
+        dependencies = { "nvim-lua/plenary.nvim" },
         opts = { signs = false },
     },
 
@@ -64,16 +64,15 @@ return {
 
     -- Highlight Snakefiles
     {
-        "ShaiberAlon/snakemake-vim"
+        "ShaiberAlon/snakemake-vim",
     },
 
     -- File browser
     {
-        'stevearc/oil.nvim',
+        "stevearc/oil.nvim",
         opts = {},
         dependencies = { { "nvim-mini/mini.icons", opts = {} } },
         -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
         lazy = false,
     },
-
 }

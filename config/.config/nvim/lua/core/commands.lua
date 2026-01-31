@@ -1,10 +1,14 @@
 -- Open the Neovim config directory in the current window
-vim.api.nvim_create_user_command('OpenConfig', function()
-    vim.cmd('edit ~/.config/nvim')  -- Open in the current window
+vim.api.nvim_create_user_command("OpenConfig", function()
+    vim.cmd("edit ~/.config/nvim") -- Open in the current window
 end, { desc = "Open Neovim config directory in the current window" })
 
 -- Show all highlighting colors
-vim.api.nvim_create_user_command('Hitest', 'source $VIMRUNTIME/syntax/hitest.vim', {})
+vim.api.nvim_create_user_command(
+    "Hitest",
+    "source $VIMRUNTIME/syntax/hitest.vim",
+    {}
+)
 
 -- Template files
 local templates = {

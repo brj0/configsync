@@ -2,17 +2,17 @@ return {
 
     {
         "mason-org/mason.nvim",
-        opts = {}
+        opts = {},
     },
 
     {
         "mason-org/mason-lspconfig.nvim",
         opts = {
             ensure_installed = {
-                'lua_ls',
+                "lua_ls",
                 -- 'pyright',
-                'ruff',
-                'texlab',
+                "ruff",
+                "texlab",
             },
         },
         dependencies = {
@@ -21,14 +21,12 @@ return {
         },
     },
 
-
     {
         "neovim/nvim-lspconfig",
         dependencies = {
             "saghen/blink.cmp",
         },
         config = function()
-
             -- Diagnostics OFF by default
             vim.diagnostic.enable(false)
 
@@ -46,7 +44,7 @@ return {
                 settings = {
                     Lua = {
                         diagnostics = {
-                            globals = { "vim" }
+                            globals = { "vim" },
                         },
                         workspace = {
                             checkThirdParty = false,
@@ -71,7 +69,12 @@ return {
                     texlab = {
                         build = {
                             executable = "latexmk",
-                            args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                            args = {
+                                "-pdf",
+                                "-interaction=nonstopmode",
+                                "-synctex=1",
+                                "%f",
+                            },
                             onSave = false,
                             forwardSearchAfter = false,
                         },
@@ -86,8 +89,6 @@ return {
                 },
             })
             vim.lsp.enable("texlab")
-
-        end
+        end,
     },
-
 }

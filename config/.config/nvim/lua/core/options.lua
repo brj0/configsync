@@ -14,11 +14,11 @@ vim.opt.splitbelow = true
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function()
-    vim.opt.clipboard = 'unnamedplus'
+    vim.opt.clipboard = "unnamedplus"
 end)
 
 -- Enable mouse mode
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 
 -- Use relative line numbers
 vim.opt.number = true
@@ -41,7 +41,7 @@ vim.opt.swapfile = false
 -- vim.opt.undofile = true
 
 -- Preview substitutions live, as we type
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 
 -- Show which line the cursor is on
 vim.opt.cursorline = true
@@ -59,7 +59,7 @@ vim.opt.shiftwidth = 4
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Search down into subfolders
 vim.opt.path:append("**")

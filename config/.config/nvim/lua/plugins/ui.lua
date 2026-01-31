@@ -14,15 +14,15 @@ return {
                     icons_enabled = false,
                 },
                 sections = {
-                    lualine_a = {"mode"},
-                    lualine_b = {"branch", "diff"},
-                    lualine_c = {"filename"},
-                    lualine_x = {"encoding", "fileformat", "filetype"},
-                    lualine_y = {"progress"},
-                    lualine_z = {"location"}
-                }
+                    lualine_a = { "mode" },
+                    lualine_b = { "branch", "diff" },
+                    lualine_c = { "filename" },
+                    lualine_x = { "encoding", "fileformat", "filetype" },
+                    lualine_y = { "progress" },
+                    lualine_z = { "location" },
+                },
             })
-        end
+        end,
     },
 
     -- monokai colorscheme
@@ -35,13 +35,17 @@ return {
                 filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
                 override = function(c) -- Override specific colors
                     return {
-                        QuickFixLine = { bg = c.base.dimmed3, fg = c.base.white, bold = true }, -- Selected QuickFix line
+                        QuickFixLine = {
+                            bg = c.base.dimmed3,
+                            fg = c.base.white,
+                            bold = true,
+                        }, -- Selected QuickFix line
                         Directory = { bg = "NONE", fg = c.base.cyan, bold = true }, -- Directories in netrw and non-selected QuickFix lines
                     }
-                end
+                end,
             })
             vim.cmd.colorscheme("monokai-pro")
-        end
+        end,
     },
 
     -- monokai colorscheme - faster than pro version
@@ -51,7 +55,6 @@ return {
         priority = 1000,
         config = function()
             -- vim.cmd("colorscheme monokai-nightasty")
-        end
+        end,
     },
-
 }
