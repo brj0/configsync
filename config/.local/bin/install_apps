@@ -3,6 +3,7 @@
 set -euo pipefail
 
 LOGFILE="$HOME/Downloads/failed_installations.log"
+mkdir -p "$(dirname "$LOGFILE")"
 touch "$LOGFILE"
 
 
@@ -65,7 +66,7 @@ install_utils() {
     install_pkgs eza
     install_pkgs alacritty
     install_pkgs espeak
-    install_pkgs # fonts-hack-ttf
+    # install_pkgs fonts-hack-ttf
     install_pkgs numix-icon-theme-circle
 }
 
