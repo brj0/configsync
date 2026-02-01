@@ -35,6 +35,23 @@ if [[ "$ftype" == *"Excel"* ]]; then
     rm $fname_csv
 fi
 
+if [[ "$ftype" == *"CSV"* || "$1" == *.csv ]]; then
+    # Handle tab- or comma-separated CSV
+    awk -F'[,\t]' '
+        NR==1 { next }   # skip header
+        {
+            # Date: remove time
+            split($3, d, " ");
+            date=d[1];
+
+            merchant=$9;
+            amount=$5;
+
+            printf "%s,%s,%.2f\n", date, merchant, amount
+        }
+    ' "$1"
+fi
+
 if [[ "$1" == "--prelim" ]]; then
     libreoffice --headless --convert-to csv --infilter=CSV:44,34,76,1 $2
 
