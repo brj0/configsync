@@ -64,7 +64,21 @@ return {
 
     -- Highlight Snakefiles
     {
-        "ShaiberAlon/snakemake-vim",
+        "snakemake/snakemake",
+        ft = "snakemake",
+        config = function(plugin)
+            vim.opt.rtp:append(plugin.dir .. "/misc/vim")
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "snakemake",
+                callback = function()
+                    vim.opt_local.foldenable = false
+                end,
+            })
+        end,
+        init = function(plugin)
+            require("lazy.core.loader").ftdetect(plugin.dir .. "/misc/vim")
+        end,
     },
 
     -- File browser
