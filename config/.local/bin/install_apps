@@ -68,6 +68,9 @@ install_utils() {
     install_pkgs espeak
     # install_pkgs fonts-hack-ttf
     install_pkgs numix-icon-theme-circle
+
+    install_pkgs fd-find
+    ln -s $(which fdfind) ~/.local/bin/fd
 }
 
 install_media() {
