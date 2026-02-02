@@ -150,15 +150,10 @@ vim.api.nvim_create_autocmd("FileType", {
         )
 
         -- Full command list (Biber: pdflatex -> biber -> pdflatex)
-        vim.keymap.set(
-            "n",
-            "<F5>",
-            "<F2><F4><F2><F3>",
-            {
-                buffer = true,
-                desc = "Full compilation (pdflatex -> biber -> pdflatex)",
-            }
-        )
+        vim.keymap.set("n", "<F5>", "<F2><F4><F2><F3>", {
+            buffer = true,
+            desc = "Full compilation (pdflatex -> biber -> pdflatex)",
+        })
 
         -- Delete auxiliary files (log, aux, toc, bbl, ...) but keep the PDF
         vim.keymap.set(
