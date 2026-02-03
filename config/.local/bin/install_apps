@@ -81,6 +81,12 @@ install_media() {
     install_pkgs fbreader
 }
 
+install_micromamba() {
+    cd $HOME/Downloads/
+    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+    mv $HOME/Downloads/bin/micromamba $HOME/.local/bin
+}
+
 install_latex() {
     install_pkgs texlive-bibtex-extra
     install_pkgs texlive-fonts-extra
@@ -201,22 +207,23 @@ CHOICES=$(whiptail --title "System Setup" \
 - TAB   : switch to OK/Cancel
 - ENTER : confirm selection and start installation
 - ESC   : abort" 30 70 14 \
-"UPDATE"    "System update & upgrade" ON \
-"DEV"       "Development tools" ON \
-"UTILS"     "System utilities" ON \
-"DOTFILES"  "Dotfiles (configsync)" ON \
-"FZF"       "fzf" ON \
-"TMUX"      "tmux (from source)" ON \
-"LATEX"     "LaTeX stack" OFF \
-"MEDIA"     "Media & graphics" OFF \
-"R"         "R dev env" OFF \
-"PYTHON"    "Python dev env" OFF \
-"CLOUD"     "Cloud tools" OFF \
-"RUST"      "Rust toolchain" OFF \
-"NVIM"      "Neovim (from source)" OFF \
-"FASTFETCH" "Fastfetch" OFF \
-"HACK"      "Hack nerd font" OFF \
-"JETBRAIN"  "JetBrain nerd font" OFF \
+"UPDATE"     "System update & upgrade" ON \
+"DEV"        "Development tools" ON \
+"UTILS"      "System utilities" ON \
+"DOTFILES"   "Dotfiles (configsync)" ON \
+"FZF"        "fzf" ON \
+"TMUX"       "tmux (from source)" ON \
+"LATEX"      "LaTeX stack" OFF \
+"MEDIA"      "Media & graphics" OFF \
+"R"          "R dev env" OFF \
+"PYTHON"     "Python dev env" OFF \
+"MICROMAMBA" "Micromamba" OFF \
+"CLOUD"      "Cloud tools" OFF \
+"RUST"       "Rust toolchain" OFF \
+"NVIM"       "Neovim (from source)" OFF \
+"FASTFETCH"  "Fastfetch" OFF \
+"HACK"       "Hack nerd font" OFF \
+"JETBRAIN"   "JetBrain nerd font" OFF \
 3>&1 1>&2 2>&3)
 
 # Exit if cancelled
@@ -229,22 +236,23 @@ CHOICES=$(whiptail --title "System Setup" \
 
 for choice in $CHOICES; do
     case "${choice//\"/}" in
-        UPDATE)    update_and_upgrade ;;
-        DEV)       install_dev ;;
-        UTILS)     install_utils ;;
-        DOTFILES)  install_dotfiles ;;
-        FZF)       install_fzf ;;
-        TMUX)      install_tmux ;;
-        LATEX)     install_latex ;;
-        MEDIA)     install_media ;;
-        R)         install_r ;;
-        PYTHON)    install_python ;;
-        CLOUD)     install_cloud ;;
-        RUST)      install_rust ;;
-        NVIM)      install_neovim ;;
-        FASTFETCH) install_fastfetch ;;
-        HACK)      install_hack_nerd_font ;;
-        JETBRAIN)  install_jb_nerd_font ;;
+        UPDATE)     update_and_upgrade ;;
+        DEV)        install_dev ;;
+        UTILS)      install_utils ;;
+        DOTFILES)   install_dotfiles ;;
+        FZF)        install_fzf ;;
+        TMUX)       install_tmux ;;
+        LATEX)      install_latex ;;
+        MEDIA)      install_media ;;
+        R)          install_r ;;
+        PYTHON)     install_python ;;
+        MICROMAMBA) install_micromamba ;;
+        CLOUD)      install_cloud ;;
+        RUST)       install_rust ;;
+        NVIM)       install_neovim ;;
+        FASTFETCH)  install_fastfetch ;;
+        HACK)       install_hack_nerd_font ;;
+        JETBRAIN)   install_jb_nerd_font ;;
     esac
 done
 

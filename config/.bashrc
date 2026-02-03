@@ -84,6 +84,20 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # Disable python3.13 paste mode
 # export PYTHON_BASIC_REPL=1
 
+# Used to activate micromamba
+if command -v micromamba >/dev/null 2>&1; then
+    export MAMBA_EXE="$HOME/.local/bin/micromamba"
+    export MAMBA_ROOT_PREFIX="$HOME/.local/share/mamba"
+
+    __mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__mamba_setup"
+    else
+        alias micromamba="$MAMBA_EXE"
+    fi
+    unset __mamba_setup
+fi
+
 
 ### ALIASES
 ###############################################################################
