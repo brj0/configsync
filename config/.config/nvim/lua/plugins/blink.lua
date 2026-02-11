@@ -12,6 +12,11 @@ return {
                 ["<C-j>"] = { "accept" },
             },
 
+            cmdline = {
+                keymap = { preset = 'inherit' },
+                completion = { menu = { auto_show = true } },
+            },
+
             appearance = {
                 nerd_font_variant = "mono",
             },
