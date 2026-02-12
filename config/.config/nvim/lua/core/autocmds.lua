@@ -195,7 +195,7 @@ vim.api.nvim_create_autocmd("FileType", {
             ["<leader>bl"] = "\\begin{block}{}<CR><++><CR>\\end{block}<CR><++><Esc>3k$i", -- Block for theorem/definition
             ["<leader>en"] = "\\begin{enumerate}<CR><CR>\\end{enumerate}<CR><++><Esc>2ki", -- Enumerate list
             ["<leader>it"] = "\\begin{itemize}<CR><CR>\\end{itemize}<CR><++><Esc>2ki\\item<Space>", -- Itemize list
-            ["<leader>ce"] = "\\begin{center}<CR><CR>\\end{center}<CR><++><Esc>2ki", -- Center environment
+            ["<leader>bc"] = "\\begin{center}<CR><CR>\\end{center}<CR><++><Esc>2ki", -- Center environment
             ["<leader>ta"] = "\\begin{tabular}{}<CR><++><CR>\\end{tabular}<CR><++><Esc>3k$i", -- Table environment
             ["<leader>ii"] = "<CR>\\item<Space>", -- New list item
             ["<leader>-"] = '<Esc>"zdiWi\\<C-R>z{}<++><Esc>T{i}', -- Autocomplete bracket/command

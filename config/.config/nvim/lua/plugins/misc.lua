@@ -109,5 +109,20 @@ return {
             },
         },
         cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+        keys = {
+            {
+                "<leader>c",
+                function()
+                    if vim.b.csvview_info then
+                        vim.cmd("CsvViewToggle")
+                        vim.wo.wrap = true
+                    else
+                        vim.cmd("CsvViewToggle")
+                    end
+                end,
+                desc = "CSV: Toggle view (+wrap handling)",
+                mode = "n",
+            },
+        },
     },
 }
