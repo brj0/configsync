@@ -116,7 +116,7 @@ vim.keymap.set("n", "<leader>l", function()
 end, { noremap = true, silent = true })
 
 -- Map Q to formatting instead of Ex mode
-vim.keymap.set("v", "Q", "gq", { noremap = true, silent = true })
+vim.keymap.set("v", "Q", "gw", { noremap = true, silent = true })
 
 -- Easier moving/indentation of blocks
 vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
