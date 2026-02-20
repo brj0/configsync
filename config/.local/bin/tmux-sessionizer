@@ -1,26 +1,38 @@
 #!/usr/bin/env bash
 
+# Directories to search
+SEARCH_PATHS=(~ /applications /mnt)
+
+# Function to search directories
+search() {
+    if command -v fd >/dev/null 2>&1; then
+        # fd syntax: fd [pattern] [paths...]
+        fd "" "${SEARCH_PATHS[@]}" --type d --hidden --follow --exclude .git 2>/dev/null
+    else
+        find "${SEARCH_PATHS[@]}" -type d 2>/dev/null
+    fi
+}
+
+# Select a directory
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/ /applications/ /mnt -type d 2>/dev/null | fzf)
-    # selected=$(find ~/projects ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(search | fzf)
 fi
 
-if [[ -z $selected ]]; then
-    exit 0
+[[ -z $selected ]] && exit 0
+
+# Generate tmux session name
+selected_name=$(basename "$selected" | tr '.' '_')
+
+# Start new session if it doesn't exist
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+    tmux new-session -ds "$selected_name" -c "$selected"
 fi
 
-selected_name=$(basename "$selected" | tr . _)
-
-# Start new session if if does not already exist
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
-fi
-
-# Switch to session
+# Switch or attach
 if [[ -z $TMUX ]]; then
-    tmux attach-session -t $selected_name
+    tmux attach-session -t "$selected_name"
 else
-    tmux switch-client -t $selected_name
+    tmux switch-client -t "$selected_name"
 fi
