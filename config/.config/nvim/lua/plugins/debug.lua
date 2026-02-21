@@ -13,6 +13,7 @@ return {
         { "<leader>do", "<cmd>DapStepOver<cr>", desc = "Step Over" },
         { "<leader>dt", "<cmd>DapViewToggle<cr>", desc = "Toggle View" },
         { "<leader>dw", "<cmd>DapViewWatch<cr>", desc = "Watch" },
+        { "<leader>dq", "<cmd>DapTerminate<cr>", desc = "Quit Debug" },
     },
     config = function()
         local dap = require("dap")
