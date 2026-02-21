@@ -59,9 +59,9 @@ vim.opt.shiftwidth = 4
 
 -- Correct shiftwith in Python
 vim.g.python_indent = {
-    open_paren    = 'shiftwidth()',
-    nested_paren  = 'shiftwidth()',
-    continued     = 'shiftwidth()',
+    open_paren = "shiftwidth()",
+    nested_paren = "shiftwidth()",
+    continued = "shiftwidth()",
 }
 
 -- Sets how neovim will display certain whitespace characters in the editor.
