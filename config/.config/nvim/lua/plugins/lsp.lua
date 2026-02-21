@@ -31,7 +31,7 @@ return {
             vim.diagnostic.enable(false)
 
             -- Toggle diagnostics
-            vim.keymap.set("n", "<leader>d", function()
+            vim.keymap.set("n", "<leader>a", function()
                 local enabled = not vim.diagnostic.is_enabled()
                 vim.diagnostic.enable(enabled)
                 print(enabled and "Diagnostics ON" or "Diagnostics OFF")

@@ -110,11 +110,6 @@ vim.keymap.set("n", "<leader>t", function()
     vim.cmd("30vsplit .")
 end, { noremap = true, silent = true })
 
--- Toggle between absolute and relative line numbers
-vim.keymap.set("n", "<leader>l", function()
-    vim.opt.relativenumber = not vim.wo.relativenumber
-end, { noremap = true, silent = true })
-
 -- Map Q to formatting instead of Ex mode
 vim.keymap.set("v", "Q", "gw", { noremap = true, silent = true })
 
@@ -275,25 +270,25 @@ vim.keymap.set("n", "<leader><leader>", '<Esc>/<++><Enter>"_c4l', { noremap = tr
 -- Dictionary spell check
 vim.keymap.set(
     "n",
-    "<leader>de",
+    "<leader>le",
     ":set nospell<CR>:setlocal spell spelllang=en_us<CR>",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "n",
-    "<leader>dg",
+    "<leader>lg",
     ":set nospell<CR>:setlocal spell spelllang=de<CR>",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "n",
-    "<leader>dm",
+    "<leader>lm",
     ":set nospell<CR>:setlocal spell spelllang=en_us,de<CR>",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "n",
-    "<leader>dd",
+    "<leader>lq",
     ":set nospell<CR>",
     { noremap = true, silent = true }
 )

@@ -125,7 +125,7 @@ vim.api.nvim_create_autocmd("FileType", {
         -- Use Texlab LSP compiler
         vim.keymap.set(
             "n",
-            "<leader>lb",
+            "<leader>bb",
             TexBuild,
             { desc = "TeX: Compile LaTeX", buffer = true, silent = true }
         )

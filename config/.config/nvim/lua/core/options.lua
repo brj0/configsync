@@ -57,6 +57,13 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 
+-- Correct shiftwith in Python
+vim.g.python_indent = {
+    open_paren    = 'shiftwidth()',
+    nested_paren  = 'shiftwidth()',
+    continued     = 'shiftwidth()',
+}
+
 -- Sets how neovim will display certain whitespace characters in the editor.
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
