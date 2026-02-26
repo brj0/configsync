@@ -84,7 +84,11 @@ return {
     -- File browser
     {
         "stevearc/oil.nvim",
-        opts = {},
+        opts = {
+            view_options = {
+                show_hidden = true,
+            },
+        },
         dependencies = { { "nvim-mini/mini.icons", opts = {} } },
         -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
         lazy = false,
