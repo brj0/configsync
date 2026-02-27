@@ -31,10 +31,10 @@ return {
             vim.diagnostic.enable(false)
 
             -- Toggle diagnostics
-            vim.keymap.set("n", "<leader>j", function()
+            vim.keymap.set("n", "<leader>ld", function()
                 local enabled = not vim.diagnostic.is_enabled()
                 vim.diagnostic.enable(enabled)
-                print(enabled and "Diagnostics ON" or "Diagnostics OFF")
+                print(enabled and "LSP Diagnostics ON" or "LSP Diagnostics OFF")
             end, { desc = "Toggle diagnostics" })
 
             -- Lua
@@ -56,10 +56,17 @@ return {
                     },
                 },
             })
-            vim.lsp.enable("lua_ls")
+            vim.keymap.set("n", "<leader>ll", function()
+                vim.lsp.enable("lua_ls")
+                print("Lua LSP started")
+            end)
 
             -- Python
-            vim.lsp.enable("ruff")
+            vim.keymap.set("n", "<leader>lr", function()
+                vim.lsp.enable("ruff")
+                print("Ruff LSP started")
+            end)
+
             -- vim.lsp.enable("pyright")
 
             -- LaTeX (TexLab LSP)
@@ -88,7 +95,10 @@ return {
                     },
                 },
             })
-            vim.lsp.enable("texlab")
+            vim.keymap.set("n", "<leader>lt", function()
+                vim.lsp.enable("texlab")
+                print("Texlab LSP started")
+            end)
         end,
     },
 }
