@@ -9,10 +9,10 @@ return {
         "mason-org/mason-lspconfig.nvim",
         opts = {
             ensure_installed = {
-                "lua_ls",
+                -- "lua_ls",
                 -- 'pyright',
-                "ruff",
-                "texlab",
+                -- "ruff",
+                -- "texlab",
             },
         },
         dependencies = {
@@ -40,6 +40,7 @@ return {
             -- Lua
             local capabilities = require("blink.cmp").get_lsp_capabilities()
             vim.lsp.config("lua_ls", {
+                -- autostart = false,
                 capabilities = capabilities,
                 settings = {
                     Lua = {
@@ -71,6 +72,7 @@ return {
 
             -- LaTeX (TexLab LSP)
             vim.lsp.config("texlab", {
+                autostart = false,
                 capabilities = capabilities,
                 settings = {
                     texlab = {
