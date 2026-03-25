@@ -61,5 +61,10 @@ return {
             "<cmd>lua require('fzf-lua').grep_cword()<CR>",
             { noremap = true, silent = true }
         )
+        vim.keymap.set("v", "<leader>s*", function()
+            vim.cmd('normal! "zy')
+            local text = vim.fn.getreg("z")
+            require("fzf-lua").live_grep({ query = text })
+        end, { noremap = true, silent = true })
     end,
 }

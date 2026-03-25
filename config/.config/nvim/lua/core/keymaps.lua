@@ -200,10 +200,7 @@ vim.keymap.set(
     { noremap = true, silent = true }
 )
 
--- Search project for current word and highlight it without moving cursor
-vim.keymap.set("n", "<leader>*", function()
-    local word = vim.fn.expand("<cword>")
-
+local function project_search_string(word)
     -- case-sensitive highlight, keep cursor
     vim.fn.setreg("/", "\\V\\C\\<" .. word .. "\\>")
     vim.cmd("normal! nN")
@@ -227,6 +224,19 @@ vim.keymap.set("n", "<leader>*", function()
 
     -- Open quickfix window
     vim.cmd("copen")
+end
+
+-- Normal mode: word under cursor
+vim.keymap.set("n", "<leader>*", function()
+    local word = vim.fn.expand("<cword>")
+    project_search_string(word)
+end, { desc = "Recursive search for current word using rg or vimgrep" })
+
+-- Visual mode: highlighted text
+vim.keymap.set("v", "<leader>*", function()
+    vim.cmd('normal! "zy') -- yank selection into z register
+    local word = vim.fn.getreg("z")
+    project_search_string(word)
 end, { desc = "Recursive search for current word using rg or vimgrep" })
 
 -- Search current selection
