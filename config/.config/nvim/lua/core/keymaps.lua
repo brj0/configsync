@@ -24,13 +24,8 @@ vim.keymap.set("n", "'F", ":cfirst<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "üF", ":clast<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "'o", ":colder<CR><CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "üo", ":cnewer<CR><CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>n", ":cnext<Enter>", { noremap = true, silent = true })
-vim.keymap.set(
-    "n",
-    "<leader>N",
-    ":cprevious<Enter>",
-    { noremap = true, silent = true }
-)
+vim.keymap.set("n", "<C-n>", ":cnext<Enter>", { noremap = true, silent = true })
+vim.keymap.set( "n", "<C-p>", ":cprevious<Enter>", { noremap = true, silent = true })
 
 -- Add empty line above/below
 vim.keymap.set("n", "'<Space>", "O<Esc>j", { noremap = true })
