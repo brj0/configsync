@@ -196,28 +196,32 @@ vim.keymap.set(
 )
 
 local function project_search_string(word)
-    -- case-sensitive highlight, keep cursor
-    vim.fn.setreg("/", "\\V\\C\\<" .. word .. "\\>")
-    vim.cmd("normal! nN")
-
-    if vim.fn.executable("rg") == 1 then
-        -- Use ripgrep for project-wide search
-        local cmd = "rg --vimgrep --case-sensitive --hidden --word-regexp "
-            .. vim.fn.shellescape(word)
-        vim.fn.setqflist(
-            {},
-            " ",
-            { title = "rg results", lines = vim.fn.systemlist(cmd) }
-        )
-    elseif vim.fn.executable("grep") == 1 then
-        -- Use grep as fallback
-        vim.cmd("silent! grep! -wF " .. vim.fn.shellescape(word) .. " *")
-    else
-        -- Only fallback is vimgrep
-        vim.cmd("vimgrep /\\<" .. word .. "\\>/gj **/*")
+    local function escape_vim_pattern(str)
+        return str:gsub("([^%w])", "\\%1")
     end
 
-    -- Open quickfix window
+    -- Only highlight in Vim if safe
+    if word:match("^%w+$") then
+        vim.fn.setreg("/", "\\V\\C\\<" .. word .. "\\>")
+        vim.cmd("normal! nN")
+    end
+
+    if vim.fn.executable("rg") == 1 then
+        local cmd
+        -- Use -F for literal search if word has special characters
+        if word:match("%W") then
+            cmd = "rg --vimgrep --case-sensitive --hidden -F " .. vim.fn.shellescape(word)
+        else
+            cmd = "rg --vimgrep --case-sensitive --hidden --word-regexp " .. vim.fn.shellescape(word)
+        end
+        vim.fn.setqflist({}, " ", { title = "rg results", lines = vim.fn.systemlist(cmd) })
+    elseif vim.fn.executable("grep") == 1 then
+        vim.cmd("silent! grep! -wF " .. vim.fn.shellescape(word) .. " *")
+    else
+        local vimgrep_pattern = "\\V\\C\\<" .. escape_vim_pattern(word) .. "\\>"
+        vim.cmd("vimgrep /" .. vimgrep_pattern .. "/gj **/*")
+    end
+
     vim.cmd("copen")
 end
 
