@@ -6,14 +6,6 @@ vim.api.nvim_create_autocmd("FileType", {
     command = "setlocal linebreak",
 })
 
--- Hack to make netrw wait for the tab shortcuts.
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "netrw",
-    callback = function()
-        vim.keymap.set("n", "tt", "<Nop>", { noremap = true, buffer = true })
-    end,
-})
-
 -- Use 2 spaces for certain file types
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {
