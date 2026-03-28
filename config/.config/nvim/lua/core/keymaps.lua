@@ -98,7 +98,7 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>mr", ":make run<CR>", { noremap = true, silent = true })
 
 -- Open entry in quickfix in new tab
-vim.keymap.set("n", "tt", "<C-W><Enter><C-W>T", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-t>", "<C-W><Enter><C-W>T", { noremap = true, silent = true })
 
 -- Open working directory in vertical split
 vim.keymap.set("n", "<leader>t", function()
