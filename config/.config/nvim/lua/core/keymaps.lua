@@ -25,7 +25,7 @@ vim.keymap.set("n", "üF", ":clast<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "'o", ":colder<CR><CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "üo", ":cnewer<CR><CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-n>", ":cnext<Enter>", { noremap = true, silent = true })
-vim.keymap.set( "n", "<C-p>", ":cprevious<Enter>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-p>", ":cprevious<Enter>", { noremap = true, silent = true })
 
 -- Add empty line above/below
 vim.keymap.set("n", "'<Space>", "O<Esc>j", { noremap = true })
@@ -195,32 +195,39 @@ vim.keymap.set(
     { noremap = true, silent = true }
 )
 
-local function project_search_string(word)
-    local function escape_vim_pattern(str)
-        return str:gsub("([^%w])", "\\%1")
+local function project_search_string(word, exact_word)
+    if vim.fn.executable("rg") == 0 then
+        vim.api.nvim_err_writeln("Error: ripgrep (rg) is not installed!")
+        return
     end
 
-    -- Only highlight in Vim if safe
-    if word:match("^%w+$") then
-        vim.fn.setreg("/", "\\V\\C\\<" .. word .. "\\>")
-        vim.cmd("normal! nN")
-    end
+    word = word:gsub("\n", "") -- remove newline from visual selection
 
-    if vim.fn.executable("rg") == 1 then
-        local cmd
-        -- Use -F for literal search if word has special characters
-        if word:match("%W") then
-            cmd = "rg --vimgrep --case-sensitive --hidden -F " .. vim.fn.shellescape(word)
-        else
-            cmd = "rg --vimgrep --case-sensitive --hidden --word-regexp " .. vim.fn.shellescape(word)
-        end
-        vim.fn.setqflist({}, " ", { title = "rg results", lines = vim.fn.systemlist(cmd) })
-    elseif vim.fn.executable("grep") == 1 then
-        vim.cmd("silent! grep! -wF " .. vim.fn.shellescape(word) .. " *")
+    local pattern
+    if exact_word then
+        -- normal mode: exact word
+        pattern = "\\V\\C\\<" .. word .. "\\>"
     else
-        local vimgrep_pattern = "\\V\\C\\<" .. escape_vim_pattern(word) .. "\\>"
-        vim.cmd("vimgrep /" .. vimgrep_pattern .. "/gj **/*")
+        -- visual mode: substring search
+        pattern = "\\V\\C" .. word
     end
+
+    -- set search register and jump to first match
+    vim.fn.setreg("/", pattern)
+    vim.cmd("silent! normal! nN")
+
+    local cmd
+    if exact_word then
+        cmd = "rg --vimgrep --case-sensitive --word-regexp "
+            .. vim.fn.shellescape(word)
+    else
+        cmd = "rg --vimgrep --case-sensitive -F " .. vim.fn.shellescape(word)
+    end
+    vim.fn.setqflist(
+        {},
+        " ",
+        { title = "rg results", lines = vim.fn.systemlist(cmd) }
+    )
 
     vim.cmd("copen")
 end
@@ -228,15 +235,15 @@ end
 -- Normal mode: word under cursor
 vim.keymap.set("n", "<leader>*", function()
     local word = vim.fn.expand("<cword>")
-    project_search_string(word)
-end, { desc = "Recursive search for current word using rg or vimgrep" })
+    project_search_string(word, true)
+end, { desc = "Recursive search for current word (exact) using rg or vimgrep" })
 
 -- Visual mode: highlighted text
 vim.keymap.set("v", "<leader>*", function()
-    vim.cmd('normal! "zy') -- yank selection into z register
+    vim.cmd('normal! "zy')
     local word = vim.fn.getreg("z")
-    project_search_string(word)
-end, { desc = "Recursive search for current word using rg or vimgrep" })
+    project_search_string(word, false) -- substring search
+end, { desc = "Recursive search for selection (substring) using rg or vimgrep" })
 
 -- Search current selection
 vim.keymap.set("v", "*", '"zy/<C-R>z<Enter>', { noremap = true })
