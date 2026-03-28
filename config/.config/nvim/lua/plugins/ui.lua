@@ -40,7 +40,6 @@ return {
                             fg = c.base.white,
                             bold = true,
                         }, -- Selected QuickFix line
-                        Directory = { bg = "NONE", fg = c.base.cyan, bold = true }, -- Directories in netrw and non-selected QuickFix lines
                     }
                 end,
             })
