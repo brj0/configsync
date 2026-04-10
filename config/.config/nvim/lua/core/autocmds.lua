@@ -257,6 +257,14 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "snakemake",
+    callback = function()
+        vim.cmd("command! SnakeFmt !snakefmt --line-length 79 %")
+    end,
+})
+
 -- Join multi-line strings and format them properly
 function FormatMultilineString()
     -- Get the selected lines in visual mode
