@@ -356,7 +356,7 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 
 -- Sends the current line or selected text to the first tmux pane for execution.
 -- This allows running code line by line in an interpreter within tmux.
-function RunInConsole(register, add_enter)
+function RunInConsole(register, add_enter, filter_empty)
     local code = vim.fn.getreg(register)
 
     -- If last line ends without CR, add one manually
@@ -367,7 +367,13 @@ function RunInConsole(register, add_enter)
     -- Split into lines
     local lines = {}
     for line in code:gmatch("([^\n]*\n)") do
-        table.insert(lines, line)
+        if not filter_empty or not line:match("^%s*\n$") then
+            table.insert(lines, line)
+        end
+    end
+
+    if filter_empty then
+        table.insert(lines, "\n")
     end
 
     -- Group lines into chunks
@@ -406,31 +412,37 @@ end
 vim.keymap.set(
     "n",
     "<leader>e",
-    "\"zy$:lua RunInConsole('z', false)<CR>j",
+    "\"zy$:lua RunInConsole('z', false, false)<CR>j",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "n",
     "<leader>a",
-    "\"zy$:lua RunInConsole('z', true)<CR>j",
+    "\"zy$:lua RunInConsole('z', true, false)<CR>j",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "v",
     "<leader>e",
-    "$\"zy'>:lua RunInConsole('z', false)<CR>j",
+    "$\"zy'>:lua RunInConsole('z', false, false)<CR>j",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "v",
     "<leader>a",
-    "$\"zy'>:lua RunInConsole('z', true)<CR>j",
+    "$\"zy'>:lua RunInConsole('z', true, false)<CR>j",
     { noremap = true, silent = true }
 )
 vim.keymap.set(
     "n",
     "<leader>v",
-    "vap$\"zy'>:lua RunInConsole('z', true)<CR>j",
+    "vap$\"zy'>:lua RunInConsole('z', true, false)<CR>j",
+    { noremap = true, silent = true }
+)
+vim.keymap.set(
+    "v",
+    "<leader>v",
+    "$\"zy'>:lua RunInConsole('z', false, true)<CR>j",
     { noremap = true, silent = true }
 )
 vim.keymap.set("n", "<leader>ma", function()
