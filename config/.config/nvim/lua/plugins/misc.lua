@@ -6,15 +6,6 @@ return {
         event = "VeryLazy",
     },
 
-    -- Comment / uncomment lines/blocks of code
-    {
-        "numToStr/Comment.nvim",
-        event = "VeryLazy",
-        opts = {
-            -- add any options here
-        },
-    },
-
     -- Add/delete/change surrounding pairs
     {
         "kylechui/nvim-surround",
