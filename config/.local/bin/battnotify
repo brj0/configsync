@@ -1,21 +1,45 @@
 #!/bin/bash
+# Battery monitor - sends a desktop notification and speaks a warning when
+# battery drops to or below the threshold while unplugged. Designed to run as a
+# cron job under a graphical (X11) session.
 
+# -- Environment
 export DISPLAY=:0
-export XAUTHORITY=~/.Xauthority
-export XDG_RUNTIME_DIR=/run/user/1000
+export XAUTHORITY="${HOME}/.Xauthority"
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
-BATTERY_LEVEL=$(acpi -b | grep -P -o '[0-9]+(?=%)' | sort -nr | head -1)
-POWER_CABLE=$(acpi -a | awk '{print $3}')
-SIGNAL=0
+# -- Config
+readonly THRESHOLD=20
+readonly LOG_DIR="${HOME}/.cache/battnotify"
+readonly LOG_FILE="${LOG_DIR}/battnotify.log"
 
-if [[ $BATTERY_LEVEL -le 20 && $POWER_CABLE == "off-line" ]]
+# -- Gather state
+TIME="$(date '+%Y-%m-%d %H:%M:%S')"
+BATTERY_LEVEL=$(acpi -b | grep -Po '[0-9]+(?=%)' | sort -rn | head -1)
+POWER_STATUS=$(acpi -a | awk '{print $NF}')  # "on-line" or "off-line"
+
+# -- Check and alert
+ALERTED=0
+
+if (( BATTERY_LEVEL <= THRESHOLD )) && [[ "$POWER_STATUS" == "off-line" ]]
 then
-    /usr/bin/notify-send -u critical "Battery low" "Battery level is ${BATTERY_LEVEL}%!"
-    /usr/bin/espeak "Battery is Low, Please connect the charger"
-    SIGNAL=1
+    /usr/bin/notify-send -u critical \
+        "Battery low" "Battery level is ${BATTERY_LEVEL}%!"
+    /usr/bin/espeak "Battery is low. Please connect the charger."
+    ALERTED=1
 fi
 
+# -- Log
+mkdir -p "$LOG_DIR"
 
-mkdir -p /tmp/battery_check
-TIME=$(date)
-echo -e $TIME "\t" $BATTERY_LEVEL "%\t" $POWER_CABLE "\t" $SIGNAL >> /tmp/battery_check/battnotify.log
+if [[ -f "$LOG_FILE" ]] && (( $(wc -l < "$LOG_FILE") > 1000 )); then
+    tail -n 1000 "$LOG_FILE" > "${LOG_FILE}.tmp" \
+        && mv "${LOG_FILE}.tmp" "$LOG_FILE"
+fi
+
+printf '%s\t%d%%\t%s\talerted=%d\n' \
+    "$TIME" \
+    "$BATTERY_LEVEL" \
+    "$POWER_STATUS" \
+    "$ALERTED" \
+    >> "$LOG_FILE"
