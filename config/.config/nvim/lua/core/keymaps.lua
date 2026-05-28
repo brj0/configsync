@@ -17,6 +17,9 @@ vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Space>", "/", { noremap = true })
 vim.keymap.set("n", "<leader><Space>", "?", { noremap = true })
 
+-- Insert tab
+vim.keymap.set("i", "<S-Tab>", "<C-V><Tab>")
+
 -- Fast quickfix navigation
 vim.keymap.set("n", "'f", ":cprevious<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "üf", ":cnext<CR>", { noremap = true, silent = true })
