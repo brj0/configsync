@@ -32,8 +32,8 @@ fi
 # -- Log
 mkdir -p "$LOG_DIR"
 
-if [[ -f "$LOG_FILE" ]] && (( $(wc -l < "$LOG_FILE") > 1000 )); then
-    tail -n 1000 "$LOG_FILE" > "${LOG_FILE}.tmp" \
+if [[ -f "$LOG_FILE" ]] && (( $(wc -l < "$LOG_FILE") > 100 )); then
+    tail -n 100 "$LOG_FILE" > "${LOG_FILE}.tmp" \
         && mv "${LOG_FILE}.tmp" "$LOG_FILE"
 fi
 
