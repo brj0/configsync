@@ -3,21 +3,18 @@
 # This script creates symbolic links for several dotfiles. Existing dotfiles
 # will not be replaced.
 
-set -eo pipefail
+set -euo pipefail
 
 this_script=$(realpath "$0")
 this_script_dir=$(dirname "$this_script")
 config_dir="$this_script_dir/config"
 
 # Check if an argument is provided and handle options
-if [ "$1" == "--local" ]; then
-    local_mode=true
-elif [ -n "$1" ]; then
-    echo "Invalid option: $1"
-    exit 1
-else
-    local_mode=false
-fi
+case "${1:-}" in
+    --local) local_mode=true ;;
+    "") local_mode=false ;;
+    *) echo "Invalid option"; exit 1 ;;
+esac
 
 # Look for updates.
 if [ "$local_mode" = false ]; then
