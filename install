@@ -3,9 +3,11 @@
 # This script creates symbolic links for several dotfiles. Existing dotfiles
 # will not be replaced.
 
-this_script=$(realpath $0)
-this_script_dir=$(dirname $this_script)
-config_dir=$(dirname $this_script)'/config'
+set -eo pipefail
+
+this_script=$(realpath "$0")
+this_script_dir=$(dirname "$this_script")
+config_dir="$this_script_dir/config"
 
 # Check if an argument is provided and handle options
 if [ "$1" == "--local" ]; then
@@ -19,12 +21,12 @@ fi
 
 # Look for updates.
 if [ "$local_mode" = false ]; then
-    git -C $this_script_dir pull
+    git -C "$this_script_dir" pull
 fi
 
 # Files and dirs to sync.
-sync_files=$(find $config_dir -mindepth 1 -type f)
-sync_dirs=$(find $config_dir -mindepth 1 -type d)
+sync_files=$(find "$config_dir" -mindepth 1 -type f)
+sync_dirs=$(find "$config_dir" -mindepth 1 -type d)
 
 # Target dirs containing symbolic links.
 home_dirs="${sync_dirs//$config_dir/$HOME}"
@@ -37,28 +39,28 @@ for f in $sync_files;
 do
     f_ln="${f/$config_dir/$HOME}"
     # Removes symbolic links if they exist.
-    if [ -L $f_ln ]; then
-        rm $f_ln
-        ln -s $f $f_ln
+    if [ -L "$f_ln" ]; then
+        rm "$f_ln"
+        ln -s "$f" "$f_ln"
     else
-        ln -sv $f $f_ln
+        ln -sv "$f" "$f_ln"
     fi
 done;
 
 # Create symbolic link for this script in ~/.local/bin.
-this_script_ln=$HOME/.local/bin/configsync
-if [ -L $this_script_ln ]; then
-    rm $this_script_ln
+this_script_ln="$HOME/.local/bin/configsync"
+if [ -L "$this_script_ln" ]; then
+    rm "$this_script_ln"
 fi
-ln -s $this_script $this_script_ln
+ln -s "$this_script" "$this_script_ln"
 
 # If not in local mode, push to GitHub
 if [ "$local_mode" = false ]; then
     # Check if there are any changes
-    if [ -n "$(git -C $this_script_dir status --porcelain)" ]; then
-        git -C $this_script_dir add -A
-        git -C $this_script_dir commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
-        git -C $this_script_dir push origin main
+    if [ -n "$(git -C "$this_script_dir" status --porcelain)" ]; then
+        git -C "$this_script_dir" add -A
+        git -C "$this_script_dir" commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
+        git -C "$this_script_dir" push origin main
         echo "Changes pushed to remote."
     else
         echo "No changes to commit."
