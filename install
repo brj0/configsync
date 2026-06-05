@@ -39,10 +39,12 @@ do
     if [ -L "$f_ln" ]; then
         rm "$f_ln"
         ln -s "$f" "$f_ln"
-    else
+    elif [ ! -e "$f_ln" ]; then
         ln -sv "$f" "$f_ln"
+    else
+        echo "Skipping $f_ln: file already exists"
     fi
-done;
+done
 
 # Create symbolic link for this script in ~/.local/bin.
 this_script_ln="$HOME/.local/bin/configsync"
