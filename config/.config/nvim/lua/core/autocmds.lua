@@ -227,9 +227,20 @@ vim.api.nvim_create_autocmd("FileType", {
             "command! RuffAllFix !ruff check --select I --fix % && ruff format --line-length 79 %"
         )
         vim.cmd("command! Pylint cexpr system('pylint ' .. expand('%')) | copen")
-        vim.cmd(
-            "command! PylintAll cexpr system('pylint $(find . -name \"*.py\")') | copen"
-        )
+        vim.api.nvim_create_user_command("PylintAll", function()
+            local in_git = vim.fn.system(
+                "git rev-parse --is-inside-work-tree 2>/dev/null"
+            ) ~= ""
+
+            local cmd
+            if in_git then
+                cmd = "pylint $(git ls-files '*.py')"
+            else
+                cmd = "pylint ."
+            end
+
+            vim.cmd("cexpr system(" .. vim.fn.string(cmd) .. ") | copen")
+        end, {})
         vim.cmd("command! Mypy cgete system('mypy ' .. expand('%')) | copen")
         vim.cmd("command! MypyAll cgete system('mypy .') | copen")
 
