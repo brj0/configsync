@@ -19,4 +19,4 @@ done
 
 git reset
 echo "All branches synced. Working files untouched."
-git status
+git branch -vv
