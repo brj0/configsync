@@ -83,6 +83,32 @@ return {
         dependencies = { { "nvim-mini/mini.icons", opts = {} } },
         -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
         lazy = false,
+        config = function(_, opts)
+            local oil = require("oil")
+            oil.setup(opts)
+
+            local detail = false
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "oil",
+                callback = function()
+                    vim.keymap.set("n", "gd", function()
+                        detail = not detail
+
+                        if detail then
+                            oil.set_columns({
+                                "icon",
+                                "permissions",
+                                "size",
+                                "mtime",
+                            })
+                        else
+                            oil.set_columns({ "icon" })
+                        end
+                    end, { buffer = true, desc = "Oil: toggle details" })
+                end,
+            })
+        end,
     },
 
     {

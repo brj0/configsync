@@ -9,6 +9,9 @@ return {
                 hidden = true, -- enable hidden files by default
                 follow = true, -- do follow symlinks
             },
+            grep = {
+                hidden = true,
+            },
         })
 
         -- Mapping for fzf commands
