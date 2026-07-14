@@ -166,6 +166,11 @@ if command -v nvim >/dev/null; then
     export MANPAGER='nvim +Man!'
 fi
 
+#  Use nvim for reading help pages if there is no man
+h() {
+    "$@" --help | nvim -c 'set ft=help' -R
+}
+
 # vim mode
 set -o vi
 bind -m vi-command 'Control-l: clear-screen'
