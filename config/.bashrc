@@ -168,7 +168,7 @@ fi
 
 #  Use nvim for reading help pages if there is no man
 h() {
-    "$@" --help | nvim -c 'set ft=help' -R
+    "$@" --help | nvim -c 'set ft=man' -R
 }
 
 # vim mode
