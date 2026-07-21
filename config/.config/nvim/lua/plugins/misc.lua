@@ -111,6 +111,7 @@ return {
         end,
     },
 
+    -- CSV viewer
     {
         "hat0uma/csvview.nvim",
         opts = {
@@ -146,4 +147,19 @@ return {
             },
         },
     },
+
+    -- Nextflow syntax
+    {
+        "LukeGoodsell/nextflow-vim",
+        ft = "nextflow",
+        config = function()
+            vim.api.nvim_create_autocmd("Syntax", {
+                pattern = "nextflow",
+                callback = function()
+                    vim.opt_local.colorcolumn = ""
+                end,
+            })
+        end,
+    },
+
 }
