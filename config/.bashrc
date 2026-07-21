@@ -168,7 +168,12 @@ fi
 
 #  Use nvim for reading help pages if there is no man
 h() {
-    "$@" --help | nvim -c 'set ft=man' -R
+    command -v "$1" >/dev/null || {
+        printf 'Command not found: %s\n' "$1" >&2
+        return 127
+    }
+
+    "$@" --help | nvim -c 'set ft=man' -R -
 }
 
 # vim mode
