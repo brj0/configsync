@@ -247,6 +247,24 @@ vim.api.nvim_create_autocmd("FileType", {
             { buffer = true, desc = "Insert breakpoint (pdb)" }
         )
 
+        vim.keymap.set(
+            "n",
+            "<leader>myy",
+            function()
+                vim.cmd("MypyAll")
+            end,
+            { buffer = true, desc = "Mypy all files" }
+        )
+
+        vim.keymap.set(
+            "n",
+            "<leader>myf",
+            function()
+                vim.cmd("Mypy")
+            end,
+            { buffer = true, desc = "Mypy current file" }
+        )
+
         -- Create custom commands for different Python tools
         vim.cmd("command! RuffCheck compiler ruff | normal <leader>mf")
         vim.cmd("command! RuffFmt !ruff format --line-length 79 %")
