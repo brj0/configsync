@@ -211,6 +211,28 @@ vim.api.nvim_create_autocmd("FileType", {
         -- Set ruff as default linter
         vim.cmd("compiler ruff")
 
+        local function ruff_fix(target)
+            vim.cmd("write")
+            vim.fn.system("ruff check --select I --fix " .. target)
+            vim.fn.system("ruff format --line-length 79 " .. target)
+            vim.cmd("edit")
+        end
+
+        -- ,ma -> RuffAllFix this file
+        vim.keymap.set(
+            "n", "<leader>mF",
+            function() ruff_fix(vim.fn.expand("%")) end,
+            { buffer = true, desc = "Ruff fix imports + format this file" }
+        )
+
+        -- ,mA -> RuffAllFix whole project
+        vim.keymap.set(
+            "n",
+            "<leader>mM",
+            function() ruff_fix(".") end,
+            { buffer = true, desc = "Ruff fix imports + format project" }
+        )
+
         -- Set a breakpoint in Python code using pdb
         vim.keymap.set(
             "n",
