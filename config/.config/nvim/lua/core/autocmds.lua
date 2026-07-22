@@ -213,9 +213,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
         local function ruff_fix(target)
             vim.cmd("write")
-            vim.fn.system("ruff check --select I --fix " .. target)
-            vim.fn.system("ruff format --line-length 79 " .. target)
+            local out1 = vim.fn.system("ruff check --select I --fix " .. target)
+            local out2 = vim.fn.system("ruff format --line-length 79 " .. target)
             vim.cmd("edit")
+            local output = out1 .. out2
+            if output ~= "" then
+                vim.notify(output)
+            else
+                vim.notify("Ruff: output produced in " .. target)
+            end
         end
 
         -- ,ma -> RuffAllFix this file
