@@ -126,7 +126,7 @@ alias fgrep='fgrep --color=auto'
 
 if command -v eza &> /dev/null; then
     alias ls='eza'
-    alias ll='ls -alF'
+    alias ll='ls -al --classify=auto'
     alias la='ls -alF --icons'
     alias l.='ls -ld .*'
     alias tree='eza --tree'
