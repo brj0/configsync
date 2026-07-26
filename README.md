@@ -4,6 +4,6 @@ Contains personal configuration/dotfiles (vimrc, tmux) and scripts to sync on mu
 ## Installation
 
 ```sh
-git clone https://github.com/brj0/configsync.git ~/.configsync
-~/.configsync/install
+git clone https://github.com/brj0/configsync.git ~/.config/configsync
+~/.config/configsync/install
 ```
