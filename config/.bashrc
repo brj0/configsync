@@ -173,7 +173,11 @@ h() {
         return 127
     }
 
-    "$@" --help | nvim -c 'set ft=man' -R -
+    "$@" --help | nvim \
+        -R \
+        -c "set ft=man" \
+        -c "file HELP-$1" \
+        -
 }
 
 # vim mode
