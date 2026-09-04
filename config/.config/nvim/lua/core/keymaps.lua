@@ -380,7 +380,7 @@ function RunInConsole(register, add_enter, filter_empty)
     end
 
     -- Group lines into chunks
-    local chunk_size = 512
+    local chunk_size = 100
     local code_chunks = {}
     for i = 1, #lines, chunk_size do
         local chunk = table.concat(vim.list_slice(lines, i, i + chunk_size - 1))
