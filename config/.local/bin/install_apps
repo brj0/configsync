@@ -136,7 +136,7 @@ install_tmux() {
     sudo make install
 }
 
-install_neovim() {
+install_neovim_from_source() {
     command_exists nvim && return
 
     install_pkgs ninja-build gettext cmake unzip curl build-essential git
@@ -147,6 +147,10 @@ install_neovim() {
     sudo make install
     # install_rust
     # cargo install --locked tree-sitter-cli
+}
+
+install_nvim() {
+    curl -fsSL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz | tar -xz --strip-components=1 -C ~/.local
 }
 
 install_jb_nerd_font() {
