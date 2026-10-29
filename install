@@ -191,7 +191,7 @@ cmd_sync() {
     local branch
     branch=$(git -C "$repo_dir" rev-parse --abbrev-ref HEAD)
     git -C "$repo_dir" add -A
-    git -C "$repo_dir" commit -m "Sync $(hostname -s) $(date +'%Y-%m-%d %H:%M:%S')"
+    git -C "$repo_dir" commit -m "Sync $(date +'%Y-%m-%d %H:%M:%S')"
     if ! $local_mode; then
         git -C "$repo_dir" pull --rebase --autostash
         git -C "$repo_dir" push origin "$branch"
