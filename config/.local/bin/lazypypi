@@ -18,7 +18,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "Uploading the package to PyPI..."
-twine upload dist/* -u "$TWINE_USERNAME" -p "$TWINE_PASSWORD"
+twine upload dist/*
 
 if [[ $? -ne 0 ]]; then
   echo "Error: Failed to upload the package to PyPI."

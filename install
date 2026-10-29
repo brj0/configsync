@@ -1,67 +1,207 @@
-#!/bin/bash
-
-# This script creates symbolic links for several dotfiles. Existing dotfiles
-# will not be replaced.
+#!/usr/bin/env bash
+#
+# configsync: symlink the dotfiles in ./config into $HOME and keep the repo in
+# sync with GitHub.
+#
+# Usage: install [command] [options]
+#
+# Commands:
+#   link        Create symlinks (default). Pulls first unless --local.
+#   sync        Show pending changes, then commit and push (asks first).
+#   status      Show which files are linked, missing, or conflicting.
+#   unlink      Remove the symlinks created by this script.
+#
+# Options:
+#   --local     Do not touch the network (no git pull).
+#   --force     Replace conflicting files; originals are moved to a backup dir.
+#   -n, --dry-run   Print what would happen, change nothing.
+#   -h, --help  Show this help.
 
 set -euo pipefail
 
-this_script=$(realpath "$0")
-this_script_dir=$(dirname "$this_script")
-config_dir="$this_script_dir/config"
+# ----------------------------------------------------------------------------
+# Setup
+# ----------------------------------------------------------------------------
 
-# Check if an argument is provided and handle options
-case "${1:-}" in
-    --local) local_mode=true ;;
-    "") local_mode=false ;;
-    *) echo "Invalid option"; exit 1 ;;
-esac
+script_path=$(realpath "${BASH_SOURCE[0]}")
+repo_dir=$(dirname "$script_path")
+config_dir="$repo_dir/config"
+backup_dir="$HOME/.local/state/configsync/backup/$(date +%Y%m%d-%H%M%S)"
 
-# Look for updates.
-if [ "$local_mode" = false ]; then
-    git -C "$this_script_dir" pull
-fi
+cmd=link
+local_mode=false
+force=false
+dry_run=false
 
-# Files and dirs to sync.
-sync_files=$(find "$config_dir" -mindepth 1 -type f)
-sync_dirs=$(find "$config_dir" -mindepth 1 -type d)
+usage() { sed -n '3,19p' "$script_path" | sed 's/^# \{0,1\}//'; }
+info()  { printf '%s\n' "$*"; }
+warn()  { printf 'warning: %s\n' "$*" >&2; }
+die()   { printf 'error: %s\n' "$*" >&2; exit 1; }
 
-# Target dirs containing symbolic links.
-home_dirs="${sync_dirs//$config_dir/$HOME}"
-
-# Create all dirs in home dir if they do not exist.
-mkdir -p $home_dirs
-
-# Create symbolic links for all files
-for f in $sync_files;
-do
-    f_ln="${f/$config_dir/$HOME}"
-    # Removes symbolic links if they exist.
-    if [ -L "$f_ln" ]; then
-        rm "$f_ln"
-        ln -s "$f" "$f_ln"
-    elif [ ! -e "$f_ln" ]; then
-        ln -sv "$f" "$f_ln"
+# Run a command, or just print it in dry-run mode.
+run() {
+    if $dry_run; then
+        printf '[dry-run] %s\n' "$*"
     else
-        echo "Skipping $f_ln: file already exists"
+        "$@"
     fi
+}
+
+for arg in "$@"; do
+    case "$arg" in
+        link|sync|status|unlink) cmd=$arg ;;
+        --local)                 local_mode=true ;;
+        --force)                 force=true ;;
+        -n|--dry-run)            dry_run=true ;;
+        -h|--help)               usage; exit 0 ;;
+        *)                       usage >&2; die "unknown argument: $arg" ;;
+    esac
 done
 
-# Create symbolic link for this script in ~/.local/bin.
-this_script_ln="$HOME/.local/bin/configsync"
-if [ -L "$this_script_ln" ]; then
-    rm "$this_script_ln"
-fi
-ln -s "$this_script" "$this_script_ln"
+[ -d "$config_dir" ] || die "config directory not found: $config_dir"
+command -v git >/dev/null || die "git is required"
 
-# If not in local mode, push to GitHub
-if [ "$local_mode" = false ]; then
-    # Check if there are any changes
-    if [ -n "$(git -C "$this_script_dir" status --porcelain)" ]; then
-        git -C "$this_script_dir" add -A
-        git -C "$this_script_dir" commit -m "New backup $(date +'%Y-%m-%d %H:%M:%S')"
-        git -C "$this_script_dir" push origin main
-        echo "Changes pushed to remote."
-    else
-        echo "No changes to commit."
+# Prints <source>\0 for each regular file under config/ (NUL-safe).
+list_sources() {
+    find "$config_dir" -type f -print0
+}
+
+target_for() { printf '%s\n' "${1/#$config_dir/$HOME}"; }
+
+# ----------------------------------------------------------------------------
+# Commands
+# ----------------------------------------------------------------------------
+
+do_pull() {
+    $local_mode && return 0
+    # Only fast-forward; never create a merge commit or fail halfway.
+    if [ -n "$(git -C "$repo_dir" status --porcelain)" ]; then
+        warn "uncommitted changes in $repo_dir; skipping git pull"
+        return 0
     fi
-fi
+    git -C "$repo_dir" pull --ff-only \
+        || warn "git pull failed; continuing with the current checkout"
+}
+
+link_one() {
+    local src=$1 dst
+    dst=$(target_for "$src")
+
+    run mkdir -p "$(dirname "$dst")"
+
+    if [ -L "$dst" ]; then
+        # Already ours? Nothing to do. Otherwise repoint it.
+        if [ "$(readlink "$dst")" = "$src" ]; then
+            return 0
+        fi
+        run ln -sfn "$src" "$dst"
+        info "relinked  $dst"
+    elif [ ! -e "$dst" ]; then
+        run ln -s "$src" "$dst"
+        info "linked    $dst"
+    elif $force; then
+        run mkdir -p "$backup_dir/$(dirname "${dst#"$HOME"/}")"
+        run mv "$dst" "$backup_dir/${dst#"$HOME"/}"
+        run ln -s "$src" "$dst"
+        info "replaced  $dst (backup in $backup_dir)"
+        conflicts_replaced=true
+    else
+        warn "skipping $dst: file exists (use --force to replace it)"
+        skipped=$((skipped + 1))
+    fi
+}
+
+cmd_link() {
+    do_pull
+    skipped=0
+    conflicts_replaced=false
+
+    while IFS= read -r -d '' src; do
+        link_one "$src"
+    done < <(list_sources)
+
+    # Make this script available as `configsync`.
+    local bin="$HOME/.local/bin/configsync"
+    run mkdir -p "$(dirname "$bin")"
+    run ln -sfn "$script_path" "$bin"
+
+    $conflicts_replaced && info "Backups: $backup_dir"
+
+    # Remind about unsynced work.
+    local dirty ahead
+    dirty=$(git -C "$repo_dir" status --porcelain | wc -l)
+    ahead=$(git -C "$repo_dir" rev-list --count '@{u}..HEAD' 2>/dev/null || echo 0)
+    if [ "$dirty" -gt 0 ] || [ "$ahead" -gt 0 ]; then
+        warn "$dirty uncommitted file(s), $ahead unpushed commit(s): run 'configsync sync'"
+    fi
+
+    if [ "$skipped" -gt 0 ]; then
+        warn "$skipped file(s) skipped"
+        return 1
+    fi
+    info "Done."
+}
+
+cmd_status() {
+    local ok=0 missing=0 conflict=0 src dst
+    while IFS= read -r -d '' src; do
+        dst=$(target_for "$src")
+        if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+            ok=$((ok + 1))
+        elif [ ! -e "$dst" ] && [ ! -L "$dst" ]; then
+            missing=$((missing + 1)); info "missing   $dst"
+        else
+            conflict=$((conflict + 1)); info "conflict  $dst"
+        fi
+    done < <(list_sources)
+    info "linked: $ok, missing: $missing, conflicting: $conflict"
+    [ $((missing + conflict)) -eq 0 ]
+}
+
+cmd_unlink() {
+    local src dst
+    while IFS= read -r -d '' src; do
+        dst=$(target_for "$src")
+        # Only remove links that point into this repo.
+        if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+            run rm "$dst"
+            info "removed   $dst"
+        fi
+    done < <(list_sources)
+    local bin="$HOME/.local/bin/configsync"
+    if [ -L "$bin" ] && [ "$(readlink "$bin")" = "$script_path" ]; then
+        run rm "$bin"
+    fi
+}
+
+cmd_sync() {
+    if [ -z "$(git -C "$repo_dir" status --porcelain)" ]; then
+        info "No changes to commit."
+        $local_mode || git -C "$repo_dir" pull --ff-only
+        return 0
+    fi
+
+    git -C "$repo_dir" status --short
+    $dry_run && { info "[dry-run] would commit and push the above"; return 0; }
+
+    local reply
+    read -r -p "Commit and push these changes? [y/N] " reply
+    [[ "$reply" =~ ^[Yy]$ ]] || { info "Aborted."; return 0; }
+
+    local branch
+    branch=$(git -C "$repo_dir" rev-parse --abbrev-ref HEAD)
+    git -C "$repo_dir" add -A
+    git -C "$repo_dir" commit -m "Sync $(hostname -s) $(date +'%Y-%m-%d %H:%M:%S')"
+    if ! $local_mode; then
+        git -C "$repo_dir" pull --rebase --autostash
+        git -C "$repo_dir" push origin "$branch"
+        info "Changes pushed."
+    fi
+}
+
+case "$cmd" in
+    link)   cmd_link ;;
+    sync)   cmd_sync ;;
+    status) cmd_status ;;
+    unlink) cmd_unlink ;;
+esac

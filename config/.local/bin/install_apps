@@ -149,7 +149,7 @@ install_neovim_from_source() {
     # cargo install --locked tree-sitter-cli
 }
 
-install_nvim() {
+install_neovim() {
     curl -fsSL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz | tar -xz --strip-components=1 -C ~/.local
 }
 
