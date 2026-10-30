@@ -1,19 +1,35 @@
-###############################################################################
-#
-# ~/.bashrc: executed by bash for non-login shells.
-#
-###############################################################################
+# =============================================================================
+# ~/.bashrc: executed by bash for interactive non-login shells.
+# =============================================================================
 
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+      *) return ;;
 esac
 
+# Small helper: is this command available?
+command_exists() { command -v "$1" >/dev/null 2>&1; }
 
-### HISTORY
-###############################################################################
+
+# --- PATH --------------------------------------------------------------------
+
+# Prepend a directory to PATH (only if it exists and is not already in PATH).
+path_prepend() {
+    [ -d "$1" ] || return 0
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+path_prepend "$HOME/.local/bin"
+path_prepend "$HOME/.opencode/bin"
+export PATH
+
+
+# --- HISTORY -----------------------------------------------------------------
 
 # Increase history size
 HISTSIZE=10000
@@ -34,8 +50,7 @@ fi
 shopt -s histappend
 
 
-### GENERAL
-###############################################################################
+# --- GENERAL -----------------------------------------------------------------
 
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -78,14 +93,8 @@ PS1="\[\e]0;\u@\h: \w\a\]$PS1"
 # Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Add opencode
-[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
-
-# Disable python3.13 paste mode
-# export PYTHON_BASIC_REPL=1
-
 # Used to activate micromamba
-if command -v micromamba >/dev/null 2>&1; then
+if command_exists micromamba; then
     export MAMBA_EXE="$HOME/.local/bin/micromamba"
     export MAMBA_ROOT_PREFIX="$HOME/.local/share/mamba"
 
@@ -99,15 +108,14 @@ if command -v micromamba >/dev/null 2>&1; then
 fi
 
 # Use fd if available (faster)
-if command -v fd >/dev/null 2>&1; then
+if command_exists fd; then
     export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude .venv'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND='fd --type d --strip-cwd-prefix --hidden --follow --exclude .git --exclude .venv'
 fi
 
 
-### ALIASES
-###############################################################################
+# --- ALIASES -----------------------------------------------------------------
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -124,7 +132,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-if command -v eza &> /dev/null; then
+if command_exists eza; then
     alias ls='eza'
     alias ll='ls -al --classify=auto'
     alias la='ls -alF --icons'
@@ -151,15 +159,11 @@ alias bat='bat --theme=OneHalfLight'
 # Add an "alert" alias for long running commands.
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Add Generic Makefile
-alias addmake='cp ~/.config/nvim/templates/Makefile Makefile'
 
-
-### VIM
-###############################################################################
+# --- VIM ---------------------------------------------------------------------
 
 # Use nvim as default editor and for man pages
-if command -v nvim >/dev/null; then
+if command_exists nvim; then
     alias vim='nvim'
     export VISUAL='nvim'
     export EDITOR='nvim'
@@ -168,7 +172,7 @@ fi
 
 #  Use nvim for reading help pages if there is no man
 h() {
-    command -v "$1" >/dev/null || {
+    command_exists "$1" || {
         printf 'Command not found: %s\n' "$1" >&2
         return 127
     }
@@ -186,17 +190,19 @@ bind -m vi-command 'Control-l: clear-screen'
 bind -m vi-insert 'Control-l: clear-screen'
 
 # Turn off caps if it is on
-command -v xset >/dev/null && xset q >/dev/null 2>&1 | grep -q "Caps Lock:   on" && xdotool key Caps_Lock >/dev/null 2>&1
+command_exists xset && xset q 2>/dev/null | grep -q "Caps Lock:   on" && xdotool key Caps_Lock >/dev/null 2>&1
+
+# Caps Lock -> Esc (ignore error if on remote system)
+command_exists setxkbmap && setxkbmap -option caps:escape 2>/dev/null
 
 # Set caps to esc (ignore error if on remote system)
-command -v setxkbmap >/dev/null && setxkbmap -option caps:escape 2>/dev/null
+command_exists setxkbmap && setxkbmap -option caps:escape 2>/dev/null
 
 # Needed for git log
 export PAGER=less
 
 
-### SOURCE
-###############################################################################
+# --- SOURCE ------------------------------------------------------------------
 
 # Source local and private additions
 [ -f ~/.bashrc_local ] && source ~/.bashrc_local
@@ -212,24 +218,18 @@ export PAGER=less
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
 
-### START
-###############################################################################
+# --- START -------------------------------------------------------------------
 
 # uv shell completions (only if installed)
-if command -v uv &> /dev/null; then
-    eval "$(uv generate-shell-completion bash)"
-fi
-
-if command -v uvx &> /dev/null; then
-    eval "$(uvx --generate-shell-completion bash)"
-fi
+command_exists uv && eval "$(uv generate-shell-completion bash)"
+command_exists uvx && eval "$(uvx --generate-shell-completion bash)"
 
 # Fast switching between tmux sessions
 bind -x '"\C- ": tmux-sessionizer'
 
 # Start screen
-if command -v fastfetch &> /dev/null; then
+if command_exists fastfetch; then
   fastfetch
-elif command -v neofetch &> /dev/null; then
+elif command_exists neofetch; then
   neofetch 2>/dev/null
 fi
