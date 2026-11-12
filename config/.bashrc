@@ -214,6 +214,8 @@ export PAGER=less
 # uv
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
+# just
+source <(just --completions bash)
 
 # --- START -------------------------------------------------------------------
 
