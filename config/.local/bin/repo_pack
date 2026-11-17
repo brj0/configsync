@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# repo_pack - Prepare a repository for LLM upload.
+#
+# Usage:
+#   repo_pack /path/to/repo [exclude ...]
+#
+# Examples:
+#   repo_pack ~/Documents/csfSturgeon .venv .git static/array_manifest
+#   repo_pack ~/Documents/methylmeta .venv .git data checkpoints
+#
+# Pulls the latest changes, copies the repository to
+# ~/Downloads/llm_uploads/, removes specified paths, and creates
+# a .tar archive alongside the copy. Does not change directories.
+
+set -euo pipefail
+
+if [[ $# -eq 0 ]]; then
+    sed -n '2,8p' "$0" | sed 's/^# \?//'
+    exit 1
+fi
+
+repo=$(realpath "$1")
+name=$(basename "$repo")
+shift
+
+dest="$HOME/Downloads/llm_uploads"
+
+git -C "$repo" pull
+
+mkdir -p "$dest"
+rm -rf "$dest/$name"
+cp -r "$repo" "$dest/$name"
+
+for path in "$@"; do
+    rm -rf "$dest/$name/$path"
+done
+
+tar -cf "$dest/$name.tar" -C "$dest" "$name/"
+
+echo "Packed: $dest/$name.tar ($(du -h "$dest/$name.tar" | cut -f1))"
